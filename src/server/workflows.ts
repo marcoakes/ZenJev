@@ -2,7 +2,7 @@ import type { Prisma,ProposedAction,DecisionRun,Ticket } from '@prisma/client';
 import { db } from './db';
 import { getSettings,issueProviderOf,issueTargetSettings } from './settings';
 import { HttpError,type Actor } from './auth';
-import { buildContext,retrieveCandidates,reviewReasons,contentHash,approvalHash,assertActionAllowed,sanitize,TEAMS,keywordBaseline,evaluateSaved,issueTargetOf,isProjectPath,type Decision,type DomainTicket,type Issue,type ApprovalBinding,type IssueTarget,type SavedPrediction,type EvaluationLabel,type Snapshot } from '../domain';
+import { buildContext,retrieveCandidates,reviewReasons,contentHash,approvalHash,assertActionAllowed,sanitize,TEAMS,keywordBaseline,evaluateSaved,evaluateBySplit,issueTargetOf,isProjectPath,type Decision,type DomainTicket,type Issue,type ApprovalBinding,type IssueTarget,type SavedPrediction,type EvaluationLabel,type Snapshot } from '../domain';
 import { MockDecisionProvider,JevDecisionProvider } from '../providers';
 export const json=(value:unknown)=>JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
 export const safeError=(error:unknown)=>error instanceof Error&&error.name.startsWith('Prisma')?'Database operation failed; inspect the operation status and retry safely':sanitize(error instanceof Error?error.message:'Operation failed').slice(0,500);
@@ -187,6 +187,17 @@ export async function validateAction(action:ProposedAction&{decision:DecisionRun
   if(configured?.error)throw new Error(configured.error);
   assertActionAllowed(bindingFor(action,action.decision),{hash:approval.bindingHash,reviewerId:approval.reviewer,reviewerRole:approval.reviewerRole as 'admin',expiresAt:approval.expiresAt.toISOString(),status:'approved'},{allowLiveWrites:settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',authenticated:true,currentTicketVersion:action.ticket.version,currentDecisionVersion:latest.ticketVersion,repositories:settings.repositories as string[],groups:TEAMS.filter(t=>t!=='unknown') as unknown as string[],...(configured?{issueTarget:{provider:configured.provider,host:configured.host}}:{})});
  }catch(error){await db.proposedAction.updateMany({where:{id:action.id,state:{in:['proposed','approved','queued']}},data:{state:'stale',error:safeError(error)}});throw new HttpError(409,safeError(error));}
+}
+/** Read-only: the newest saved run of each split for this run's task, evaluated apart at this run's threshold. */
+export async function splitMetricsFor(run:{task:string;threshold:number},syntheticOnly=false) {
+ const predictions:SavedPrediction[]=[],labels:EvaluationLabel[]=[],seen=new Set<string>(),labelled=new Set<string>();
+ for(const split of ['development','held_out']){
+  const saved=await db.evaluationRun.findFirst({where:{task:run.task,split,...(syntheticOnly?{dataSource:'synthetic'}:{})},orderBy:{createdAt:'desc'}});
+  if(!saved)continue;
+  for(const p of (saved.predictions as unknown as SavedPrediction[]|null)??[])if(!seen.has(p.ticketId)){seen.add(p.ticketId);predictions.push(p);}
+  for(const l of (saved.settings as {evaluationLabels?:EvaluationLabel[]}|null)?.evaluationLabels??[])if(!labelled.has(l.ticketId)){labelled.add(l.ticketId);labels.push(l);}
+ }
+ return evaluateBySplit(predictions,labels,run.threshold);
 }
 export async function runEvaluation(options:{task?:string;split?:string;threshold?:number;newRun?:boolean},actor:Actor) {
  const settings=await getSettings(),task=options.task??'initial_routing',split=options.split??'development',threshold=options.threshold??settings.threshold;

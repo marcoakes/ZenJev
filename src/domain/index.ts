@@ -192,3 +192,4 @@ export function buildIssueDraft(snapshot:Snapshot,affectedOrganizations=1):{titl
 export function validateDatasetSplits(rows:{incidentId:string;split:'development'|'held_out'}[]):void {
   const incidents=new Map<string,string>();for(const row of rows){const old=incidents.get(row.incidentId);if(old&&old!==row.split)throw new Error('Related incident crosses evaluation splits');incidents.set(row.incidentId,row.split);}
 }
+export * from './splits';

@@ -3,7 +3,7 @@ import { db } from './db';
 import {readBoundedText} from './request';
 import { authenticate,login,HttpError,validateRuntimeConfig } from './auth';
 import { getSettings,publicSettings } from './settings';
-import { json,safeError,enqueue,approveLink,proposeAction,editAction,approveAction,queueAction,runEvaluation,audit,proposeBacklink,rejectAction } from './workflows';
+import { json,safeError,enqueue,approveLink,proposeAction,editAction,approveAction,queueAction,runEvaluation,splitMetricsFor,audit,proposeBacklink,rejectAction } from './workflows';
 import { receiveWebhook,checkIssueConnection } from './integrations';
 import { issueProviderOf,issueTargetSettings } from './settings';
 import { seedDemo } from './seed';
@@ -106,11 +106,11 @@ export async function handleApi(request:Request,segments:string[]):Promise<Respo
   }
   if(resource==='evaluation'&&method==='GET'){
    const runs=await db.evaluationRun.findMany({where:{...(url.searchParams.get('task')?{task:url.searchParams.get('task')!}:{}),...(url.searchParams.get('split')?{split:url.searchParams.get('split')!}:{}),...(actor.demo?{dataSource:'synthetic'}:{})},orderBy:{createdAt:'desc'},take:20});
-   return response({runs,latest:runs[0]??null,metrics:runs[0]?.metrics??null});
+   return response({runs,latest:runs[0]??null,metrics:runs[0]?.metrics??null,splitMetrics:runs[0]?await splitMetricsFor(runs[0],actor.demo):null});
   }
   if(resource==='evaluation'&&method==='POST'){
    const body=await bodyOf(request);const run=await runEvaluation({task:body.task?String(body.task):undefined,split:body.split?String(body.split):undefined,threshold:body.threshold===undefined?undefined:Number(body.threshold),newRun:body.newRun===true},actor);
-   return response({run,latest:run,metrics:run.metrics});
+   return response({run,latest:run,metrics:run.metrics,splitMetrics:await splitMetricsFor(run,actor.demo)});
   }
   if(resource==='settings'&&method==='GET')return response(await publicSettings(actor.csrfToken));
   if(resource==='settings'&&method==='POST'){
