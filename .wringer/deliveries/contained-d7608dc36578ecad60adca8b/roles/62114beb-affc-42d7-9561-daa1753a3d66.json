@@ -1,0 +1,140 @@
+{
+  "id": "62114beb-affc-42d7-9561-daa1753a3d66",
+  "role": "worker",
+  "status": "completed",
+  "disposition": "accepted",
+  "sourceRequestSha256": "bfcf8782d585c82ced8f2a214ea8c0520e9a0fddf7183a8de9674c4b12501970",
+  "sourceResultSha256": "84fea191c58fb38bc8e9e0bbf7d1547c3ecd1da501de1b74039cc741fc87a3c6",
+  "request": {
+    "role": "worker",
+    "repo": {
+      "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+      "commit": "ee8459f6940e89f27323892dbe07c2630215a898"
+    },
+    "runtime": {
+      "kind": "trusted-local",
+      "network": {
+        "policy": "unenforced"
+      },
+      "env": []
+    },
+    "agent": {
+      "protocol": "acp",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentclientprotocol/claude-agent-acp@0.101.1"
+      ],
+      "env": []
+    },
+    "budget": {
+      "maxTurns": 1,
+      "timeoutMs": 900000
+    },
+    "scope": {
+      "writable": [
+        "src"
+      ],
+      "protected": [
+        ".wringer.yaml",
+        "checks/branding.test.mjs",
+        "scripts/check-fresh-setup.mjs",
+        "scripts/check-native.mjs",
+        "scripts/check.mjs",
+        "tests/backend.test.ts",
+        "tests/browser/auth.spec.ts",
+        "tests/browser/workbench.spec.ts",
+        "tests/domain.test.ts",
+        "tests/evaluation-splits.test.ts",
+        "tests/gitlab.test.ts",
+        "tests/integration-smoke.test.ts",
+        "tests/issue-provider-persistence.test.ts",
+        "tests/keychain-jev.test.ts",
+        "tests/provider-integration-orchestration.test.ts",
+        "tests/providers.test.ts"
+      ],
+      "writableDirectories": [
+        "node_modules"
+      ]
+    }
+  },
+  "result": {
+    "status": "completed",
+    "sessionId": "8f701b28-0bc9-4757-ab97-ecc73227decd",
+    "stopReason": "end_turn",
+    "protocolVersion": 1,
+    "authentication": {
+      "methodAttempted": null,
+      "sessionOpened": true
+    },
+    "usage": null,
+    "provenance": {
+      "schema_version": "wringer.runtime.v3",
+      "runtimeId": "wringer-worker-439b099b-eebb-439a-9123-d1c847189f6b",
+      "role": "worker",
+      "kind": "trusted-local",
+      "boundary": "trusted-local",
+      "established": "none",
+      "repository": {
+        "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+        "commit": "ee8459f6940e89f27323892dbe07c2630215a898"
+      },
+      "workspace": "fresh-temporary-clone",
+      "repositoryAccess": "read-write",
+      "declared": {
+        "kind": "trusted-local",
+        "network": {
+          "policy": "unenforced"
+        },
+        "env": []
+      },
+      "observed": {
+        "host": {
+          "platform": "darwin",
+          "arch": "arm64"
+        },
+        "workspace": "a temporary clone, removed after use",
+        "agent": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@agentclientprotocol/claude-agent-acp@0.101.1"
+          ]
+        },
+        "scope": {
+          "writable": [
+            "src"
+          ],
+          "protected": [
+            ".wringer.yaml",
+            "checks/branding.test.mjs",
+            "scripts/check-fresh-setup.mjs",
+            "scripts/check-native.mjs",
+            "scripts/check.mjs",
+            "tests/backend.test.ts",
+            "tests/browser/auth.spec.ts",
+            "tests/browser/workbench.spec.ts",
+            "tests/domain.test.ts",
+            "tests/evaluation-splits.test.ts",
+            "tests/gitlab.test.ts",
+            "tests/integration-smoke.test.ts",
+            "tests/issue-provider-persistence.test.ts",
+            "tests/keychain-jev.test.ts",
+            "tests/provider-integration-orchestration.test.ts",
+            "tests/providers.test.ts"
+          ],
+          "writableDirectories": [
+            "node_modules"
+          ]
+        },
+        "scopeEnforcement": "at candidate review"
+      },
+      "limits": [
+        "Ran on this computer under the operator's account; nothing was contained.",
+        "Network, files and credentials were limited only by the operator's own account; no boundary was established.",
+        "The approved change scope is enforced when the controller reviews the captured patch, not while the agent runs.",
+        "An agent descendant that left its process group could outlive the session; none is inspected."
+      ]
+    }
+  }
+}

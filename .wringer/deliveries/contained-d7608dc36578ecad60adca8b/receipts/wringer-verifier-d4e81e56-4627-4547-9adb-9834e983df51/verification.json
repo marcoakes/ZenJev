@@ -1,0 +1,58 @@
+{
+  "schema_version": "wringer.contained-verification.v2",
+  "status": "passed",
+  "candidateCommit": "bbac04a5c7f6e0e418f8446a5e9f4e75801aa2ce",
+  "candidateTree": "95667f1e7973bc6436e040849baa7655d3f0dc39",
+  "acceptanceSha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+  "runtimeId": "wringer-verifier-d4e81e56-4627-4547-9adb-9834e983df51",
+  "image": "trusted-local",
+  "checks": [
+    {
+      "id": "evaluation-splits",
+      "status": "passed",
+      "exitCode": 0,
+      "checkInputsSha256": "67e31f6b232463a904da736af33f3c8ad0873678e51be2f6a06673ba53eafae9",
+      "outputSha256": "572964240a9672f09fff01d303af3514a199eed6981c640b7cc85275981dd6ce"
+    }
+  ],
+  "regressions": [],
+  "evidenceRef": "receipts/wringer-verifier-d4e81e56-4627-4547-9adb-9834e983df51",
+  "checkEvidence": [],
+  "repair": {
+    "schema_version": "wringer.repair-packet.v1",
+    "phase": "candidate",
+    "planSha256": "ee8ee66248313621f9c42bfdbade4ed21a6d367418d0202182fc8b8cac31ad7d",
+    "acceptanceSha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+    "candidateCommit": "bbac04a5c7f6e0e418f8446a5e9f4e75801aa2ce",
+    "candidateTree": "95667f1e7973bc6436e040849baa7655d3f0dc39",
+    "observationSha256": "a2ac310523e82e7237bfda527cb781dc454027a7a9ac590fde1737545cbf3c69",
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "kind": "acceptance",
+        "argv": [
+          "/bin/sh",
+          "-c",
+          "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+        ],
+        "cwd": ".",
+        "requirements": [
+          "evaluation-splits"
+        ],
+        "status": "passed",
+        "exitCode": 0,
+        "outputSha256": "572964240a9672f09fff01d303af3514a199eed6981c640b7cc85275981dd6ce",
+        "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[32m✓\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 3\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m5 passed\u001b[39m\u001b[22m\u001b[90m (5)\u001b[39m\n\u001b[2m   Start at \u001b[22m 16:00:50\n\u001b[2m   Duration \u001b[22m 957ms\u001b[2m (transform 67%, import 22%, tests 6%, worker 5%)\u001b[22m\n\n",
+        "stderr": "",
+        "omittedBytes": 0
+      }
+    ],
+    "omittedChecks": 0,
+    "limits": [
+      "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+      "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+      "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+    ],
+    "sha256": "3266adec62bc97fd2d174ceb0db6e7e5886519b9c350996c0634b8ac91e64d2f"
+  }
+}

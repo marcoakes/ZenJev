@@ -1,0 +1,46 @@
+{
+  "schema_version": "wringer.engineering-evidence.v1",
+  "planSha256": "ee8ee66248313621f9c42bfdbade4ed21a6d367418d0202182fc8b8cac31ad7d",
+  "playbook": null,
+  "adoption": null,
+  "uses": [],
+  "loopDecisions": [
+    {
+      "schema_version": "wringer.loop-decision.v1",
+      "sequence": 1,
+      "phase": "checks",
+      "candidateCommit": "bbac04a5c7f6e0e418f8446a5e9f4e75801aa2ce",
+      "candidateTree": "95667f1e7973bc6436e040849baa7655d3f0dc39",
+      "acceptanceSha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+      "environmentSha256": "fb926b115f5100ea4237f1abd3b0b8d2d50b3919349a2cb9999c4b38287803bd",
+      "verificationSha256": "9f867a7f975ce392dd95dd776e0ea3e17660e946eacd392e7a0a95cf13cda94f",
+      "comparableSha256": "76c589ea5fe02027b9ee223a37427c2c0993a6dff328d4b42ac2d78ce6fd0bf1",
+      "outcomes": [
+        {
+          "id": "evaluation-splits",
+          "kind": "check",
+          "status": "passed"
+        }
+      ],
+      "unsuccessful": false,
+      "action": "continue",
+      "repeatedCandidateSequence": null,
+      "repeatedOutcomes": 0,
+      "reason": "This observation does not require a repair; readiness still depends on all remaining checks and human decisions.",
+      "sha256": "8760fc7d2322bdae832c8e02adc1e25f5c2eb16f76a9a52ec29bda52c4c7fffa"
+    }
+  ],
+  "checks": [
+    {
+      "id": "evaluation-splits",
+      "level": "command"
+    }
+  ],
+  "limits": [
+    "Playbook use is a controller-recorded request, not proof of model understanding or measured improvement. Guidance is not injected into judge instructions, but tracked repository bytes remain readable.",
+    "Repair excerpts are reconstructed from carried redacted outputs. The original observation digest is an opaque controller commitment: host-specific runtime provenance is projected for portability, not reconstructed byte for byte.",
+    "Any carried adoption receipt records a future-selection decision and evidence revision, not a rerun of its private comparative trials or proof of live benefit.",
+    "Command-red means the command failed before implementation. Assertion-red additionally binds executed protected-runner assertions; neither proves requirement completeness.",
+    "Loop decisions are deterministic observations under one approved policy. Repeated outcomes are not a quality score."
+  ]
+}

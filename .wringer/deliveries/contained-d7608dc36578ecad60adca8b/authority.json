@@ -1,0 +1,26 @@
+{
+  "schema_version": "wringer.execution-authority.v2",
+  "actor": "Claude (acting for Marc)",
+  "repository": {
+    "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+    "commit": "ee8459f6940e89f27323892dbe07c2630215a898"
+  },
+  "plan_sha256": "ee8ee66248313621f9c42bfdbade4ed21a6d367418d0202182fc8b8cac31ad7d",
+  "acceptance_sha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+  "actions": [
+    "build",
+    "judge",
+    "plan",
+    "verify"
+  ],
+  "budget": {
+    "max_sessions": 8,
+    "max_worker_turns": 4,
+    "max_judge_turns": 4,
+    "max_planner_turns": 0,
+    "wall_clock_seconds": 3600,
+    "session_timeout_seconds": 900
+  },
+  "granted_at": "2026-11-12T15:58:52.482Z",
+  "expires_at": "2026-11-12T16:58:52.479Z"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "wringer.contained-projection.v2",
+  "omitted": [
+    "ACP request prompt bodies",
+    "ACP thought/progress traces and provider stderr",
+    "Worker/planner narrative and patch duplication",
+    "Controller absolute transport paths",
+    "Journal free-form details and feedback duplicates"
+  ],
+  "sourceJournalHeadSha256": "49452d1b3fa379571436025abd2b567c67a34d4087037ece19c49ee3a96e5d46",
+  "portableJournalHeadSha256": "dd2598e4344a31077b73b33a7ed12d665e81f8dc0937a6e6d8bc4318e8cb9cd3",
+  "viewSha256": "0b7bfe34dde2774fe82c44d786e70b24dad36fb5256de389a214b328e0c16e92",
+  "limits": [
+    "This is a tamper-evident record of controller observations, not a fresh execution of acceptance checks or proof against a malicious controller.",
+    "ACP prompts, worker narrative, thought streams and private provider traces are omitted. The source journal was validated before a separately hashed portable semantic projection was made; source digest commitments are provenance, not a claim that omitted bytes can be replayed here.",
+    "Container declarations and recorded runtime identities do not substitute for the live platform isolation release gate.",
+    "The candidate bundle carries exact committed Git history. An evidence commit contains this bundle; its own hash is returned by publication, not self-embedded in its contents.",
+    "The separate contained falsification command challenges supported changed source lines only. It is not a correctness proof; caught, surviving and unavailable mutations are reported separately."
+  ]
+}
