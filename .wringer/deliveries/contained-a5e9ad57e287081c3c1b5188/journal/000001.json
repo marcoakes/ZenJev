@@ -1,0 +1,30 @@
+{
+  "schema_version": "wringer.contained-delivery-event.v3",
+  "sequence": 1,
+  "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+  "at": "2026-11-12T15:45:06.564Z",
+  "type": "journey-approved",
+  "source_event_sha256": "07ad75979b67ab3b4e62ca98aa5e7f683c5df3562bda09ed44800a2d3327c0f1",
+  "state": {
+    "schema_version": "wringer.contained-journey.v1",
+    "id": "c4f6f03c-698c-40d2-88be-93d9fed70378",
+    "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+    "authoritySha256": "ee8480d382a98b3aea5da391b7c72c20a155520bd3662fb1ae2388f4bf5b3db7",
+    "environmentSha256": "15f4f1900094696f560bf2c2490df86639b814fecd6f150b0b05f7c0c44af202",
+    "startedAt": "2026-11-12T15:44:55.035Z",
+    "source": null,
+    "stage": "prepare",
+    "iteration": 0,
+    "plannerComplete": false,
+    "workerEffect": null,
+    "judgeEffect": null,
+    "runtimeIds": [],
+    "effects": [],
+    "baseline": null,
+    "verification": null,
+    "candidate": null,
+    "judge": null,
+    "humanJudgements": []
+  },
+  "sha256": "4609bc64fb134d68799e6b3800ac3afcf63fd4347d16440557093494549e4438"
+}

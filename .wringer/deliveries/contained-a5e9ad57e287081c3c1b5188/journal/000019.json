@@ -1,0 +1,318 @@
+{
+  "schema_version": "wringer.contained-delivery-event.v3",
+  "sequence": 19,
+  "previous": "edec83d06947807356c5e84dd7daba8c7241587ffc87a4e40ddb8fa6bd8087d2",
+  "at": "2026-11-12T15:49:59.632Z",
+  "type": "agent-reply-parsed",
+  "source_event_sha256": "c630f0c6f0eba305f25c81a14ca8a6e08878166dd3210d84c5792af3d39fa9b1",
+  "state": {
+    "schema_version": "wringer.contained-journey.v1",
+    "id": "c4f6f03c-698c-40d2-88be-93d9fed70378",
+    "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+    "authoritySha256": "ee8480d382a98b3aea5da391b7c72c20a155520bd3662fb1ae2388f4bf5b3db7",
+    "environmentSha256": "15f4f1900094696f560bf2c2490df86639b814fecd6f150b0b05f7c0c44af202",
+    "startedAt": "2026-11-12T15:44:55.035Z",
+    "source": {
+      "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+      "commit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc"
+    },
+    "stage": "judge",
+    "iteration": 0,
+    "plannerComplete": false,
+    "workerEffect": "5fc16f06-b676-4101-947e-c871a6983dab",
+    "judgeEffect": "51a17ba3-dcd2-4043-bd47-5daa3fb085f4",
+    "runtimeIds": [
+      "wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+      "wringer-worker-6651bab3-143e-4b66-a9fa-6491fe36c1b9",
+      "wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+      "wringer-judge-15b1aa97-2ec6-49f2-8257-a23ae9719902"
+    ],
+    "effects": [
+      {
+        "id": "5fc16f06-b676-4101-947e-c871a6983dab",
+        "role": "worker",
+        "status": "completed",
+        "requestSha256": "7327c14d1f76c424552aad915a1ab80a4b510cfb7763f6ae34668a73aac72bf5",
+        "requestIdentity": "185bf0bdca795477f753ff7879d0397c41216dc418dfad85f79b4cd4a286d5a5",
+        "disposition": "accepted",
+        "resultSha256": "e3afd7d33dcf04659dc280092606b3a01d59f182fba33a2a0c8aed4b9fd2beff"
+      },
+      {
+        "id": "51a17ba3-dcd2-4043-bd47-5daa3fb085f4",
+        "role": "judge",
+        "status": "completed",
+        "requestSha256": "72934e9e2d9f919bec3559e15caba0560d35ff69e967b87f2a4b531c8a00d4eb",
+        "requestIdentity": "3a1725283f7ca13a0484f0c3cb8b1ef15e06087d3585da3ac5944095b9dde1bd",
+        "resultSha256": "518a735e3559c5811316c17a9e037764e526893c5808676f19d06a9177d6b44f"
+      }
+    ],
+    "verificationAttempts": [
+      {
+        "id": "05c61f0a-18f8-4091-bcc4-b1659092b8eb",
+        "phase": "baseline",
+        "sourceCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+        "requestSha256": "b2242b860dfd89b22d9bb410326d13fd0e8bd70d79453994237a5edbd899a1f4",
+        "status": "completed",
+        "result": {
+          "schema_version": "wringer.contained-verification.v2",
+          "status": "failed",
+          "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+          "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+          "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+          "runtimeId": "wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+          "image": "trusted-local",
+          "checks": [
+            {
+              "id": "evaluation-splits",
+              "status": "failed",
+              "exitCode": 1,
+              "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+              "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899"
+            }
+          ],
+          "regressions": [],
+          "evidenceRef": "receipts/wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+          "checkEvidence": [],
+          "repair": {
+            "schema_version": "wringer.repair-packet.v1",
+            "phase": "baseline",
+            "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+            "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+            "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+            "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+            "observationSha256": "203820379b643a909fd84961d058e3a4b85fda4c8592b1a319a7c1cec71c055e",
+            "checks": [
+              {
+                "id": "evaluation-splits",
+                "kind": "acceptance",
+                "argv": [
+                  "/bin/sh",
+                  "-c",
+                  "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+                ],
+                "cwd": ".",
+                "requirements": [
+                  "evaluation-splits"
+                ],
+                "status": "failed",
+                "exitCode": 1,
+                "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899",
+                "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[31m❯\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m0 test\u001b[22m\u001b[2m)\u001b[22m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[31m1 failed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[2mno tests\u001b[22m\n\u001b[2m   Start at \u001b[22m 15:45:14\n\u001b[2m   Duration \u001b[22m 985ms\u001b[2m (worker 97%, environment 3%)\u001b[22m\n\n",
+                "stderr": "\n\u001b[31m⎯⎯⎯⎯⎯⎯\u001b[39m\u001b[1m\u001b[41m Failed Suites 1 \u001b[49m\u001b[22m\u001b[31m⎯⎯⎯⎯⎯⎯⎯\u001b[39m\n\n\u001b[41m\u001b[1m FAIL \u001b[22m\u001b[49m tests/evaluation-splits.test.ts\u001b[2m [ tests/evaluation-splits.test.ts ]\u001b[22m\n\u001b[31m\u001b[1mError\u001b[22m: Cannot find module '../src/domain/splits' imported from [private path]\n\u001b[36m \u001b[2m❯\u001b[22m tests/evaluation-splits.test.ts:\u001b[2m4:1\u001b[22m\u001b[39m\n    \u001b[90m  2|\u001b[39m import {type Team,type Decision,type SavedPrediction,type EvaluationLa…\n    \u001b[90m  3|\u001b[39m import * as domain from '../src/domain';\n    \u001b[90m  4|\u001b[39m import {evaluateBySplit} from '../src/domain/splits';\n    \u001b[90m   |\u001b[39m \u001b[31m^\u001b[39m\n    \u001b[90m  5|\u001b[39m\n    \u001b[90m  6|\u001b[39m // The evaluation lab reports one set of numbers over every saved pred…\n\n\u001b[31m\u001b[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\u001b[22m\u001b[39m\n\n",
+                "omittedBytes": 0
+              }
+            ],
+            "omittedChecks": 0,
+            "limits": [
+              "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+              "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+              "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+            ],
+            "sha256": "a95fb5a722706b3323a4f573c6dbd1b38db019c1117ed1a7e6317c98bc816745"
+          }
+        },
+        "disposition": "failed"
+      },
+      {
+        "id": "680d466c-8022-4278-a8d7-b169df1fc8b5",
+        "phase": "candidate",
+        "sourceCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+        "requestSha256": "78121c54f233bfda1218d07dcc47c442d396f7cebf856c9c9434ccca29780cec",
+        "status": "completed",
+        "result": {
+          "schema_version": "wringer.contained-verification.v2",
+          "status": "passed",
+          "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+          "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+          "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+          "runtimeId": "wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+          "image": "trusted-local",
+          "checks": [
+            {
+              "id": "evaluation-splits",
+              "status": "passed",
+              "exitCode": 0,
+              "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+              "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0"
+            }
+          ],
+          "regressions": [],
+          "evidenceRef": "receipts/wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+          "checkEvidence": [],
+          "repair": {
+            "schema_version": "wringer.repair-packet.v1",
+            "phase": "candidate",
+            "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+            "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+            "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+            "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+            "observationSha256": "fb56199e7a9a4fc15875f59b641de3aeac2b08ebbc2d69442189a6c90044b263",
+            "checks": [
+              {
+                "id": "evaluation-splits",
+                "kind": "acceptance",
+                "argv": [
+                  "/bin/sh",
+                  "-c",
+                  "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+                ],
+                "cwd": ".",
+                "requirements": [
+                  "evaluation-splits"
+                ],
+                "status": "passed",
+                "exitCode": 0,
+                "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0",
+                "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[32m✓\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m5 passed\u001b[39m\u001b[22m\u001b[90m (5)\u001b[39m\n\u001b[2m   Start at \u001b[22m 15:48:59\n\u001b[2m   Duration \u001b[22m 2.51s\u001b[2m (transform 67%, import 22%, worker 6%, tests 5%)\u001b[22m\n\n",
+                "stderr": "",
+                "omittedBytes": 0
+              }
+            ],
+            "omittedChecks": 0,
+            "limits": [
+              "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+              "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+              "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+            ],
+            "sha256": "7ade6bcf7c255d438346d59ca65c02c801dca64d8713be0457719cc271d92e32"
+          }
+        },
+        "disposition": "passed"
+      }
+    ],
+    "baseline": {
+      "schema_version": "wringer.contained-verification.v2",
+      "status": "failed",
+      "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+      "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+      "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+      "runtimeId": "wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+      "image": "trusted-local",
+      "checks": [
+        {
+          "id": "evaluation-splits",
+          "status": "failed",
+          "exitCode": 1,
+          "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+          "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899"
+        }
+      ],
+      "regressions": [],
+      "evidenceRef": "receipts/wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+      "checkEvidence": [],
+      "repair": {
+        "schema_version": "wringer.repair-packet.v1",
+        "phase": "baseline",
+        "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+        "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+        "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+        "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+        "observationSha256": "203820379b643a909fd84961d058e3a4b85fda4c8592b1a319a7c1cec71c055e",
+        "checks": [
+          {
+            "id": "evaluation-splits",
+            "kind": "acceptance",
+            "argv": [
+              "/bin/sh",
+              "-c",
+              "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+            ],
+            "cwd": ".",
+            "requirements": [
+              "evaluation-splits"
+            ],
+            "status": "failed",
+            "exitCode": 1,
+            "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899",
+            "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[31m❯\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m0 test\u001b[22m\u001b[2m)\u001b[22m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[31m1 failed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[2mno tests\u001b[22m\n\u001b[2m   Start at \u001b[22m 15:45:14\n\u001b[2m   Duration \u001b[22m 985ms\u001b[2m (worker 97%, environment 3%)\u001b[22m\n\n",
+            "stderr": "\n\u001b[31m⎯⎯⎯⎯⎯⎯\u001b[39m\u001b[1m\u001b[41m Failed Suites 1 \u001b[49m\u001b[22m\u001b[31m⎯⎯⎯⎯⎯⎯⎯\u001b[39m\n\n\u001b[41m\u001b[1m FAIL \u001b[22m\u001b[49m tests/evaluation-splits.test.ts\u001b[2m [ tests/evaluation-splits.test.ts ]\u001b[22m\n\u001b[31m\u001b[1mError\u001b[22m: Cannot find module '../src/domain/splits' imported from [private path]\n\u001b[36m \u001b[2m❯\u001b[22m tests/evaluation-splits.test.ts:\u001b[2m4:1\u001b[22m\u001b[39m\n    \u001b[90m  2|\u001b[39m import {type Team,type Decision,type SavedPrediction,type EvaluationLa…\n    \u001b[90m  3|\u001b[39m import * as domain from '../src/domain';\n    \u001b[90m  4|\u001b[39m import {evaluateBySplit} from '../src/domain/splits';\n    \u001b[90m   |\u001b[39m \u001b[31m^\u001b[39m\n    \u001b[90m  5|\u001b[39m\n    \u001b[90m  6|\u001b[39m // The evaluation lab reports one set of numbers over every saved pred…\n\n\u001b[31m\u001b[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\u001b[22m\u001b[39m\n\n",
+            "omittedBytes": 0
+          }
+        ],
+        "omittedChecks": 0,
+        "limits": [
+          "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+          "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+          "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+        ],
+        "sha256": "a95fb5a722706b3323a4f573c6dbd1b38db019c1117ed1a7e6317c98bc816745"
+      }
+    },
+    "verification": {
+      "schema_version": "wringer.contained-verification.v2",
+      "status": "passed",
+      "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+      "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+      "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+      "runtimeId": "wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+      "image": "trusted-local",
+      "checks": [
+        {
+          "id": "evaluation-splits",
+          "status": "passed",
+          "exitCode": 0,
+          "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+          "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0"
+        }
+      ],
+      "regressions": [],
+      "evidenceRef": "receipts/wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+      "checkEvidence": [],
+      "repair": {
+        "schema_version": "wringer.repair-packet.v1",
+        "phase": "candidate",
+        "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+        "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+        "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+        "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+        "observationSha256": "fb56199e7a9a4fc15875f59b641de3aeac2b08ebbc2d69442189a6c90044b263",
+        "checks": [
+          {
+            "id": "evaluation-splits",
+            "kind": "acceptance",
+            "argv": [
+              "/bin/sh",
+              "-c",
+              "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+            ],
+            "cwd": ".",
+            "requirements": [
+              "evaluation-splits"
+            ],
+            "status": "passed",
+            "exitCode": 0,
+            "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0",
+            "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[32m✓\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m5 passed\u001b[39m\u001b[22m\u001b[90m (5)\u001b[39m\n\u001b[2m   Start at \u001b[22m 15:48:59\n\u001b[2m   Duration \u001b[22m 2.51s\u001b[2m (transform 67%, import 22%, worker 6%, tests 5%)\u001b[22m\n\n",
+            "stderr": "",
+            "omittedBytes": 0
+          }
+        ],
+        "omittedChecks": 0,
+        "limits": [
+          "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+          "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+          "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+        ],
+        "sha256": "7ade6bcf7c255d438346d59ca65c02c801dca64d8713be0457719cc271d92e32"
+      }
+    },
+    "candidate": {
+      "source": {
+        "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+        "commit": "095c012bafb4842050b9d01e0a1940e9a392eec4"
+      },
+      "tree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+      "changedPaths": [
+        "src/app/globals.css",
+        "src/components/api-types.ts",
+        "src/components/workbench.tsx",
+        "src/domain/index.ts",
+        "src/domain/splits.ts",
+        "src/server/api.ts"
+      ]
+    },
+    "judge": null,
+    "humanJudgements": []
+  },
+  "sha256": "86612013b660df6397139093f28f87906a3c964519d9588ca01a688101b569b0"
+}

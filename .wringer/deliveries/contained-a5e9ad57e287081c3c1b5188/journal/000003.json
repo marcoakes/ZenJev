@@ -1,0 +1,42 @@
+{
+  "schema_version": "wringer.contained-delivery-event.v3",
+  "sequence": 3,
+  "previous": "c14a5d35d238cdfcfb0e138bab9cb49b9c80faf93c5e43acb1a5fdbe304b5abe",
+  "at": "2026-11-12T15:45:06.566Z",
+  "type": "verification-reserved",
+  "source_event_sha256": "b081282c9b5be0cbc940edad7746c752485175aee652bd367c42b7dc06364b8f",
+  "state": {
+    "schema_version": "wringer.contained-journey.v1",
+    "id": "c4f6f03c-698c-40d2-88be-93d9fed70378",
+    "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+    "authoritySha256": "ee8480d382a98b3aea5da391b7c72c20a155520bd3662fb1ae2388f4bf5b3db7",
+    "environmentSha256": "15f4f1900094696f560bf2c2490df86639b814fecd6f150b0b05f7c0c44af202",
+    "startedAt": "2026-11-12T15:44:55.035Z",
+    "source": {
+      "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+      "commit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc"
+    },
+    "stage": "baseline",
+    "iteration": 0,
+    "plannerComplete": false,
+    "workerEffect": null,
+    "judgeEffect": null,
+    "runtimeIds": [],
+    "effects": [],
+    "verificationAttempts": [
+      {
+        "id": "05c61f0a-18f8-4091-bcc4-b1659092b8eb",
+        "phase": "baseline",
+        "sourceCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+        "requestSha256": "b2242b860dfd89b22d9bb410326d13fd0e8bd70d79453994237a5edbd899a1f4",
+        "status": "reserved"
+      }
+    ],
+    "baseline": null,
+    "verification": null,
+    "candidate": null,
+    "judge": null,
+    "humanJudgements": []
+  },
+  "sha256": "958ecf4039edf562f4729cb8bb4820c5b60dbb537058cb2b88704d8f268a5ca0"
+}

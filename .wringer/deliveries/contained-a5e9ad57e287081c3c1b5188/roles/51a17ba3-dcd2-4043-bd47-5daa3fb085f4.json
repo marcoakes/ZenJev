@@ -1,0 +1,99 @@
+{
+  "id": "51a17ba3-dcd2-4043-bd47-5daa3fb085f4",
+  "role": "judge",
+  "status": "completed",
+  "disposition": "accepted",
+  "sourceRequestSha256": "72934e9e2d9f919bec3559e15caba0560d35ff69e967b87f2a4b531c8a00d4eb",
+  "sourceResultSha256": "518a735e3559c5811316c17a9e037764e526893c5808676f19d06a9177d6b44f",
+  "request": {
+    "role": "judge",
+    "repo": {
+      "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+      "commit": "095c012bafb4842050b9d01e0a1940e9a392eec4"
+    },
+    "runtime": {
+      "kind": "trusted-local",
+      "network": {
+        "policy": "unenforced"
+      },
+      "env": []
+    },
+    "agent": {
+      "protocol": "acp",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentclientprotocol/codex-acp@2.6.0"
+      ],
+      "env": []
+    },
+    "budget": {
+      "maxTurns": 1,
+      "timeoutMs": 900000
+    }
+  },
+  "result": {
+    "status": "completed",
+    "sessionId": "01a1d072-d039-7b02-b6f2-545d779c1866",
+    "stopReason": "end_turn",
+    "protocolVersion": 1,
+    "authentication": {
+      "methodAttempted": null,
+      "sessionOpened": true
+    },
+    "usage": null,
+    "provenance": {
+      "schema_version": "wringer.runtime.v3",
+      "runtimeId": "wringer-judge-15b1aa97-2ec6-49f2-8257-a23ae9719902",
+      "role": "judge",
+      "kind": "trusted-local",
+      "boundary": "trusted-local",
+      "established": "none",
+      "repository": {
+        "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+        "commit": "095c012bafb4842050b9d01e0a1940e9a392eec4"
+      },
+      "workspace": "fresh-temporary-clone",
+      "repositoryAccess": "read-only",
+      "declared": {
+        "kind": "trusted-local",
+        "network": {
+          "policy": "unenforced"
+        },
+        "env": []
+      },
+      "observed": {
+        "host": {
+          "platform": "darwin",
+          "arch": "arm64"
+        },
+        "workspace": "a temporary clone, removed after use",
+        "agent": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@agentclientprotocol/codex-acp@2.6.0"
+          ]
+        }
+      },
+      "limits": [
+        "Ran on this computer under the operator's account; nothing was contained.",
+        "Network, files and credentials were limited only by the operator's own account; no boundary was established.",
+        "The approved change scope is enforced when the controller reviews the captured patch, not while the agent runs.",
+        "An agent descendant that left its process group could outlive the session; none is inspected."
+      ]
+    },
+    "finding": {
+      "criteria": [
+        {
+          "id": "evaluation-splits",
+          "met": true,
+          "reason": "The retained acceptance check passed all five tests. Source inspection confirms split precedence, separate evaluateSaved results, unassigned IDs, the domain export, and per-split precision, coverage, and ticket counts alongside overall metrics."
+        }
+      ],
+      "note": "Candidate commit and tree match. Independent test execution was blocked by missing Vitest dependencies; the supplied deterministic verification passed. No human criteria scored.",
+      "runtimeId": "wringer-judge-15b1aa97-2ec6-49f2-8257-a23ae9719902",
+      "sessionId": "01a1d072-d039-7b02-b6f2-545d779c1866"
+    }
+  }
+}

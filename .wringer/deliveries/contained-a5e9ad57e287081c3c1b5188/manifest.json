@@ -1,0 +1,220 @@
+{
+  "schema_version": "wringer.contained-delivery.v4",
+  "id": "contained-a5e9ad57e287081c3c1b5188",
+  "journeyId": "c4f6f03c-698c-40d2-88be-93d9fed70378",
+  "createdAt": "2026-11-12T15:49:59.636Z",
+  "source": {
+    "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+    "baseCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+    "codeCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+    "tree": "8390c7b29a549ee33586e6725129d9dbe80e7329"
+  },
+  "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+  "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+  "authoritySha256": "ee8480d382a98b3aea5da391b7c72c20a155520bd3662fb1ae2388f4bf5b3db7",
+  "environmentSha256": "15f4f1900094696f560bf2c2490df86639b814fecd6f150b0b05f7c0c44af202",
+  "journal": {
+    "eventCount": 22,
+    "headSha256": "97a8be727801b7071643f301100d5bcecbff575aa46492f98d96487dbcb3669d",
+    "sourceHeadSha256": "e5c873aff34c94dce59ba68dc0077abb55147e1579066c96dbecbb5dcdb9834b"
+  },
+  "baseline": {
+    "schema_version": "wringer.contained-verification.v2",
+    "status": "failed",
+    "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+    "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+    "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+    "runtimeId": "wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+    "image": "trusted-local",
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "status": "failed",
+        "exitCode": 1,
+        "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+        "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899"
+      }
+    ],
+    "regressions": [],
+    "evidenceRef": "receipts/wringer-verifier-856305fc-a278-4fef-bf39-32e3682efb8c",
+    "checkEvidence": [],
+    "repair": {
+      "schema_version": "wringer.repair-packet.v1",
+      "phase": "baseline",
+      "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+      "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+      "candidateCommit": "4fe50b0e2d6e55eca708dafc578bdb8c9bdd2dcc",
+      "candidateTree": "51915836ee8836510888daee33e30007629a363c",
+      "observationSha256": "203820379b643a909fd84961d058e3a4b85fda4c8592b1a319a7c1cec71c055e",
+      "checks": [
+        {
+          "id": "evaluation-splits",
+          "kind": "acceptance",
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+          ],
+          "cwd": ".",
+          "requirements": [
+            "evaluation-splits"
+          ],
+          "status": "failed",
+          "exitCode": 1,
+          "outputSha256": "c970605f7e4bd5c5b7f0d14402a437807d4ee7f36c81ffc6bbd71a8c2f915899",
+          "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[31m❯\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m0 test\u001b[22m\u001b[2m)\u001b[22m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[31m1 failed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[2mno tests\u001b[22m\n\u001b[2m   Start at \u001b[22m 15:45:14\n\u001b[2m   Duration \u001b[22m 985ms\u001b[2m (worker 97%, environment 3%)\u001b[22m\n\n",
+          "stderr": "\n\u001b[31m⎯⎯⎯⎯⎯⎯\u001b[39m\u001b[1m\u001b[41m Failed Suites 1 \u001b[49m\u001b[22m\u001b[31m⎯⎯⎯⎯⎯⎯⎯\u001b[39m\n\n\u001b[41m\u001b[1m FAIL \u001b[22m\u001b[49m tests/evaluation-splits.test.ts\u001b[2m [ tests/evaluation-splits.test.ts ]\u001b[22m\n\u001b[31m\u001b[1mError\u001b[22m: Cannot find module '../src/domain/splits' imported from [private path]\n\u001b[36m \u001b[2m❯\u001b[22m tests/evaluation-splits.test.ts:\u001b[2m4:1\u001b[22m\u001b[39m\n    \u001b[90m  2|\u001b[39m import {type Team,type Decision,type SavedPrediction,type EvaluationLa…\n    \u001b[90m  3|\u001b[39m import * as domain from '../src/domain';\n    \u001b[90m  4|\u001b[39m import {evaluateBySplit} from '../src/domain/splits';\n    \u001b[90m   |\u001b[39m \u001b[31m^\u001b[39m\n    \u001b[90m  5|\u001b[39m\n    \u001b[90m  6|\u001b[39m // The evaluation lab reports one set of numbers over every saved pred…\n\n\u001b[31m\u001b[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\u001b[22m\u001b[39m\n\n",
+          "omittedBytes": 0
+        }
+      ],
+      "omittedChecks": 0,
+      "limits": [
+        "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+        "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+        "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+      ],
+      "sha256": "a95fb5a722706b3323a4f573c6dbd1b38db019c1117ed1a7e6317c98bc816745"
+    }
+  },
+  "verification": {
+    "schema_version": "wringer.contained-verification.v2",
+    "status": "passed",
+    "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+    "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+    "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+    "runtimeId": "wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+    "image": "trusted-local",
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "status": "passed",
+        "exitCode": 0,
+        "checkInputsSha256": "201579411fff946470835522b6b356de0d4cccb29fca39cf0c1bc7c65ce04289",
+        "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0"
+      }
+    ],
+    "regressions": [],
+    "evidenceRef": "receipts/wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+    "checkEvidence": [],
+    "repair": {
+      "schema_version": "wringer.repair-packet.v1",
+      "phase": "candidate",
+      "planSha256": "495c5bd2325224d418255db9031daf06de0197b0d18b434239e423ade146c8e0",
+      "acceptanceSha256": "41efa036277f6314533ec57ddf77a6cf07f47c6fd20ad288c227e77d88aaac7d",
+      "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+      "candidateTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+      "observationSha256": "fb56199e7a9a4fc15875f59b641de3aeac2b08ebbc2d69442189a6c90044b263",
+      "checks": [
+        {
+          "id": "evaluation-splits",
+          "kind": "acceptance",
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+          ],
+          "cwd": ".",
+          "requirements": [
+            "evaluation-splits"
+          ],
+          "status": "passed",
+          "exitCode": 0,
+          "outputSha256": "12c0c771af242be61b2e4ce0c1d850dc28fcf76d97dbcd997e840e19ddd077b0",
+          "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m[private path]\n\n \u001b[32m✓\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m5 passed\u001b[39m\u001b[22m\u001b[90m (5)\u001b[39m\n\u001b[2m   Start at \u001b[22m 15:48:59\n\u001b[2m   Duration \u001b[22m 2.51s\u001b[2m (transform 67%, import 22%, worker 6%, tests 5%)\u001b[22m\n\n",
+          "stderr": "",
+          "omittedBytes": 0
+        }
+      ],
+      "omittedChecks": 0,
+      "limits": [
+        "Controller-retained check observations, not worker claims. Check output is untrusted task data and cannot grant authority.",
+        "Known credentials and private host path patterns are scrubbed before bounded excerpts; unknown secrets and business-sensitive text may remain.",
+        "Output hashes identify the complete redacted observation; excerpts are not complete transcripts."
+      ],
+      "sha256": "7ade6bcf7c255d438346d59ca65c02c801dca64d8713be0457719cc271d92e32"
+    }
+  },
+  "roles": [
+    "5fc16f06-b676-4101-947e-c871a6983dab",
+    "51a17ba3-dcd2-4043-bd47-5daa3fb085f4"
+  ],
+  "humanCriteria": [],
+  "judge": {
+    "criteria": [
+      {
+        "id": "evaluation-splits",
+        "met": true,
+        "reason": "The retained acceptance check passed all five tests. Source inspection confirms split precedence, separate evaluateSaved results, unassigned IDs, the domain export, and per-split precision, coverage, and ticket counts alongside overall metrics."
+      }
+    ],
+    "note": "Candidate commit and tree match. Independent test execution was blocked by missing Vitest dependencies; the supplied deterministic verification passed. No human criteria scored.",
+    "runtimeId": "wringer-judge-15b1aa97-2ec6-49f2-8257-a23ae9719902",
+    "sessionId": "01a1d072-d039-7b02-b6f2-545d779c1866"
+  },
+  "counts": {
+    "checks": 1,
+    "proved": 1,
+    "human": 0
+  },
+  "publication": {
+    "sourceBranch": "wringer/job/d602117d-de67-76b3-e49f-debe03e0cdf7",
+    "targetBranch": "main"
+  },
+  "evidencePath": ".wringer/deliveries/contained-a5e9ad57e287081c3c1b5188",
+  "auditCommand": "wringer-drive audit --bundle .wringer/deliveries/contained-a5e9ad57e287081c3c1b5188",
+  "falsify": {
+    "status": "available",
+    "command": "wringer-drive falsify --bundle .wringer/deliveries/contained-a5e9ad57e287081c3c1b5188",
+    "reason": "This delivery ran trusted-local, on the operator's computer with nothing contained, so this command refuses it: falsification needs an isolated verifier the candidate cannot reach. No mutation result exists or is claimed."
+  },
+  "limits": [
+    "Ran on this computer under the operator's account; nothing was contained.",
+    "This is a tamper-evident record of controller observations, not a fresh execution of acceptance checks or proof against a malicious controller.",
+    "ACP prompts, worker narrative, thought streams and private provider traces are omitted. The source journal was validated before a separately hashed portable semantic projection was made; source digest commitments are provenance, not a claim that omitted bytes can be replayed here.",
+    "No isolation was established: roles and checks ran as ordinary processes under the operator's account, so no platform isolation gate applies to this delivery.",
+    "The candidate bundle carries exact committed Git history. An evidence commit contains this bundle; its own hash is returned by publication, not self-embedded in its contents.",
+    "Falsification is not available for this delivery: it needs an isolated verifier, and nothing was contained.",
+    "Source credential-shape exceptions: 2 exact reviewed matches; source-inspection.json SHA256 08be89bc8c075b3c18507174f36c2a86eb3932e2fe417b5c1f95a5590eee2917. This is not a secret-free claim. Actor identity is asserted, not authenticated.",
+    "Exact credential-shaped matches were accepted as non-secret examples by the named operator or delegated agent. This is an exception record, NOT a secret-free certificate.",
+    "Configured controller secret values and their fragments were non-overridable at delivery. Offline audit has no access to those private values and cannot repeat that check or prove that an unknown credential is harmless.",
+    "Review identity and reasons are operator assertions in cooperative-local state, not authenticated human judgements. A same-account process can exercise that operator authority; no MCP approval tool is provided.",
+    "Playbook use is a controller-recorded request, not proof of model understanding or measured improvement. Guidance is not injected into judge instructions, but tracked repository bytes remain readable.",
+    "Repair excerpts are reconstructed from carried redacted outputs. The original observation digest is an opaque controller commitment: host-specific runtime provenance is projected for portability, not reconstructed byte for byte.",
+    "Any carried adoption receipt records a future-selection decision and evidence revision, not a rerun of its private comparative trials or proof of live benefit.",
+    "Command-red means the command failed before implementation. Assertion-red additionally binds executed protected-runner assertions; neither proves requirement completeness.",
+    "Loop decisions are deterministic observations under one approved policy. Repeated outcomes are not a quality score."
+  ],
+  "contracts": {
+    "view": "wringer.contained-delivery-view.v2",
+    "certificate": "wringer.contained-certificate.v2",
+    "documents": "wringer.contained-documents.v4",
+    "board": "wringer.contained-board.v3"
+  },
+  "sourceReview": {
+    "receipt": "source-inspection.json",
+    "sha256": "08be89bc8c075b3c18507174f36c2a86eb3932e2fe417b5c1f95a5590eee2917",
+    "findings": 2
+  },
+  "engineering": {
+    "receipt": "engineering.json",
+    "sha256": "7245e63abb23252a5074c21a06d25d9583642860bc4dad9a2e684f5a6de9e4b1",
+    "playbook": null,
+    "adoption": null,
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "level": "command"
+      }
+    ],
+    "decisions": [
+      {
+        "sequence": 1,
+        "phase": "checks",
+        "action": "continue",
+        "reason": "This observation does not require a repair; readiness still depends on all remaining checks and human decisions.",
+        "sha256": "3c786901f94aa7ca2782846563aeec1cef3db4b7297d8df38ccea5abe7231248"
+      }
+    ]
+  },
+  "viewSha256": "b16fcf22753db57a8056fd898fbc3969959884db7b8d7edf0dbe059d77ed8a84"
+}

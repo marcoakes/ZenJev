@@ -1,0 +1,58 @@
+{
+  "provenance": {
+    "schema_version": "wringer.runtime.v3",
+    "runtimeId": "wringer-verifier-528337e7-1f9b-442d-9813-6c71e26096ba",
+    "role": "verifier",
+    "kind": "trusted-local",
+    "boundary": "trusted-local",
+    "established": "none",
+    "repository": {
+      "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+      "commit": "095c012bafb4842050b9d01e0a1940e9a392eec4"
+    },
+    "workspace": "fresh-temporary-clone",
+    "repositoryAccess": "read-only",
+    "declared": {
+      "kind": "trusted-local",
+      "network": {
+        "policy": "unenforced"
+      },
+      "env": []
+    },
+    "observed": {
+      "host": {
+        "platform": "darwin",
+        "arch": "arm64"
+      },
+      "workspace": "a temporary clone, removed after use",
+      "writableDirectories": [
+        "node_modules"
+      ]
+    },
+    "limits": [
+      "Ran on this computer under the operator's account; nothing was contained.",
+      "Network, files and credentials were limited only by the operator's own account; no boundary was established.",
+      "The approved change scope is enforced when the controller reviews the captured patch, not while the agent runs.",
+      "An agent descendant that left its process group could outlive the session; none is inspected."
+    ]
+  },
+  "results": [
+    {
+      "id": "setup/dependencies",
+      "code": 0,
+      "stdout": "\nadded 465 packages in 6s\n",
+      "stderr": "npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.\n",
+      "durationMs": 6639
+    },
+    {
+      "id": "acceptance/evaluation-splits",
+      "code": 0,
+      "stdout": "\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.1 \u001b[39m\u001b[90m/private/var/folders/n8/bx4t2r951kn9bfs540fq17gw0000gn/T/wringer-verifier-gcqH7V/repo\u001b[39m\n\n \u001b[32m✓\u001b[39m tests/evaluation-splits.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m5 passed\u001b[39m\u001b[22m\u001b[90m (5)\u001b[39m\n\u001b[2m   Start at \u001b[22m 15:48:59\n\u001b[2m   Duration \u001b[22m 2.51s\u001b[2m (transform 67%, import 22%, worker 6%, tests 5%)\u001b[22m\n\n",
+      "stderr": "",
+      "durationMs": 4145
+    }
+  ],
+  "sourceChanged": false,
+  "sourceTree": "8390c7b29a549ee33586e6725129d9dbe80e7329",
+  "checkInputsSha256": "436854231e21a97d9ae3c5fd52a0e01114c8171053c9c1bd27f26425ff33d2b9"
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "wringer.source-review-receipt.v1",
+  "inventory": {
+    "schema_version": "wringer.source-findings.v1",
+    "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+    "findings": [
+      {
+        "id": "5013075ad49e04429d9e828a50c4fbcddc13e2fcd4ded3752e1c5bd92f3957d1",
+        "objectId": "0922587716eb859084bdf60e8a0caaf6e33a26cc",
+        "objectType": "blob",
+        "rule": "provider-sk",
+        "matchSha256": "d23a11d8976333f2044f17f1ee5b0ff48990a638853ac40a4dbf696ae33ebfaf"
+      },
+      {
+        "id": "5fd77737039e28d0db5af8a45d19c272487af4481507abc382e79d9614e53612",
+        "objectId": "e4b77660d91201393e8a4f72aeb9676adb080979",
+        "objectType": "blob",
+        "rule": "provider-sk",
+        "matchSha256": "d23a11d8976333f2044f17f1ee5b0ff48990a638853ac40a4dbf696ae33ebfaf"
+      }
+    ],
+    "sha256": "1b4212e06d418a927e2a077f72b755a881507273db491a86215d0219d4d8b083"
+  },
+  "approvals": [
+    {
+      "schema_version": "wringer.source-review-approval.v1",
+      "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+      "inventorySha256": "1b4212e06d418a927e2a077f72b755a881507273db491a86215d0219d4d8b083",
+      "finding": {
+        "id": "5013075ad49e04429d9e828a50c4fbcddc13e2fcd4ded3752e1c5bd92f3957d1",
+        "objectId": "0922587716eb859084bdf60e8a0caaf6e33a26cc",
+        "objectType": "blob",
+        "rule": "provider-sk",
+        "matchSha256": "d23a11d8976333f2044f17f1ee5b0ff48990a638853ac40a4dbf696ae33ebfaf"
+      },
+      "actor": "Claude (acting for Marc)",
+      "actorKind": "delegated-agent",
+      "reason": "In tests/domain.test.ts, the sanitize() redaction test feeds a fake provider-key-shaped canary, beside other fake canaries, and asserts each is removed. A fixture string, not a credential. Both matches are this file's two versions, already public on the main branch of github.com/marcoakes/ZenJev.",
+      "at": "2026-11-12T15:51:32.037Z",
+      "sha256": "faabb5699c3f81ba102688e9c2d0cd99c1eae109295d8d28b537e04cbee8169e"
+    },
+    {
+      "schema_version": "wringer.source-review-approval.v1",
+      "candidateCommit": "095c012bafb4842050b9d01e0a1940e9a392eec4",
+      "inventorySha256": "1b4212e06d418a927e2a077f72b755a881507273db491a86215d0219d4d8b083",
+      "finding": {
+        "id": "5fd77737039e28d0db5af8a45d19c272487af4481507abc382e79d9614e53612",
+        "objectId": "e4b77660d91201393e8a4f72aeb9676adb080979",
+        "objectType": "blob",
+        "rule": "provider-sk",
+        "matchSha256": "d23a11d8976333f2044f17f1ee5b0ff48990a638853ac40a4dbf696ae33ebfaf"
+      },
+      "actor": "Claude (acting for Marc)",
+      "actorKind": "delegated-agent",
+      "reason": "In tests/domain.test.ts, the sanitize() redaction test feeds a fake provider-key-shaped canary, beside other fake canaries, and asserts each is removed. A fixture string, not a credential. Both matches are this file's two versions, already public on the main branch of github.com/marcoakes/ZenJev.",
+      "at": "2026-11-12T15:51:32.037Z",
+      "sha256": "d9938526180f0624b93d0f74e480e251c62b3a513ae65730b2bed9a47ce0eda4"
+    }
+  ],
+  "limitations": [
+    "Exact credential-shaped matches were accepted as non-secret examples by the named operator or delegated agent. This is an exception record, NOT a secret-free certificate.",
+    "Configured controller secret values and their fragments were non-overridable at delivery. Offline audit has no access to those private values and cannot repeat that check or prove that an unknown credential is harmless.",
+    "Review identity and reasons are operator assertions in cooperative-local state, not authenticated human judgements. A same-account process can exercise that operator authority; no MCP approval tool is provided."
+  ]
+}
