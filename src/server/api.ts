@@ -7,7 +7,7 @@ import { json,safeError,enqueue,approveLink,proposeAction,editAction,approveActi
 import { receiveWebhook,checkIssueConnection } from './integrations';
 import { issueProviderOf,issueTargetSettings } from './settings';
 import { seedDemo } from './seed';
-import { TEAMS,ISSUE_PROVIDERS,isProjectPath,type Decision,type Candidate } from '../domain';
+import { TEAMS,ISSUE_PROVIDERS,isProjectPath,evaluateBySplit,type Decision,type Candidate,type SavedPrediction,type EvaluationLabel } from '../domain';
 
 const response=(body:unknown,status=200)=>Response.json(body,{status,headers:{'cache-control':'no-store','x-content-type-options':'nosniff'}});
 async function bodyOf(request:Request):Promise<Record<string,unknown>> {
@@ -106,7 +106,10 @@ export async function handleApi(request:Request,segments:string[]):Promise<Respo
   }
   if(resource==='evaluation'&&method==='GET'){
    const runs=await db.evaluationRun.findMany({where:{...(url.searchParams.get('task')?{task:url.searchParams.get('task')!}:{}),...(url.searchParams.get('split')?{split:url.searchParams.get('split')!}:{}),...(actor.demo?{dataSource:'synthetic'}:{})},orderBy:{createdAt:'desc'},take:20});
-   return response({runs,latest:runs[0]??null,metrics:runs[0]?.metrics??null});
+   // Development and held-out tickets are reported apart, recomputed from the saved predictions and the labels frozen with the run.
+   const latest=runs[0];
+   const splits=latest?evaluateBySplit(latest.predictions as unknown as SavedPrediction[],(latest.settings as {evaluationLabels?:EvaluationLabel[]}|null)?.evaluationLabels??[],latest.threshold):null;
+   return response({runs,latest:latest??null,metrics:latest?.metrics??null,splits});
   }
   if(resource==='evaluation'&&method==='POST'){
    const body=await bodyOf(request);const run=await runEvaluation({task:body.task?String(body.task):undefined,split:body.split?String(body.split):undefined,threshold:body.threshold===undefined?undefined:Number(body.threshold),newRun:body.newRun===true},actor);

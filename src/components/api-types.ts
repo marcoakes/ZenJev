@@ -1,4 +1,4 @@
-import type { ChoiceResult, Decision, Snapshot, evaluateSaved } from '@/domain';
+import type { ChoiceResult, Decision, Snapshot, evaluateSaved, SplitEvaluation } from '@/domain';
 
 export type JsonObject = Record<string, unknown>;
 export type PolicyThresholds = { routingConfidence: number; engineering: number; missingInfo: number; multipleIssues: number; matchProbability: number; matchMargin: number };
@@ -17,7 +17,7 @@ export type ApiData = Partial<SettingsView> & {
   tickets?: TicketView[]; total?: number; page?: number; pageSize?: number; counts?: { unreviewed: number; engineering: number; linked: number; completed: number };
   ticket?: TicketView; decisions?: DecisionRun[]; candidates?: CandidateView[]; links?: { issueId: string; status: string }[]; actions?: ActionView[];
   settings?: SettingsView; issues?: IssueView[]; drafts?: ActionView[]; indexCount?: number;
-  runs?: EvaluationRun[]; latest?: EvaluationRun | null; metrics?: MetricsView | null; events?: AuditView[];
+  runs?: EvaluationRun[]; latest?: EvaluationRun | null; metrics?: MetricsView | null; splits?: SplitEvaluation | null; events?: AuditView[];
   status?: string; database?: string; worker?: { status: string; lastSeenAt: string | null }; sync?: { id: string; provider: string; lastSuccessAt: string | null; error: string | null }[];
   actor?: { id: string; role: string; demo: boolean; csrfToken: string };
 };
