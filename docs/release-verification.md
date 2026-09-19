@@ -2,6 +2,37 @@
 
 The separate [marcoakes/ZenJev repository](https://github.com/marcoakes/ZenJev) exists and is private. Repository creation and pushes were authorised by the owner. No hosted deployment, repository visibility change, customer-data processing or ticket/issue mutation is implied by that publication.
 
+## GitLab integration verification, 19 September 2026
+
+The [CI run 35467679769](https://github.com/marcoakes/ZenJev/actions/runs/35467679769)
+**passed all ten gates and 165 counted cases** on source
+`7eae4f28a5cca2e7f2a00b66ec616d9b40f671fc`, using the same unchanged Wringer harness
+`7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4` and native PostgreSQL 17.0.11 services.
+
+| Field | Observed value |
+|---|---|
+| CI run | [35467679769](https://github.com/marcoakes/ZenJev/actions/runs/35467679769) |
+| Tested application source | `7eae4f28a5cca2e7f2a00b66ec616d9b40f671fc` |
+| CI verdict | **Success** |
+| Verified scope | Ten gates; 165 cases: 104 contracts, 43 persistence, four native, four branding, eight workbench browser and two authenticated browser. |
+| Change against the previous baseline | +56 cases: +43 contracts, +12 persistence, +1 workbench browser. No case was removed or weakened. |
+| Evidence integrity | Four sealed bundles, all recorded `passed` with no failed gate, bound to the tested source. |
+
+Documentation was committed separately after this run, so the tested source identity stays
+distinct from the evidence and documentation commit.
+
+### Not verified
+
+- **No live GitLab check of any kind has been run.** No GitLab account, namespace, project,
+  runner or credential exists for ZenJev. GitLab connectivity, authentication, issue retrieval,
+  issue creation and the create-then-link lifecycle are all unverified.
+- **The GitLab pipeline has never executed.** [.gitlab-ci.yml](../.gitlab-ci.yml) was validated
+  offline only: GitLab's own CI schema reported zero errors and `gitlab-ci-local` resolved the
+  job graph. It was not run in containers. See [GitLab CI](gitlab-ci.md).
+- Everything previously recorded as unverified stays unverified: live Zendesk OAuth, ingestion
+  and webhooks, live GitHub issue retrieval and ingestion, all external ticket and issue
+  mutations, hosted deployment, and the owner's personal usability judgment.
+
 ## Final verified source
 
 The final [CI run 35462754472](https://github.com/marcoakes/ZenJev/actions/runs/35462754472) **passed all ten gates and 109 counted cases** on source `8ea4f2730365b180214c221ad5325c97e6e6a7bf`. It ran the unchanged Wringer harness, native PostgreSQL 17 services, a production Next.js build, Chromium/Axe and the repaired authenticated-navigation coverage.

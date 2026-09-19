@@ -4,7 +4,7 @@
 
 **Less noise. Smarter support.**
 
-A Zendesk-to-GitHub support workbench for inspecting evidence, reviewing uncertain decisions, associating related reports and approving exact handoff previews. Includes 100 synthetic tickets, 20 issues, 12 fictional organisations, a durable worker and a saved-prediction evaluation lab.
+A Zendesk-to-issue-tracker support workbench, supporting GitHub and GitLab, for inspecting evidence, reviewing uncertain decisions, associating related reports and approving exact handoff previews. Includes 100 synthetic tickets, 20 issues, 12 fictional organisations, a durable worker and a saved-prediction evaluation lab.
 
 The separate repository is published privately at [marcoakes/ZenJev](https://github.com/marcoakes/ZenJev). No hosted deployment is included. The supplied artwork and its relative README link are unchanged.
 
@@ -67,6 +67,15 @@ This runs declared trusted-local commands. It does not manufacture owner approva
 The live Jev smoke made one request with zero retries: requested/reported `jev-1.13.0`, 747 input tokens, 193 output tokens. It verifies connectivity and schema handling on synthetic input, not model accuracy or customer-data processing. [Activation instructions](docs/jev-activation.md) use a narrowly selected Keychain item without printing the key.
 
 The [app GitHub smoke](evidence/live/github-smoke-20260919-active-helper.json) succeeded using the existing active-account helper: exactly one metadata GET confirmed `marcoakes/ZenJev` is private, with zero retries, model calls, issue reads or mutations. The earlier credential-lookup failure remains historical evidence. This verifies metadata access only; GitHub issue retrieval/ingestion, Zendesk OAuth/ingestion/webhooks and all external ticket/issue mutations remain unverified against live accounts. Read [integrations](docs/integrations.md), [credential observations](docs/credentials.md) and `.env.example` before activation.
+
+GitLab is implemented beside GitHub and selected explicitly in Settings. Its offline contract,
+cross-provider identity, approval and persistence coverage all pass; **no live GitLab check has
+been run and no GitLab project, account or credential exists**, so GitLab connectivity, issue
+retrieval, creation and linking are unverified. A [GitLab CI pipeline](.gitlab-ci.yml) mirrors the
+GitHub workflow and was validated offline only; see [GitLab CI](docs/gitlab-ci.md) for exactly what
+was and was not checked. Server-side configuration is `GITLAB_SERVER_URL`, `GITLAB_TOKEN`,
+`GITLAB_PROJECTS`, optional `GITLAB_CREDENTIAL_REFERENCE` and `GITLAB_ALLOW_PRIVATE_NETWORK`; an
+explicit connection check additionally requires `ALLOW_LIVE_CONNECTION_CHECK=true`.
 
 `npm run admin:bootstrap -- USERNAME` reads a password from private stdin or protected environment configuration. `npm run retention -- --source=synthetic --before=2001-01-01T00:00:00Z` reports counts only; add `--apply` after reviewing the selection. Outstanding actions block deletion and immutable audit remains.
 

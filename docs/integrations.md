@@ -28,6 +28,72 @@ The adapter lists allowlisted repositories only, fetches visibility metadata, fo
 
 For an approved new issue, the worker rechecks the authoritative ticket and the adapter refetches repository visibility immediately before POST. Public-repository writes are prohibited. The exact title/body/repository preview, ticket snapshot/version, decision and mode are included in approval identity. An uncertain result is reconciled by a non-sensitive action marker; creation is not automatically retried. Issue creation and a subsequent Zendesk backlink are separate approved actions. Their receipts are retained separately, so a failed backlink does not discard or recreate the issue.
 
+## GitLab
+
+GitLab.com and self-managed GitLab are supported beside GitHub. The provider is selected
+explicitly in Settings (`issueProvider`); it is never inferred from which credential happens to
+exist, and selecting one never replaces GitHub's implementation. Only the selected provider is
+indexed, matched against and written to.
+
+Configuration is split deliberately. The **provider** is workspace configuration an administrator
+can change. The **host** is server configuration: `GITLAB_SERVER_URL` is read server-side and the
+settings API rejects any attempt to supply a host, so a client cannot redirect the integration.
+`GITLAB_PROJECTS` is the reviewed allowlist of full project paths and `GITLAB_TOKEN` is the
+server-side credential. `GITLAB_CREDENTIAL_REFERENCE` names the credential's source for the status
+display only; it never holds a value. Store the token in the Keychain under service `gitlab-token`,
+account `zenjev`, as described in [credentials.md](credentials.md), and never reuse the Jev item.
+
+The server URL must be a bare HTTPS origin. A path, query, embedded credentials or plain HTTP is
+refused before any request, because two GitLab roots on one hostname would share a stored issue
+identity. GitLab installed under a relative URL root is therefore not supported; give it a
+hostname. Loopback, RFC1918, link-local and `.internal`/`.local` endpoints are refused unless
+`GITLAB_ALLOW_PRIVATE_NETWORK=true` explicitly declares a private self-managed endpoint. The
+adapter never follows redirects and never follows a URL taken from a payload or a header.
+
+Credential status distinguishes four states and never guesses: **not configured**, **configured**
+(present but unchecked), **retrieval failed** (a reference exists but no value could be read),
+**connection failed** and **connection verified**. Only an explicit check moves the last two, and
+that check requires `ALLOW_LIVE_CONNECTION_CHECK=true` plus an authenticated administrator. It
+performs exactly one project metadata GET, reads no issue, ticket or customer data, and writes
+nothing.
+
+Implemented reads use the v4 API with `Authorization: Bearer`:
+
+- `GET /api/v4/projects/<url-encoded path>`: path confirmation and visibility. Nested groups such
+  as `group/subgroup/project` are supported and encoded at request time. GitLab answers 404 both
+  for a missing project and for one the token cannot see, so that case is reported as an access
+  failure rather than an empty result.
+- `GET /api/v4/projects/<id>/issues?state=all&scope=all&per_page=100&page=N`: bounded numeric
+  pagination following the `x-next-page` header, capped at 20 pages, with an incomplete sync
+  reported as an error rather than a partial index. Task work items are excluded, mirroring the
+  exclusion of GitHub pull requests. `opened` is normalised to `open`.
+
+Issue identity is scoped by provider, host and project as well as number, because GitLab issue
+`iid` values are project-scoped and would otherwise collide with GitHub numbers. Issues on
+GitHub.com keep their historic `owner/repo#number` identifier so existing rows, ticket links and
+frozen decision records stay valid; every other provider or host is qualified, for example
+`gitlab:gitlab.com:group/sub/project#42`. The project-global `id` is retained in write receipts.
+
+For an approved new issue, the worker rechecks the authoritative ticket and the adapter refetches
+project visibility immediately before `POST /api/v4/projects/<id>/issues`. **Writes to public and
+internal projects are both prohibited**; only `private` is permitted. Approval identity binds the
+provider, host and project alongside the exact title, body, ticket snapshot, decision and mode, so
+a GitHub approval can never authorise a GitLab write, an approval for one self-managed host cannot
+be replayed against another, and changing the configured provider invalidates the approval before
+any request is attempted. An uncertain result is reconciled through the non-sensitive action
+marker; creation is never retried automatically, and reconciliation refuses to run against a
+provider or host other than the one the action was approved for. GitLab's search index lags writes,
+so reconciliation matches the marker over listed issues rather than using `search`.
+
+Authentication failures, insufficient scopes, hidden projects, rate limits (`RateLimit-Reset` and
+`Retry-After` deadlines are preserved), malformed responses and outages raise typed errors. There
+is no silent fallback to mock or to the other provider. No webhook subsystem is added: issue
+integration does not require one, and the existing Zendesk webhook path is unchanged.
+
+The GitLab token needs read access to the allowlisted projects for indexing, and issue-write
+permission only for approved creation. No source, pipeline, registry or project-creation access is
+requested.
+
 ## Zendesk OAuth and ingestion
 
 The [official client-credentials flow](https://developer.zendesk.com/documentation/authentication/oauth-migration/) uses the organisation's confidential OAuth client with `POST https://<subdomain>.zendesk.com/oauth/tokens`. The adapter requests an explicit scope string, caches the access token in memory until shortly before expiry, then obtains a new token. It does not invent a refresh token. A dedicated service account should own this client because Zendesk attributes operations to its owner.
@@ -70,6 +136,19 @@ DATA_MODE=live ALLOW_LIVE_WRITES=false ALLOW_LIVE_DATA_PROCESSING=false \
 ```
 
 This performs one repository metadata GET. It confirms authentication/visibility metadata for that target, not issue-read or write permission.
+
+For GitLab, set `GITLAB_TOKEN` privately, `GITLAB_PROJECTS` to the reviewed allowlist and
+`GITLAB_SERVER_URL` for a self-managed host. Replace the placeholder with a member of that allowlist:
+
+```sh
+DATA_MODE=live ALLOW_LIVE_WRITES=false ALLOW_LIVE_DATA_PROCESSING=false \
+  npx --no-install tsx scripts/integration-smoke.ts --provider=gitlab --project=GROUP/SUBGROUP/PROJECT --allow-live-read
+```
+
+This performs exactly one project metadata GET against the configured origin, with a 15-second
+deadline and zero retries. It reports the project's visibility only. **No live GitLab check has
+been run: no GitLab account, project or credential exists for ZenJev.** GitLab connectivity,
+issue retrieval, issue creation and the linking lifecycle are all unverified.
 
 The actual [19 September smoke](../evidence/live/github-smoke-20260919-active-helper.json) succeeded for `marcoakes/ZenJev`, returning `repositoryPrivate: true` after exactly one GET, with a 15-second deadline and zero retries. The existing active-account helper was captured privately and supplied only to the clean child environment; the credential was never printed, persisted or put in arguments. No issue retrieval, customer-data processing, model call or mutation occurred. The [earlier explicit-user lookup failure](../evidence/live/github-smoke-20260919.json) remains unchanged as historical evidence; using the active helper required no source, scope or authentication change.
 
