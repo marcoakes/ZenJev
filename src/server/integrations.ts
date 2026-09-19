@@ -1,13 +1,23 @@
 import { db } from './db';
-import { getSettings } from './settings';
-import { ZendeskProvider,GitHubProvider,verifyZendeskWebhook,ProviderError } from '../providers';
-import { contentHash,sanitize } from '../domain';
+import { getSettings,issueProviderOf,connectionCursorId } from './settings';
+import { ZendeskProvider,GitHubProvider,GitLabProvider,verifyZendeskWebhook,ProviderError } from '../providers';
+import { contentHash,sanitize,type IssueProviderName } from '../domain';
 import { json,audit,safeError } from './workflows';
 import { HttpError } from './auth';
+export type IssueAdapter=GitHubProvider|GitLabProvider;
 export async function integrationProviders() {
  const settings=await getSettings();
- return {github:new GitHubProvider({token:process.env.GITHUB_TOKEN??'',repositories:settings.repositories as string[],apiVersion:process.env.GITHUB_API_VERSION}),get zendesk(){return new ZendeskProvider({subdomain:process.env.ZENDESK_SUBDOMAIN??'unconfigured',clientId:process.env.ZENDESK_OAUTH_CLIENT_ID??'',clientSecret:process.env.ZENDESK_OAUTH_CLIENT_SECRET??'',scopes:process.env.ZENDESK_OAUTH_SCOPES??'',allowedGroupIds:Object.values(settings.teamMappings as Record<string,string|null>).filter((v):v is string=>v!==null)})}};
+ const issueProvider=issueProviderOf(settings.issueProvider);
+ const projects=settings.repositories as string[];
+ const github=new GitHubProvider({token:process.env.GITHUB_TOKEN??'',repositories:projects,apiVersion:process.env.GITHUB_API_VERSION,host:process.env.GITHUB_HOST});
+ // Constructed lazily: an invalid self-managed server URL must fail the GitLab path, not the workspace.
+ const gitlab=()=>new GitLabProvider({token:process.env.GITLAB_TOKEN??'',projects,serverUrl:process.env.GITLAB_SERVER_URL,allowPrivateNetwork:process.env.GITLAB_ALLOW_PRIVATE_NETWORK==='true'});
+ return {issueProvider,github,get gitlab(){return gitlab();},
+  get issues():IssueAdapter{return issueProvider==='gitlab'?gitlab():github;},
+  get zendesk(){return new ZendeskProvider({subdomain:process.env.ZENDESK_SUBDOMAIN??'unconfigured',clientId:process.env.ZENDESK_OAUTH_CLIENT_ID??'',clientSecret:process.env.ZENDESK_OAUTH_CLIENT_SECRET??'',scopes:process.env.ZENDESK_OAUTH_SCOPES??'',allowedGroupIds:Object.values(settings.teamMappings as Record<string,string|null>).filter((v):v is string=>v!==null)})}};
 }
+/** Matches the stored issue identity rule: GitHub.com keeps its historic key, every other host is qualified. */
+export const syncCursorId=(provider:IssueProviderName,host:string,project:string)=>provider==='github'&&host==='github.com'?`github:${project}`:`${provider}:${host}:${project}`;
 export async function receiveWebhook(request:Request) {
  const chunks:Uint8Array[]=[];let size=0;
  const reader=request.body?.getReader();if(reader){while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>65536){await reader.cancel();throw new HttpError(413,'Webhook exceeds payload limit');}chunks.push(part.value);}}
@@ -25,17 +35,44 @@ export async function receiveWebhook(request:Request) {
   return {accepted:true,duplicate:!inserted};
  }catch(error){if((error as {code?:string}).code==='P2002')return {accepted:true,duplicate:true};throw error;}
 }
-export async function syncGitHub() {
+/** Indexes the selected issue provider only. A GitHub index is never mixed with a GitLab one. */
+export async function syncIssues() {
  const settings=await getSettings();if(settings.dataMode!=='live')throw new HttpError(403,'Issue sync requires live mode');
- const {github}=await integrationProviders();
- for(const repository of settings.repositories as string[]) {
+ const {issues:adapter,issueProvider}=await integrationProviders();
+ const host=adapter.host;
+ for(const project of settings.repositories as string[]) {
+  const id=syncCursorId(issueProvider,host,project);
   try {
-   const issues=await github.listIssues(repository);
+   const remote=await adapter.listIssues(project);
    await db.$transaction(async tx=>{
-    for(const issue of issues)await tx.gitHubIssue.upsert({where:{repository_number:{repository,number:issue.number}},update:{title:issue.title,body:issue.body,state:issue.state,labels:json(issue.labels),private:issue.private,updatedAt:new Date(issue.updatedAt)},create:{...issue,labels:json(issue.labels),createdAt:new Date(issue.createdAt??issue.updatedAt),updatedAt:new Date(issue.updatedAt),source:'github'}});
-    await tx.syncCursor.upsert({where:{id:`github:${repository}`},update:{lastSuccessAt:new Date(),error:null},create:{id:`github:${repository}`,provider:'github',lastSuccessAt:new Date()}});
+    for(const issue of remote)await tx.gitHubIssue.upsert({where:{provider_host_repository_number:{provider:issueProvider,host,repository:project,number:issue.number}},update:{title:issue.title,body:issue.body,state:issue.state,labels:json(issue.labels),private:issue.private,url:issue.url??null,updatedAt:new Date(issue.updatedAt)},create:{id:issue.id,provider:issueProvider,host,repository:project,number:issue.number,title:issue.title,body:issue.body,state:issue.state,labels:json(issue.labels),private:issue.private,url:issue.url??null,createdAt:new Date(issue.createdAt??issue.updatedAt),updatedAt:new Date(issue.updatedAt),source:issueProvider}});
+    await tx.syncCursor.upsert({where:{id},update:{lastSuccessAt:new Date(),error:null},create:{id,provider:issueProvider,lastSuccessAt:new Date()}});
    });
-  }catch(error){await db.syncCursor.upsert({where:{id:`github:${repository}`},update:{error:safeError(error)},create:{id:`github:${repository}`,provider:'github',error:safeError(error)}});throw error;}
+  }catch(error){await db.syncCursor.upsert({where:{id},update:{error:safeError(error)},create:{id,provider:issueProvider,error:safeError(error)}});throw error;}
+ }
+}
+/**
+ * One bounded metadata read that turns a configured credential into a verified or failed one.
+ * It reads no issue, no ticket and no customer data, and it never writes.
+ */
+export async function checkIssueConnection(project:string) {
+ if(process.env.ALLOW_LIVE_CONNECTION_CHECK!=='true')throw new HttpError(403,'Enable ALLOW_LIVE_CONNECTION_CHECK on the server before checking a live connection');
+ const settings=await getSettings();
+ if(!(settings.repositories as string[]).includes(project))throw new HttpError(403,'Project is not allowlisted');
+ const {issues:adapter,issueProvider}=await integrationProviders();
+ const host=adapter.host,id=connectionCursorId(issueProvider,host);
+ const token=issueProvider==='gitlab'?process.env.GITLAB_TOKEN:process.env.GITHUB_TOKEN;
+ if(!token){await db.syncCursor.upsert({where:{id},update:{error:'retrieval: credential is unavailable',lastSuccessAt:null},create:{id,provider:issueProvider,error:'retrieval: credential is unavailable'}});throw new HttpError(400,'No credential is configured for the selected issue provider');}
+ try {
+  const metadata=adapter instanceof GitLabProvider?await adapter.project(project):await adapter.repository(project);
+  const visibility='visibility' in metadata?metadata.visibility:metadata.private?'private':'public';
+  await db.syncCursor.upsert({where:{id},update:{lastSuccessAt:new Date(),error:null},create:{id,provider:issueProvider,lastSuccessAt:new Date()}});
+  await audit('system','integration.connection_verified',`${issueProvider}:${host}`,'succeeded',{project,visibility,requests:1},issueProvider);
+  return {provider:issueProvider,host,project,visibility,verifiedAt:new Date().toISOString()};
+ }catch(error){
+  await db.syncCursor.upsert({where:{id},update:{error:safeError(error),lastSuccessAt:null},create:{id,provider:issueProvider,error:safeError(error)}});
+  await audit('system','integration.connection_failed',`${issueProvider}:${host}`,'failed',{project,error:safeError(error)},issueProvider);
+  throw error;
  }
 }
 export async function syncZendeskPage() {

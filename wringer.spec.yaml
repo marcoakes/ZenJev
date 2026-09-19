@@ -135,6 +135,26 @@ criteria:
       integrations, portable from native PostgreSQL, contained from standalone trusted-local checks,
       agent review from owner judgment, and local delivery from publication. Include failures, skips,
       missing approvals and reproducible next steps. Documentation existence alone does not prove this.
+  - id: SW-13
+    title: The GitLab issue adapter is selectable, bounded and refuses unsafe destinations
+    required: true
+    guidance: >-
+      Inspect domain-provider-contracts. The adapter must reach gitlab.com and a configured self-managed
+      origin over HTTPS only, refuse loopback, private and link-local endpoints unless explicitly declared,
+      allowlist nested project paths, page by x-next-page, read project-scoped iid identifiers, exclude task
+      work items, and refuse writes to public or internal projects. Authentication, hidden projects, rate
+      limits, malformed responses and uncertain writes must raise typed errors with no silent mock fallback
+      and no credential in any URL or message. Mocked HTTP contracts do not claim live GitLab connectivity.
+  - id: SW-14
+    title: GitHub and GitLab issue identity, approval and stored history never cross
+    required: true
+    guidance: >-
+      Inspect persistence-workflow. Existing GitHub.com issues must keep their stored identifiers, ticket
+      links and default provider after migration, and a GitLab issue sharing a number must coexist. An issue
+      approval must bind provider, host and project; changing any of them, or the configured provider, must
+      invalidate the approval and stale the action before any request. Deduplication must separate providers,
+      an uncertain write must remain reconcilable without retry, reconciliation must refuse a changed
+      destination, and GitHub creation must still succeed under the same rules.
   - id: ZJ-01
     title: Product, README and UI identity is ZenJev; the intended target is marcoakes/ZenJev and Wringer remains separate
     required: true

@@ -2,7 +2,7 @@ import type { Job } from '@prisma/client';
 import { db } from '../server/db';
 import { getSettings } from '../server/settings';
 import { evaluateTicket,validateAction,bindingFor,json,safeError,audit,enqueue } from '../server/workflows';
-import { integrationProviders,syncGitHub,syncZendeskPage,ingestZendeskTicket } from '../server/integrations';
+import { integrationProviders,syncIssues,syncZendeskPage,ingestZendeskTicket } from '../server/integrations';
 import { makeTicketFixture } from '../server/fixtures';
 import type { ActionApproval } from '../domain';
 import { ProviderError } from '../providers';
@@ -45,13 +45,13 @@ export async function executeAction(actionId:string,adapters?:Awaited<ReturnType
   }
   const settings=await getSettings();
   const approved=action.approvals[0],approval:ActionApproval={hash:approved.bindingHash,reviewerId:approved.reviewer,reviewerRole:approved.reviewerRole as 'admin',expiresAt:approved.expiresAt.toISOString(),status:'approved'};
-  const controls={allowLiveWrites:settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',authenticated:true,currentTicketVersion:action.ticket.version,currentDecisionVersion:action.decision.ticketVersion,repositories:settings.repositories as string[],groups:Object.keys(settings.teamMappings as object)};
   const clients=adapters??await integrationProviders();
+  const controls={allowLiveWrites:settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',authenticated:true,currentTicketVersion:action.ticket.version,currentDecisionVersion:action.decision.ticketVersion,repositories:settings.repositories as string[],groups:Object.keys(settings.teamMappings as object),...(action.type==='create_issue'?{issueTarget:{provider:clients.issueProvider,host:clients.issues.host}}:{})};
   const current=await clients.zendesk.ticket(action.ticket.sourceId);
   if(new Date(current.updated_at).getTime()!==action.ticket.sourceUpdatedAt.getTime())throw new ProviderError('conflict','Ticket changed at source; return to review');
   let receipt:unknown;
   if(action.type==='create_issue'){
-   const created=await clients.github.createIssue(bindingFor(action,action.decision),approval,controls);
+   const created=await clients.issues.createIssue(bindingFor(action,action.decision),approval,controls);
    // Persist the issue receipt before a separately approved backlink can ever be attempted.
    receipt={...created,backlinkState:'requires_separate_approval',message:'Issue created. Zendesk backlink is a separate action and has not been sent.'};
    await db.proposedAction.update({where:{id:actionId},data:{remoteIssueId:created.id,remoteIssueUrl:created.url,receipt:json(receipt)}});
@@ -83,9 +83,11 @@ export async function reconcileAction(actionId:string) {
   await audit('worker','action.reconciled',action.ticketId,'succeeded',{actionId,externalCalls:0});
   return db.proposedAction.update({where:{id:actionId},data:{state:prior?.backlinkState==='failed'?'needs_reconciliation':'succeeded',receipt:json(receipt),error:prior?.backlinkState==='failed'?'Created issue is reconciled; backlink still requires separate approval and execution':null}});
  }
- const {github,zendesk}=await integrationProviders();
+ const clients=await integrationProviders();
  const ticket=await db.ticket.findUniqueOrThrow({where:{id:action.ticketId}});
- const found=action.type==='create_issue'?await github.reconcileIssue(action.destination,action.id):action.type==='internal_note'?await zendesk.reconcileNote(ticket.sourceId,action.id):null;
+ // Reconcile against the provider and host the action was approved for, never the currently selected one.
+ if(action.type==='create_issue'&&(action.issueProvider!==clients.issueProvider||action.issueHost!==clients.issues.host))throw new Error('Configured issue provider or host differs from the approved destination; reconcile manually');
+ const found=action.type==='create_issue'?await clients.issues.reconcileIssue(action.destination,action.id):action.type==='internal_note'?await clients.zendesk.reconcileNote(ticket.sourceId,action.id):null;
  if(!found)throw new Error('No authoritative marker found. Action remains in reconciliation; no automatic retry.');
  return db.proposedAction.update({where:{id:actionId},data:{state:'succeeded',receipt:json({reconciled:true,result:found}),error:null,remoteIssueId:typeof found==='object'?found.id:action.remoteIssueId}});
 }
@@ -106,7 +108,8 @@ export async function processJob(job:Job) {
   case 'evaluate': await evaluateTicket(String(p.ticketId));break;
   case 'action': await executeAction(String(p.actionId));break;
   case 'reconcile': await reconcileAction(String(p.actionId));break;
-  case 'github_sync': await syncGitHub();break;
+  // `github_sync` remains accepted so jobs queued before GitLab support still run.
+  case 'issue_sync': case 'github_sync': await syncIssues();break;
   case 'zendesk_sync': await syncZendeskPage();break;
   case 'zendesk_ticket': await ingestZendeskTicket(String(p.sourceId));break;
   case 'replay':await replayStep();break;
@@ -133,5 +136,5 @@ export async function scheduleReconciliation() {
  const s=await getSettings();if(s.dataMode!=='live')return;
  const bucket=Math.floor(Date.now()/300_000);
  await enqueue('zendesk_sync',{},`reconcile-zendesk:${bucket}`);
- await enqueue('github_sync',{},`reconcile-github:${bucket}`);
+ await enqueue('issue_sync',{},`reconcile-issues:${bucket}`);
 }

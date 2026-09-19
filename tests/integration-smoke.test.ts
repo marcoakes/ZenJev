@@ -68,3 +68,50 @@ describe('operator read-only integration smoke', () => {
     expect(smokeFailure(new Error('FAKE_INTERNAL_SECRET_CANARY'))).toEqual({ status: 'failed', code: 'unexpected', httpStatus: null });
   });
 });
+
+const gitlabArgs = ['--provider=gitlab', '--project=acme-group/platform/billing', '--allow-live-read'];
+const gitlabEnv = { DATA_MODE: 'live', ALLOW_LIVE_WRITES: 'false', ALLOW_LIVE_DATA_PROCESSING: 'false', GITLAB_TOKEN: 'FAKE_GITLAB_SECRET_CANARY', GITLAB_PROJECTS: 'acme-group/platform/billing' };
+
+describe('operator read-only GitLab smoke', () => {
+  it('fails closed before HTTP on unacknowledged, non-live, unallowlisted, malformed and mixed-target invocations', async () => {
+    const f = vi.fn<typeof fetch>();
+    const cases: [string[], Record<string, string>][] = [
+      [gitlabArgs.slice(0, 2), gitlabEnv],
+      [gitlabArgs, { ...gitlabEnv, DATA_MODE: 'demo' }],
+      [gitlabArgs, { ...gitlabEnv, ALLOW_LIVE_WRITES: 'true' }],
+      [gitlabArgs, { ...gitlabEnv, GITLAB_TOKEN: '' }],
+      [gitlabArgs, { ...gitlabEnv, GITLAB_PROJECTS: 'other-group/project' }],
+      [['--provider=gitlab', '--project=acme/../secret', '--allow-live-read'], { ...gitlabEnv, GITLAB_PROJECTS: 'acme/../secret' }],
+      [['--provider=gitlab', '--project=single', '--allow-live-read'], { ...gitlabEnv, GITLAB_PROJECTS: 'single' }],
+      [[...gitlabArgs, '--ticket=123'], gitlabEnv],
+      [[...gitlabArgs, '--repository=example/private'], gitlabEnv],
+      [gitlabArgs, { ...gitlabEnv, GITLAB_SERVER_URL: 'http://gitlab.example.com' }],
+      [gitlabArgs, { ...gitlabEnv, GITLAB_SERVER_URL: 'https://gitlab.example.com/nested' }],
+      [gitlabArgs, { ...gitlabEnv, GITLAB_SERVER_URL: 'https://127.0.0.1' }],
+    ];
+    for (const [args, env] of cases) await expect(integrationSmoke(args, env, f)).rejects.toMatchObject({ name: 'ProviderError' });
+    expect(f).not.toHaveBeenCalled();
+  });
+  it('performs exactly one project metadata GET against the configured origin and reports visibility only', async () => {
+    const f = vi.fn<typeof fetch>().mockResolvedValue(response({ id: 11, path_with_namespace: 'acme-group/platform/billing', visibility: 'private', web_url: 'https://gitlab.example.com/acme-group/platform/billing' }));
+    const result = await integrationSmoke(gitlabArgs, { ...gitlabEnv, GITLAB_SERVER_URL: 'https://gitlab.example.com' }, f);
+    expect(result).toEqual({ status: 'succeeded', provider: 'gitlab', readOnly: true, recordsRead: 1, httpRequests: 1, modelCalls: 0, mutations: 0, projectVisibility: 'private' });
+    expect(f).toHaveBeenCalledTimes(1);
+    expect(String(f.mock.calls[0][0])).toBe('https://gitlab.example.com/api/v4/projects/acme-group%2Fplatform%2Fbilling');
+    expect(f.mock.calls[0][1]?.method ?? 'GET').toBe('GET');
+    expect(JSON.stringify(result)).not.toContain('FAKE_GITLAB_SECRET_CANARY');
+  });
+  it('admits a declared private endpoint and never widens the declared request boundary', async () => {
+    const f = vi.fn<typeof fetch>().mockResolvedValue(response({ id: 11, path_with_namespace: 'acme-group/platform/billing', visibility: 'internal', web_url: 'https://gitlab.internal/acme-group/platform/billing' }));
+    const env = { ...gitlabEnv, GITLAB_SERVER_URL: 'https://gitlab.internal', GITLAB_ALLOW_PRIVATE_NETWORK: 'true' };
+    expect(await integrationSmoke(gitlabArgs, env, f)).toMatchObject({ projectVisibility: 'internal', httpRequests: 1 });
+    expect(f).toHaveBeenCalledTimes(1);
+  });
+  it('reports a failure as a category and status without a message, URL or credential', async () => {
+    const f = vi.fn<typeof fetch>().mockResolvedValue(response({ message: 'token FAKE_GITLAB_SECRET_CANARY rejected' }, 401));
+    const error = await integrationSmoke(gitlabArgs, gitlabEnv, f).catch((e: unknown) => e);
+    const failure = smokeFailure(error);
+    expect(failure).toEqual({ status: 'failed', code: 'authentication', httpStatus: 401 });
+    expect(JSON.stringify(failure)).not.toContain('FAKE_GITLAB_SECRET_CANARY');
+  });
+});

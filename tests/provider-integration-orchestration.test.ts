@@ -94,7 +94,7 @@ describe('durable provider orchestration with intercepted HTTP',()=>{
   });
   it('persists sync failure instead of reporting an empty issue index and redacts response bodies',async()=>{
     remoteFetch.mockReset();remoteFetch.mockResolvedValue(json({message:'PRIVATE_RATE_LIMIT_CANARY'},429,{'Retry-After':'60'}));
-    await expect(integrations.syncGitHub()).rejects.toThrow('delayed retry');expect(remoteFetch).toHaveBeenCalledTimes(1);
+    await expect(integrations.syncIssues()).rejects.toThrow('delayed retry');expect(remoteFetch).toHaveBeenCalledTimes(1);
     const status=await db.syncCursor.findUniqueOrThrow({where:{id:'github:orchestration-fixture/issues'}});expect(status.lastSuccessAt).toBeNull();expect(status.error).toContain('delayed retry');expect(status.error).not.toContain('PRIVATE_RATE_LIMIT_CANARY');
   });
 });

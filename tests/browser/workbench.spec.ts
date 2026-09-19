@@ -4,7 +4,7 @@ import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const screenshots = resolve(process.env.WRINGER_ARTIFACTS_DIR || 'evidence/screenshots');
-type Detail = {ticket:{id:string;reviewState:string;decision:{status:string;provider?:string;proposedIssueId:string|null;destination?:{value:string}}|null}; actions:{id:string;state:string;payload:Record<string,unknown>;receipt:unknown;approvals:{invalidatedAt:string|null}[]}[]};
+type Detail = {ticket:{id:string;reviewState:string;decision:{status:string;provider?:string;proposedIssueId:string|null;destination?:{value:string}}|null}; actions:{id:string;type:string;state:string;issueProvider?:string|null;issueHost?:string|null;payload:Record<string,unknown>;receipt:unknown;approvals:{invalidatedAt:string|null}[]}[]};
 const browserObservations=new WeakMap<Page,{errors:string[];external:string[]}>();
 async function detail(request:APIRequestContext,id:string):Promise<Detail>{const r=await request.get(`/api/tickets/${id}`);expect(r.ok()).toBeTruthy();return r.json();}
 async function evaluated(request:APIRequestContext,id:string){
@@ -160,4 +160,48 @@ test('ZJ-05 A-18: primary screens have no serious accessibility errors or docume
   await page.goto('/tickets/ticket-001');await expect(page.getByRole('heading',{name:'Conversation',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
   await page.screenshot({path:resolve(screenshots,'detail-mobile.png'),fullPage:true});
+});
+
+test('SW-11 SW-14: issue provider selection, allowlist validation and issue destination preview',async({page,request})=>{
+  await page.goto('/settings');
+  await expect(page.getByRole('heading',{name:'Settings',exact:true})).toBeVisible();
+  // Both issue providers are listed; the selected one names the exact host it would reach.
+  await expect(page.getByText('GitHub issue index',{exact:true})).toBeVisible();
+  await expect(page.getByText('GitLab issue index',{exact:true})).toBeVisible();
+  const provider=page.getByRole('combobox',{name:'Issue provider',exact:true});
+  await expect(provider).toHaveValue('github');
+  await expect(page.locator('.settings-panel').filter({hasText:'Allowed destinations'})).toContainText('github.com');
+
+  // A nested GitLab path is not a valid GitHub repository and is refused with the allowlist unchanged.
+  const allowlist=page.locator('#repositories');
+  await expect(allowlist).toHaveValue(/zenjev-demo\/integrations/);
+  await allowlist.fill('acme-group/platform/billing-service');
+  await page.getByRole('button',{name:'Save configuration',exact:true}).click();
+  await expect(page.locator('.notice.error')).toContainText(/allowlist/i);
+  expect((await (await request.get('/api/settings')).json()).repositories).toEqual(['zenjev-demo/integrations','zenjev-demo/platform','zenjev-demo/identity']);
+
+  // A demo reviewer cannot move the workspace to another issue provider.
+  await page.reload();
+  await page.getByRole('combobox',{name:'Issue provider',exact:true}).selectOption('gitlab');
+  await expect(page.locator('#repositories')).toHaveAttribute('id','repositories');
+  await page.getByRole('button',{name:'Save configuration',exact:true}).click();
+  await expect(page.locator('.notice.error')).toContainText(/administrator/i);
+  const settings=await (await request.get('/api/settings')).json();
+  expect(settings.issueProvider).toBe('github');
+  expect(settings.issueHost).toBe('github.com');
+  expect(settings.issueCredentialState).toBe('unconfigured');
+
+  // The exact issue destination, including its provider and host, is visible before approval.
+  await page.goto('/tickets/ticket-002');
+  await page.getByRole('button',{name:'Prepare new issue draft',exact:true}).click();
+  await page.getByRole('combobox',{name:'Allowlisted repository',exact:true}).selectOption('zenjev-demo/integrations');
+  await page.getByRole('button',{name:'Create preview',exact:true}).click();
+  const card=page.locator('.action-card').filter({hasText:'New issue draft'}).first();
+  await expect(card.locator('.action-destination')).toContainText('GitHub');
+  await expect(card.locator('.action-destination')).toContainText('github.com/zenjev-demo/integrations');
+  await expect(card.locator('.action-destination')).toContainText('dry run');
+  const draft=(await detail(request,'ticket-002')).actions.find(a=>a.type==='create_issue');
+  expect(draft?.issueProvider).toBe('github');
+  expect(draft?.issueHost).toBe('github.com');
+  await page.screenshot({path:resolve(screenshots,'issue-provider-settings.png'),fullPage:true});
 });

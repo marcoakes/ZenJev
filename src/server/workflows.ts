@@ -1,15 +1,21 @@
 import type { Prisma,ProposedAction,DecisionRun,Ticket } from '@prisma/client';
 import { db } from './db';
-import { getSettings } from './settings';
+import { getSettings,issueProviderOf,issueTargetSettings } from './settings';
 import { HttpError,type Actor } from './auth';
-import { buildContext,retrieveCandidates,reviewReasons,contentHash,approvalHash,assertActionAllowed,sanitize,TEAMS,keywordBaseline,evaluateSaved,type Decision,type DomainTicket,type Issue,type ApprovalBinding,type SavedPrediction,type EvaluationLabel,type Snapshot } from '../domain';
+import { buildContext,retrieveCandidates,reviewReasons,contentHash,approvalHash,assertActionAllowed,sanitize,TEAMS,keywordBaseline,evaluateSaved,issueTargetOf,isProjectPath,type Decision,type DomainTicket,type Issue,type ApprovalBinding,type IssueTarget,type SavedPrediction,type EvaluationLabel,type Snapshot } from '../domain';
 import { MockDecisionProvider,JevDecisionProvider } from '../providers';
 export const json=(value:unknown)=>JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
 export const safeError=(error:unknown)=>error instanceof Error&&error.name.startsWith('Prisma')?'Database operation failed; inspect the operation status and retry safely':sanitize(error instanceof Error?error.message:'Operation failed').slice(0,500);
 export async function audit(actor:string,action:string,recordId:string,outcome:string,details:unknown={},provider='mock') {return db.auditEvent.create({data:{actor,action,recordId,outcome,details:json(details),provider}});}
 export async function enqueue(kind:string,payload:unknown,dedupKey:string,availableAt=new Date()) {return db.job.upsert({where:{dedupKey},update:{},create:{kind,payload:json(payload),dedupKey,availableAt}});}
 export function domainTicket(ticket:Ticket&{comments:{id:string;text:string;visibility:string;createdAt:Date;integrationReceipt:boolean}[]}):DomainTicket {return {id:ticket.id,subject:ticket.subject,organization:ticket.organization,source:ticket.source as DomainTicket['source'],version:ticket.version,createdAt:ticket.createdAt.toISOString(),attachments:ticket.attachments,comments:ticket.comments.map(c=>({id:c.id,text:c.text,visibility:c.visibility as 'public'|'internal',createdAt:c.createdAt.toISOString(),integrationReceipt:c.integrationReceipt}))};}
-export async function issueIndex():Promise<Issue[]> {return (await db.gitHubIssue.findMany({where:(process.env.DATA_MODE??'demo')==='demo'?{source:'synthetic'}:{source:'github'}})).map(i=>({...i,labels:i.labels as string[],state:i.state as 'open'|'closed',createdAt:i.createdAt.toISOString(),updatedAt:i.updatedAt.toISOString()}));}
+/** Synthetic fixtures are provider-agnostic; a live index is scoped to the selected provider and host. */
+export async function issueIndex():Promise<Issue[]> {
+ const demo=(process.env.DATA_MODE??'demo')==='demo';
+ let where:{source:string}|{provider:string;host:string}={source:'synthetic'};
+ if(!demo){const settings=await getSettings(),target=issueTargetSettings(issueProviderOf(settings.issueProvider));if(target.error)throw new HttpError(400,target.error);where={provider:target.provider,host:target.host};}
+ return (await db.gitHubIssue.findMany({where})).map(i=>({...i,labels:i.labels as string[],state:i.state as 'open'|'closed',provider:issueTargetOf(i).provider,host:issueTargetOf(i).host,url:i.url??undefined,createdAt:i.createdAt.toISOString(),updatedAt:i.updatedAt.toISOString()}));
+}
 function providerFor(settings:Awaited<ReturnType<typeof getSettings>>) {return settings.jevMode==='live'?new JevDecisionProvider({apiKey:process.env.TYPESAFE_API_KEY??'',model:process.env.JEV_MODEL??'jev-1.13.0',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',thresholds:{...settings.policyThresholds as object,routingConfidence:settings.threshold},teamCriteria:settings.teamCriteria as Record<string,string>}):new MockDecisionProvider({thresholds:{...settings.policyThresholds as object,routingConfidence:settings.threshold},teamCriteria:settings.teamCriteria as Record<string,string>});}
 export async function evaluateTicket(ticketId:string,actor='worker') {
  const started=performance.now(),settings=await getSettings();
@@ -61,7 +67,14 @@ export async function approveLink(ticketId:string,issueId:string,reason:string|u
   return link;
  }); return link;
 }
-export function bindingFor(action:ProposedAction,decision:DecisionRun):ApprovalBinding {return {actionId:action.id,payload:action.payload,ticketId:action.ticketId,ticketVersion:action.ticketVersion,ticketSnapshotId:decision.snapshotId,decisionId:action.decisionId,decisionVersion:decision.ticketVersion,destination:action.destination,dataSource:action.dataSource as ApprovalBinding['dataSource'],provider:action.provider as ApprovalBinding['provider'],mode:action.mode as ApprovalBinding['mode'],kind:action.type as ApprovalBinding['kind']};}
+/**
+ * Only issue actions carry a target, so Zendesk approvals keep the binding hash they were granted with.
+ * An issue action without a recorded provider and host produces no target and therefore cannot be executed.
+ */
+export function bindingFor(action:ProposedAction,decision:DecisionRun):ApprovalBinding {
+ const target=action.type==='create_issue'&&action.issueProvider&&action.issueHost?{target:{provider:issueProviderOf(action.issueProvider),host:action.issueHost,project:action.destination} satisfies IssueTarget}:{};
+ return {actionId:action.id,payload:action.payload,ticketId:action.ticketId,ticketVersion:action.ticketVersion,ticketSnapshotId:decision.snapshotId,decisionId:action.decisionId,decisionVersion:decision.ticketVersion,destination:action.destination,dataSource:action.dataSource as ApprovalBinding['dataSource'],provider:action.provider as ApprovalBinding['provider'],mode:action.mode as ApprovalBinding['mode'],kind:action.type as ApprovalBinding['kind'],...target};
+}
 export async function proposeAction(ticketId:string,type:'route'|'create_issue'|'tags'|'internal_note',body:Record<string,unknown>,actor:Actor) {
  const {ticket,decision,output}=await currentDecision(ticketId),settings=await getSettings();
  let destination:string,payload:unknown;
@@ -81,6 +94,7 @@ export async function proposeAction(ticketId:string,type:'route'|'create_issue'|
  } else {
   destination=String(body.repository??(settings.repositories as string[])[0]);
   if(!(settings.repositories as string[]).includes(destination))throw new HttpError(403,'Repository is not allowlisted');
+  if(!isProjectPath(destination,issueProviderOf(settings.issueProvider)))throw new HttpError(400,'Destination project path is not valid for the selected issue provider');
   const snapshot=decision.snapshot.input as unknown as ReturnType<typeof buildContext>;
   const problem=snapshot.messages.filter(m=>m.visibility==='public').slice(0,2).map(m=>m.text).join('\n\n');
   payload={title:sanitize(String(body.title??snapshot.subject),[ticket.organization]).slice(0,200),body:sanitize(String(body.body??`## Problem statement\n${problem}\n\n## Expected / actual behaviour\nSee the permitted source excerpts above.\n\n## Environment\nNot supplied\n\n## Reproduction details\nNot supplied — request exact steps before investigation.\n\n## Affected organisations\n1 ${ticket.source==='synthetic'?'fictional ':''}organisation\n\n## Missing information\n${output.missingReproInfo>=(output.policy?.missingInfo??.5)?'Essential diagnostic information is missing.':'Confirm environment and reproducibility.'}\n\n## Internal source\nZenJev ticket ${ticket.number}`)),repository:destination};
@@ -88,8 +102,11 @@ export async function proposeAction(ticketId:string,type:'route'|'create_issue'|
  assertDraftPrivacy(ticket,payload);
  const mode=settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true'&&settings.dataMode==='live'&&ticket.source==='zendesk'&&decision.provider==='jev'?'live':'dry_run';
  const actionId=crypto.randomUUID();
- const partial={id:actionId,ticketId,decisionId:decision.id,ticketVersion:ticket.version,type,destination,payload:json(payload),mode,provider:decision.provider,dataSource:ticket.source};
- const payloadHash=contentHash(payload),dedupKey=contentHash({ticketId,decisionId:decision.id,type,destination,payload,mode});
+ // The issue destination is frozen onto the action, so a later provider change cannot redirect an approved write.
+ const issueTarget=type==='create_issue'?issueTargetSettings(issueProviderOf(settings.issueProvider)):null;
+ if(issueTarget?.error)throw new HttpError(400,issueTarget.error);
+ const partial={id:actionId,ticketId,decisionId:decision.id,ticketVersion:ticket.version,type,destination,payload:json(payload),mode,provider:decision.provider,dataSource:ticket.source,issueProvider:issueTarget?.provider??null,issueHost:issueTarget?.host??null};
+ const payloadHash=contentHash(payload),dedupKey=contentHash({ticketId,decisionId:decision.id,type,destination,payload,mode,...(issueTarget?{issueProvider:issueTarget.provider,issueHost:issueTarget.host}:{})});
  const action=await db.proposedAction.upsert({where:{dedupKey},update:{},create:{...partial,payloadHash,dedupKey}});
  await audit(actor.id,'action.proposed',ticketId,'succeeded',{actionId:action.id,type,mode,payloadHash},decision.provider);
  return action;
@@ -166,7 +183,9 @@ export async function validateAction(action:ProposedAction&{decision:DecisionRun
    const reviewer=await db.user.findUnique({where:{id:approval.reviewer}});
    if(!reviewer||!['admin','reviewer'].includes(reviewer.role))throw new Error('A currently authorised authenticated reviewer is required for live writes');
   }
-  assertActionAllowed(bindingFor(action,action.decision),{hash:approval.bindingHash,reviewerId:approval.reviewer,reviewerRole:approval.reviewerRole as 'admin',expiresAt:approval.expiresAt.toISOString(),status:'approved'},{allowLiveWrites:settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',authenticated:true,currentTicketVersion:action.ticket.version,currentDecisionVersion:latest.ticketVersion,repositories:settings.repositories as string[],groups:TEAMS.filter(t=>t!=='unknown') as unknown as string[]});
+  const configured=action.type==='create_issue'?issueTargetSettings(issueProviderOf(settings.issueProvider)):null;
+  if(configured?.error)throw new Error(configured.error);
+  assertActionAllowed(bindingFor(action,action.decision),{hash:approval.bindingHash,reviewerId:approval.reviewer,reviewerRole:approval.reviewerRole as 'admin',expiresAt:approval.expiresAt.toISOString(),status:'approved'},{allowLiveWrites:settings.allowLiveWrites&&process.env.ALLOW_LIVE_WRITES==='true',allowLiveDataProcessing:settings.allowLiveDataProcessing&&process.env.ALLOW_LIVE_DATA_PROCESSING==='true',authenticated:true,currentTicketVersion:action.ticket.version,currentDecisionVersion:latest.ticketVersion,repositories:settings.repositories as string[],groups:TEAMS.filter(t=>t!=='unknown') as unknown as string[],...(configured?{issueTarget:{provider:configured.provider,host:configured.host}}:{})});
  }catch(error){await db.proposedAction.updateMany({where:{id:action.id,state:{in:['proposed','approved','queued']}},data:{state:'stale',error:safeError(error)}});throw new HttpError(409,safeError(error));}
 }
 export async function runEvaluation(options:{task?:string;split?:string;threshold?:number;newRun?:boolean},actor:Actor) {
@@ -213,11 +232,17 @@ export function assertDraftPrivacy(ticket:{organization:string;comments:{text:st
  }
 }
 
+/** GitHub serves issues at /owner/repo/issues/N; GitLab at /group/sub/project/-/issues/N. */
+export function isIssueUrlFor(url:string|null|undefined,target:IssueTarget):boolean {
+ if(!url||!target.host||!target.project)return false;
+ const prefix=`https://${target.host}/${target.project}/${target.provider==='gitlab'?'-/':''}issues/`;
+ return url.startsWith(prefix)&&/^\d+$/.test(url.slice(prefix.length).split(/[?#]/)[0]);
+}
 export async function proposeBacklink(actionId:string,actor:Actor) {
  const original=await db.proposedAction.findUniqueOrThrow({where:{id:actionId}});
  if(original.type!=='create_issue'||!original.remoteIssueId||!['succeeded','needs_reconciliation'].includes(original.state))throw new HttpError(409,'Backlink requires a retained created issue receipt');
  const body=original.mode==='dry_run'?`Synthetic engineering handoff marker ${original.remoteIssueId}. Dry run — no external issue exists.`:`Engineering handoff: ${original.remoteIssueUrl}`;
- if(original.mode==='live'&&(!original.remoteIssueUrl||!original.remoteIssueUrl.startsWith(`https://github.com/${original.destination}/issues/`)))throw new HttpError(409,'Stored issue URL does not match the reviewed repository');
+ if(original.mode==='live'&&!isIssueUrlFor(original.remoteIssueUrl,{provider:issueProviderOf(original.issueProvider),host:original.issueHost??'',project:original.destination}))throw new HttpError(409,'Stored issue URL does not match the reviewed provider, host and project');
  const note=await proposeAction(original.ticketId,'internal_note',{body},actor);
  const linked=await db.proposedAction.update({where:{id:note.id},data:{parentActionId:original.id}});
  await audit(actor.id,'backlink.proposed',original.ticketId,'succeeded',{actionId:note.id,parentActionId:original.id,requiresSeparateApproval:true},original.provider);

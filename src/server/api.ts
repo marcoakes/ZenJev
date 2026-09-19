@@ -4,9 +4,10 @@ import {readBoundedText} from './request';
 import { authenticate,login,HttpError,validateRuntimeConfig } from './auth';
 import { getSettings,publicSettings } from './settings';
 import { json,safeError,enqueue,approveLink,proposeAction,editAction,approveAction,queueAction,runEvaluation,audit,proposeBacklink,rejectAction } from './workflows';
-import { receiveWebhook } from './integrations';
+import { receiveWebhook,checkIssueConnection } from './integrations';
+import { issueProviderOf,issueTargetSettings } from './settings';
 import { seedDemo } from './seed';
-import { TEAMS,type Decision,type Candidate } from '../domain';
+import { TEAMS,ISSUE_PROVIDERS,isProjectPath,type Decision,type Candidate } from '../domain';
 
 const response=(body:unknown,status=200)=>Response.json(body,{status,headers:{'cache-control':'no-store','x-content-type-options':'nosniff'}});
 async function bodyOf(request:Request):Promise<Record<string,unknown>> {
@@ -114,7 +115,7 @@ export async function handleApi(request:Request,segments:string[]):Promise<Respo
   if(resource==='settings'&&method==='GET')return response(await publicSettings(actor.csrfToken));
   if(resource==='settings'&&method==='POST'){
    const body=await bodyOf(request),settings=await getSettings();
-   const allowed=['threshold','includeInternalNotes','retentionDays','repositories','teamMappings','allowLiveWrites','allowLiveDataProcessing','dataMode','jevMode','policyThresholds','teamCriteria'];
+   const allowed=['threshold','includeInternalNotes','retentionDays','repositories','teamMappings','allowLiveWrites','allowLiveDataProcessing','dataMode','jevMode','policyThresholds','teamCriteria','issueProvider'];
    if(Object.keys(body).some(k=>!allowed.includes(k)))throw new HttpError(400,'Unknown setting or secret field');
    const updates:Prisma.WorkspaceSettingsUpdateInput={};
    if(body.threshold!==undefined){if(typeof body.threshold!=='number'||body.threshold<0||body.threshold>1)throw new HttpError(400,'Threshold must be between 0 and 1');updates.threshold=body.threshold;}
@@ -128,7 +129,17 @@ export async function handleApi(request:Request,segments:string[]):Promise<Respo
    if(body.teamCriteria!==undefined){const criteria=body.teamCriteria;if(!criteria||typeof criteria!=='object'||Array.isArray(criteria)||Object.keys(criteria).length!==TEAMS.length||TEAMS.some(t=>typeof (criteria as Record<string,unknown>)[t]!=='string'||(criteria as Record<string,string>)[t].trim().length<3||(criteria as Record<string,string>)[t].length>500))throw new HttpError(400,'Supply a 3–500 character description for every fixed team option');updates.teamCriteria=json(criteria);}
    if(body.includeInternalNotes!==undefined){if(typeof body.includeInternalNotes!=='boolean')throw new HttpError(400,'Privacy setting must be boolean');updates.includeInternalNotes=body.includeInternalNotes;}
    if(body.retentionDays!==undefined){if(!Number.isInteger(body.retentionDays)||Number(body.retentionDays)<1||Number(body.retentionDays)>365)throw new HttpError(400,'Retention must be 1–365 days');updates.retentionDays=Number(body.retentionDays);}
-   if(body.repositories!==undefined){if(!Array.isArray(body.repositories)||body.repositories.length>20||body.repositories.some(r=>typeof r!=='string'||!/^[\w.-]+\/[\w.-]+$/.test(r)))throw new HttpError(400,'Invalid repository allowlist');updates.repositories=json(body.repositories);}
+   // The provider is selected explicitly; its host stays server configuration and is never accepted here.
+   const nextProvider=body.issueProvider===undefined?issueProviderOf(settings.issueProvider):issueProviderOf(body.issueProvider);
+   if(body.issueProvider!==undefined&&!(ISSUE_PROVIDERS as readonly string[]).includes(String(body.issueProvider)))throw new HttpError(400,'Unknown issue provider');
+   const providerChanged=body.issueProvider!==undefined&&nextProvider!==issueProviderOf(settings.issueProvider);
+   if(providerChanged){
+    if(actor.demo)throw new HttpError(403,'Selecting an issue provider requires an authenticated administrator');
+    const target=issueTargetSettings(nextProvider);if(target.error)throw new HttpError(400,target.error);
+    updates.issueProvider=nextProvider;
+   }
+   if(body.repositories!==undefined){if(!Array.isArray(body.repositories)||body.repositories.length>20||body.repositories.some(r=>!isProjectPath(r,nextProvider)))throw new HttpError(400,'Invalid project allowlist for the selected issue provider');updates.repositories=json(body.repositories);}
+   if(providerChanged&&body.repositories===undefined&&(settings.repositories as string[]).some(r=>!isProjectPath(r,nextProvider)))throw new HttpError(400,'The saved project allowlist is not valid for the selected issue provider; supply a new allowlist');
    if(body.teamMappings!==undefined){if(!body.teamMappings||typeof body.teamMappings!=='object'||Array.isArray(body.teamMappings)||Object.keys(body.teamMappings).some(k=>!(TEAMS as readonly string[]).includes(k))||Object.values(body.teamMappings).some(v=>v!==null&&(typeof v!=='string'||!/^\d+$/.test(v))))throw new HttpError(400,'Invalid team mappings');updates.teamMappings=json(body.teamMappings);}
    if(body.dataMode!==undefined&&body.dataMode!==settings.dataMode)throw new HttpError(403,'Change data mode through reviewed server deployment configuration');
    if(body.jevMode!==undefined&&body.jevMode!==settings.jevMode)throw new HttpError(403,'Change Jev mode through explicit server configuration; activation may incur provider cost');
@@ -142,8 +153,16 @@ export async function handleApi(request:Request,segments:string[]):Promise<Respo
   if(resource==='audit'&&method==='GET')return response({events:await db.auditEvent.findMany({where:url.searchParams.get('recordId')?{recordId:url.searchParams.get('recordId')!}:{},orderBy:{createdAt:'desc'},take:200})});
   if(resource==='sync'&&method==='POST'){
    if(actor.demo||(await getSettings()).dataMode!=='live')throw new HttpError(403,'Live ingestion requires authenticated live configuration');
-   if(!['zendesk','github'].includes(id))throw new HttpError(400,'Unknown integration');
-   const job=await enqueue(`${id}_sync`,{},`manual-sync:${id}:${Date.now()}`);return response({jobId:job.id},202);
+   // `github` is retained as the historic name for indexing the selected issue provider.
+   if(!['zendesk','github','issues'].includes(id))throw new HttpError(400,'Unknown integration');
+   const kind=id==='zendesk'?'zendesk_sync':'issue_sync';
+   const job=await enqueue(kind,{},`manual-sync:${kind}:${Date.now()}`);return response({jobId:job.id},202);
+  }
+  if(resource==='connections'&&id==='issues'&&method==='POST'){
+   if(actor.demo||actor.role!=='admin')throw new HttpError(403,'A connection check requires an authenticated administrator');
+   const body=await bodyOf(request),settings=await getSettings();
+   const project=String(body.project??(settings.repositories as string[])[0]??'');
+   return response({connection:await checkIssueConnection(project)});
   }
   if(resource==='demo'&&id==='replay'&&method==='POST'){
    const settings=await getSettings();if(settings.dataMode!=='demo')throw new HttpError(403,'Replay is synthetic-only');const body=await bodyOf(request);

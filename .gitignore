@@ -12,3 +12,4 @@ playwright-report/
 *.tsbuildinfo
 work/
 .npm/
+.gitlab-ci-local/

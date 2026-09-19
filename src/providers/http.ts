@@ -16,14 +16,17 @@ export async function requestJson(url:string,init:RequestInit,options:HttpOption
     if(response.ok){
       try {return {body:parseProviderJson(await response.text()),response};}catch {if(mutation)throw new ProviderError('uncertain','Write response could not be decoded; reconcile before retry');throw new ProviderError('schema','Provider returned invalid JSON',response.status);}
     }
-    const rateLimited=response.status===429||(response.status===403&&(response.headers.get('x-ratelimit-remaining')==='0'||response.headers.has('retry-after')));
+    // GitHub exposes x-ratelimit-*; GitLab exposes the RateLimit-* draft headers.
+    const remaining=response.headers.get('x-ratelimit-remaining')??response.headers.get('ratelimit-remaining');
+    const rateLimited=response.status===429||(response.status===403&&(remaining==='0'||response.headers.has('retry-after')));
     if(response.status===401||(response.status===403&&!rateLimited)) throw new ProviderError('authentication','Provider authentication or permission failed',response.status);
     if(response.status===409) throw new ProviderError('conflict','Remote state changed; return to review',409);
     const transient=rateLimited||response.status>=500;
     if(mutation&&response.status>=500) throw new ProviderError('uncertain','Remote write outcome is uncertain; reconcile before retry',response.status);
     if(!transient) throw new ProviderError('schema',`Provider rejected the request (HTTP ${response.status})`,response.status);
     const header=response.headers.get('retry-after');
-    const retryAfter=header?(Number.isFinite(Number(header))?Number(header)*1000:Date.parse(header)-Date.now()):rateLimited&&response.headers.has('x-ratelimit-reset')?Number(response.headers.get('x-ratelimit-reset'))*1000-Date.now():0;
+    const reset=response.headers.get('x-ratelimit-reset')??response.headers.get('ratelimit-reset');
+    const retryAfter=header?(Number.isFinite(Number(header))?Number(header)*1000:Date.parse(header)-Date.now()):rateLimited&&reset?Number(reset)*1000-Date.now():0;
     if(attempt>=retries) throw new ProviderError(rateLimited?'rate_limit':'transient','Provider retry limit exhausted',response.status,Math.max(options.minimumRetryDelayMs??0,retryAfter)||null);
     // Never retry earlier than a server deadline. Long delays are delegated to durable job scheduling.
     if(retryAfter>30000)throw new ProviderError('rate_limit','Provider requested a delayed retry; reschedule the job',response.status,retryAfter);

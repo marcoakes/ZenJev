@@ -20,7 +20,34 @@ export function resolveTeamCriteria(overrides:Partial<Record<Team,string>>={}):R
 }
 
 export type DomainTicket = { id: string; subject: string; organization: string; source: 'synthetic'|'zendesk'; version: number; createdAt: string; comments: { id: string; text: string; visibility: 'public'|'internal'; createdAt: string; authorName?: string; authorId?: string; authorType?: 'customer'|'agent'|'system'|'unknown'; attachments?: number; integrationReceipt?: boolean }[]; attachments?: number; customerNames?: string[] };
-export type Issue = { id: string; repository: string; number: string; title: string; body: string; state: 'open'|'closed'; labels: string[]; updatedAt: string; createdAt?: string; private: boolean };
+export const ISSUE_PROVIDERS = ['github','gitlab'] as const;
+export type IssueProviderName = typeof ISSUE_PROVIDERS[number];
+/** An issue always belongs to one provider, one host and one project path. */
+export type IssueTarget = { provider: IssueProviderName; host: string; project: string };
+export const DEFAULT_ISSUE_HOSTS: Record<IssueProviderName,string> = { github:'github.com', gitlab:'gitlab.com' };
+/** Records written before GitLab support are GitHub.com issues; their stored identity is never rewritten. */
+export function issueTargetOf(issue:{provider?:string|null;host?:string|null;repository:string}):IssueTarget {
+  const provider=(ISSUE_PROVIDERS as readonly string[]).includes(issue.provider??'')?issue.provider as IssueProviderName:'github';
+  return {provider,host:issue.host||DEFAULT_ISSUE_HOSTS[provider],project:issue.repository};
+}
+/**
+ * Stable local identity for an external issue. GitHub.com keeps the historic `owner/repo#number`
+ * form so existing rows, links and frozen decision records stay valid; every other host or
+ * provider is prefixed, so a GitHub number can never collide with a project-scoped GitLab iid.
+ */
+export function issueKey(target:IssueTarget,number:string|number):string {
+  const suffix=`${target.project}#${number}`;
+  return target.provider==='github'&&target.host==='github.com'?suffix:`${target.provider}:${target.host}:${suffix}`;
+}
+export function sameIssueTarget(a:IssueTarget,b:IssueTarget):boolean { return a.provider===b.provider&&a.host===b.host&&a.project===b.project; }
+/** GitLab allows nested groups; GitHub allows exactly one owner segment. Neither allows traversal or reserved endings. */
+export function isProjectPath(value:unknown,provider:IssueProviderName='gitlab'):value is string {
+  if(typeof value!=='string'||value.length>255)return false;
+  const segments=value.split('/');
+  if(segments.length<2||segments.length>(provider==='github'?2:6))return false;
+  return segments.every(segment=>/^[A-Za-z0-9][A-Za-z0-9_.-]*$/.test(segment)&&!/\.(git|atom)$/i.test(segment)&&segment!=='.'&&segment!=='..');
+}
+export type Issue = { id: string; repository: string; number: string; title: string; body: string; state: 'open'|'closed'; labels: string[]; updatedAt: string; createdAt?: string; private: boolean; provider?: IssueProviderName; host?: string; url?: string };
 export type Snapshot = { id: string; hash: string; ticketId: string; ticketVersion: number; dataSource: DomainTicket['source']; asOf: string; subject: string; organizationAlias: string; messages: { sourceId: string; text: string; visibility: 'public'|'internal'; createdAt: string }[]; omittedCount: number; internalNotesIncluded: boolean; attachmentCount: number; contextIncomplete: boolean };
 export type Candidate = { issue: Issue; relevance: number };
 export type ChoiceResult = { value: string; probabilities: Record<string, number>; confidence: number };
@@ -110,10 +137,14 @@ export function keywordBaseline(snapshot: Snapshot): Team {
   if(/how (do|can)|where|setup/.test(text)) return 'support';
   return 'unknown';
 }
-export type ApprovalBinding = { actionId:string; payload:unknown; ticketId:string; ticketVersion:number; ticketSnapshotId:string; decisionId:string; decisionVersion:number; destination:string; dataSource:'synthetic'|'zendesk'; provider:'mock'|'jev'; mode:'dry_run'|'live'; kind:'route'|'tags'|'internal_note'|'create_issue' };
+/**
+ * `provider` names the decision provider. `target` names the issue destination and is present
+ * only for `create_issue`, so Zendesk approvals keep their existing binding hash.
+ */
+export type ApprovalBinding = { actionId:string; payload:unknown; ticketId:string; ticketVersion:number; ticketSnapshotId:string; decisionId:string; decisionVersion:number; destination:string; dataSource:'synthetic'|'zendesk'; provider:'mock'|'jev'; mode:'dry_run'|'live'; kind:'route'|'tags'|'internal_note'|'create_issue'; target?:IssueTarget };
 export function approvalHash(binding: ApprovalBinding): string { return contentHash(binding); }
 export type ActionApproval = { hash:string; reviewerId:string; reviewerRole:'admin'|'reviewer'|'viewer'; expiresAt:string; status:'approved'|'stale'|'rejected' };
-export function assertActionAllowed(binding: ApprovalBinding, approval: ActionApproval, controls: {allowLiveWrites:boolean;allowLiveDataProcessing:boolean;authenticated:boolean;currentTicketVersion:number;currentDecisionVersion:number;repositories:string[];groups?:string[];now?:Date}): void {
+export function assertActionAllowed(binding: ApprovalBinding, approval: ActionApproval, controls: {allowLiveWrites:boolean;allowLiveDataProcessing:boolean;authenticated:boolean;currentTicketVersion:number;currentDecisionVersion:number;repositories:string[];groups?:string[];issueTarget?:{provider:IssueProviderName;host:string};now?:Date}): void {
   if(!controls.authenticated||!approval.reviewerId||!['admin','reviewer'].includes(approval.reviewerRole)) throw new Error('An authenticated authorised reviewer is required');
   if(approval.status!=='approved'||!Number.isFinite(Date.parse(approval.expiresAt))||Date.parse(approval.expiresAt)<=(controls.now??new Date()).getTime()) throw new Error('Approval is not current');
   const actual=Buffer.from(approvalHash(binding)),expected=Buffer.from(approval.hash);
@@ -123,6 +154,12 @@ export function assertActionAllowed(binding: ApprovalBinding, approval: ActionAp
   if(binding.kind==='create_issue'&&!controls.repositories.includes(binding.destination)) throw new Error('Repository is not allowlisted');
   if(binding.kind==='route'&&controls.groups&&!controls.groups.includes(binding.destination)) throw new Error('Destination group is not allowlisted');
   if(binding.mode==='live'&&(!controls.allowLiveWrites||!controls.allowLiveDataProcessing||binding.dataSource!=='zendesk'||binding.provider!=='jev')) throw new Error('Live writes require real data, live Jev, and explicit processing/write controls');
+  if(binding.kind==='create_issue') {
+    // An issue approval authorises exactly one provider, host and project. A GitHub approval can never reach GitLab.
+    if(!binding.target||!(ISSUE_PROVIDERS as readonly string[]).includes(binding.target.provider)||!binding.target.host) throw new Error('Issue approval must bind a provider, host and project');
+    if(binding.target.project!==binding.destination) throw new Error('Approved project does not match the bound destination');
+    if(controls.issueTarget&&(controls.issueTarget.provider!==binding.target.provider||controls.issueTarget.host!==binding.target.host)) throw new Error('Configured issue provider or host changed after approval');
+  }
 }
 export type SavedPrediction = { ticketId:string; decision:Decision|null; candidateIds:string[]; baseline:Team; error?:string|null; retrievalError?:string|null; latencyMs?:number|null; split?:'development'|'held_out'; incidentId?:string };
 export type EvaluationLabel = {ticketId:string; destination:Team|null; needsEngineering:boolean|null; critical?:boolean; matchingIssueId?:string|null; split?:'development'|'held_out'; incidentId?:string};

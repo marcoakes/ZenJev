@@ -15,13 +15,13 @@ gates:
     timeout: 30
     proves: [ZJ-01, ZJ-02, ZJ-03]
   - id: domain-provider-contracts
-    run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts
+    run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/gitlab.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts
     timeout: 120
-    proves: [SW-04, SW-07, SW-08, SW-09, SW-10]
+    proves: [SW-04, SW-07, SW-08, SW-09, SW-10, SW-13]
   - id: persistence-workflow
-    run: node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts
-    timeout: 240
-    proves: [SW-03, SW-05, SW-06]
+    run: node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts tests/issue-provider-persistence.test.ts
+    timeout: 300
+    proves: [SW-03, SW-05, SW-06, SW-14]
   - id: browser
     run: node scripts/check.mjs browser tests/browser/workbench.spec.ts
     timeout: 300

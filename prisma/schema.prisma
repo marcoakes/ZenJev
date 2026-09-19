@@ -15,6 +15,7 @@ model WorkspaceSettings {
   threshold Float @default(0.8)
   policyThresholds Json @default("{\"routingConfidence\":0.8,\"engineering\":0.7,\"missingInfo\":0.5,\"multipleIssues\":0.5,\"matchProbability\":0.9,\"matchMargin\":0.15}")
   teamCriteria Json @default("{\"support\":\"General product usage or setup assistance\",\"billing\":\"Invoices, charges or subscription administration\",\"identity\":\"Authentication, permissions or sign-in failures\",\"integrations\":\"Webhooks, external connectors or integration behaviour\",\"platform\":\"Core service failures or platform availability\",\"unknown\":\"Evidence is insufficient or no single team is appropriate\"}")
+  issueProvider String @default("github")
   repositories Json
   teamMappings Json
   rubricVersion String @default("triage-v1")
@@ -76,10 +77,14 @@ model TicketSnapshot {
   decisions DecisionRun[]
   @@index([ticketId,contentHash])
 }
+/// The external issue index. Rows predating GitLab support are GitHub.com issues by default.
 model GitHubIssue {
   id String @id
+  provider String @default("github")
+  host String @default("github.com")
   repository String
   number String
+  url String?
   title String
   body String
   state String
@@ -89,7 +94,8 @@ model GitHubIssue {
   createdAt DateTime
   updatedAt DateTime
   links TicketIssueLink[]
-  @@unique([repository,number])
+  @@unique([provider,host,repository,number])
+  @@index([provider,host])
 }
 model CandidateSnapshot {
   id String @id @default(cuid())
@@ -145,6 +151,8 @@ model ProposedAction {
   ticketVersion Int
   type String
   destination String
+  issueProvider String?
+  issueHost String?
   payload Json
   payloadHash String
   mode String
