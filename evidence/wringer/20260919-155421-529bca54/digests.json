@@ -1,0 +1,33 @@
+{
+  "schema_version": "wringer.digests.v1",
+  "algorithm": "sha256",
+  "files": {
+    ".wringer.yaml": "78adfaeea079adf0bc72c5ec2e5c9a310a13042d5a0f09da5574c382c8334649",
+    "checks.json": "36352297f8ce1c3bbba3c25ce8d7bd5a8121b8db4a387f06533b05225e70f8b4",
+    "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence.jsonl": "24c8a15061ec507f481f2a390cb8b38e9f6a404179b1e4467d36755d85cc8eb9",
+    "execution.json": "80b81d659a0478160245d48f6df92c5766e4c79a4f9eecc030fff88d7ee4c62c",
+    "gates/001_fresh-offline-setup/result.json": "20535df06da36bfcc47f27e8a69a9e6038850f6bf2b4096b0b88d1bd57861022",
+    "gates/001_fresh-offline-setup/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/001_fresh-offline-setup/stdout.log": "2a6091abeb82d61d52c86ca0c8575e0ca3d9862319be0fcfb432ef959278375b",
+    "gates/002_branding/result.json": "3349a21bf082f9dd53b289719dc83f89550cff7696189a51b522977cbc69f5af",
+    "gates/002_branding/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/002_branding/stdout.log": "ac522b94f4e52802f982b245ff15497dbadca296ecffce701ebfadade446d048",
+    "gates/003_domain-provider-contracts/result.json": "134faba114392de3d688f7624f7e4159e7c58318da274ce80d99a1f3c86b40bd",
+    "gates/003_domain-provider-contracts/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/003_domain-provider-contracts/stdout.log": "a43c1cac444ffde1bf2f25abad0b6e9c1a6899902b4c0558d06c3b946abb612a",
+    "gates/004_persistence-workflow/result.json": "de8bdcbcfd06de8c02ef300d42c9f3f0243e81451a85efc76ba852eeb9c8e63b",
+    "gates/004_persistence-workflow/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/004_persistence-workflow/stdout.log": "0702492288ae8119a1c184ab8cd74808276e5ab317a946bb936d740568137b17",
+    "gates/005_browser/artifacts.json": "b236aba085c8e07e9882fe15cec228c1781fb4aef4876293ee79cd579126e2e8",
+    "gates/005_browser/result.json": "ebdd3262f23894167797273ce61857c018cf9c0f5fcabd6f86a82f113d474fc9",
+    "gates/005_browser/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/005_browser/stdout.log": "1c9f953a785ed67261798f5f96ab534483ee416901e36d56db7030f29eb890ef",
+    "manifest.json": "684b216e8fa21a1813331c0ea65b9550b1fe2f9d499b0a6480947db3dc5d4cc8",
+    "snapshot.json": "ca2710551034faada573d5307f338a685c07a47036d8395c51453c61f4184ea6",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.md": "ae001c72e4f71db9b0d786d29b6d128d0c27726e929bfd3065f71faa1e997d3b",
+    "untracked.json": "122e9a353ad1734d4c4cc961738ddb2b2d7ed41d5df845b2fe62dc96b1af5584",
+    "wringer.spec.yaml": "0e1702ee0ddf67cf12f163772ee4a3504bd894ae396e1a70fc86aa0751126074"
+  }
+}

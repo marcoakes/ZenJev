@@ -1,0 +1,24 @@
+Portable development PostgreSQL (PGlite): demo :55432, isolated tests :55433. This is not native PostgreSQL concurrency evidence.
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v6.19.3) to ./node_modules/@prisma/client in 161ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate
+
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "zenjev_demo", schema "public" at "127.0.0.1:55432"
+
+5 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+{"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":0}
+ZenJev: http://127.0.0.1:3000 — Synthetic data / Mock decisions / Dry run only.
+▲ Next.js 16.3.5
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+✓ Ready in 193ms
+✓ Running next.config.ts took 110ms
+{"event":"worker.started","workerId":"worker-90397","dataMode":"demo","jevMode":"mock"}

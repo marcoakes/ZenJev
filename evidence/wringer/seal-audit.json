@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "zenjev.wringer-seal-audit.v1",
+  "auditKind": "offline evidence seal and hash-chain validation; no tests or gates rerun",
+  "harness": {
+    "root": "/Users/marc/Claude/wringer",
+    "commit": "7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4",
+    "runtime": "Bun 1.4.2",
+    "interpreter": "/Users/marc/.bun/bin/bun",
+    "command": "env -i PATH=\"$PATH\" /Users/marc/.bun/bin/bun --eval <inline audit script>",
+    "importPath": "/Users/marc/Claude/wringer/packages/engine/src/io.ts",
+    "validationCall": "await validateDigests(directory)"
+  },
+  "auditStartedAt": "2026-09-19T15:58:41.381Z",
+  "auditFinishedAt": "2026-09-19T15:58:41.455Z",
+  "limitations": [
+    "Seal validation checks stored file hashes and event hash chains, not product behavior or human approval.",
+    "The original run results, including any failure, are preserved without reinterpretation.",
+    "This is an offline audit of existing bundles and is not new test evidence."
+  ],
+  "runs": [
+    {
+      "directory": ".wringer/runs/20260919-155421-529bca54",
+      "runId": "20260919-155421-529bca54",
+      "sourceCommit": "29ca2c671e779fec93a2bee7bd9bca4043b3e3eb",
+      "sourceDirty": false,
+      "runStartedAt": "2026-09-19T15:54:21.681Z",
+      "runFinishedAt": "2026-09-19T15:54:37.931Z",
+      "recordedRunResult": {
+        "status": "failed",
+        "failed_gate": "browser"
+      },
+      "checkedAt": "2026-09-19T15:58:41.415Z",
+      "validation": {
+        "ok": true,
+        "errors": []
+      }
+    },
+    {
+      "directory": ".wringer/runs/20260919-155502-8ad2b474",
+      "runId": "20260919-155502-8ad2b474",
+      "sourceCommit": "29ca2c671e779fec93a2bee7bd9bca4043b3e3eb",
+      "sourceDirty": false,
+      "runStartedAt": "2026-09-19T15:55:02.929Z",
+      "runFinishedAt": "2026-09-19T15:57:15.814Z",
+      "recordedRunResult": {
+        "status": "passed",
+        "failed_gate": null
+      },
+      "checkedAt": "2026-09-19T15:58:41.451Z",
+      "validation": {
+        "ok": true,
+        "errors": []
+      }
+    }
+  ],
+  "allSealsValid": true
+}

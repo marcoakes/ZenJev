@@ -99,5 +99,18 @@
     "This is executed in-app browser review, not a passing Playwright or Axe suite.",
     "Headless Chromium is blocked by macOS Mach bootstrap permissions.",
     "No live providers, paid requests, external writes or publication."
-  ]
+  ],
+  "finalSourceCommit": "29ca2c671e779fec93a2bee7bd9bca4043b3e3eb",
+  "finalRecheck": {
+    "recordedAt": "2026-09-19T16:08:45.576Z",
+    "associations": [
+      "ticket-001",
+      "ticket-002",
+      "ticket-003"
+    ],
+    "actionId": "6421fd11-1f3b-4847-a4da-b85a3ee735c5",
+    "state": "succeeded",
+    "receiptExternalCalls": 0,
+    "consoleWarningsOrErrors": []
+  }
 }

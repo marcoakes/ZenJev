@@ -1,0 +1,10 @@
+{
+  "schema_version": "wringer.gate-artifacts.v1",
+  "gate": "browser",
+  "artifacts": [],
+  "omitted": [],
+  "limits": [
+    "Artifacts record bytes and media types, not what the artifacts demonstrate. Binary artifacts cannot be redacted and are explicitly marked redacted:false.",
+    "Gate artifacts remain local and must not be transmitted by delivery by default."
+  ]
+}

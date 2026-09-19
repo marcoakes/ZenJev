@@ -1,0 +1,1 @@
+{"check":"SW-12 portable handoff integrity","status":"passed","sourceCommit":"29ca2c671e779fec93a2bee7bd9bca4043b3e3eb","sourceFiles":81,"artifacts":102,"gates":8,"note":"Hashes and result structure audited; no gates rerun and no human acceptance granted."}

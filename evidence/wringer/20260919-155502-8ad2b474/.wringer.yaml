@@ -1,0 +1,40 @@
+version: 1
+execution:
+  backend: local
+evidence:
+  include: []
+  redact:
+    env: ['*TOKEN*', '*SECRET*', '*KEY*', '*PASSWORD*']
+gates:
+  - id: fresh-offline-setup
+    run: node scripts/check-fresh-setup.mjs
+    timeout: 120
+    proves: [SW-01]
+  - id: branding
+    run: node --test checks/branding.test.mjs
+    timeout: 30
+    proves: [ZJ-01, ZJ-02, ZJ-03]
+  - id: domain-provider-contracts
+    run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts
+    timeout: 120
+    proves: [SW-04, SW-07, SW-08, SW-09, SW-10]
+  - id: persistence-workflow
+    run: node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts
+    timeout: 240
+    proves: [SW-03, SW-05, SW-06]
+  - id: browser
+    run: node scripts/check.mjs browser tests/browser/workbench.spec.ts
+    timeout: 300
+    proves: [SW-02, SW-11, ZJ-04, ZJ-05]
+    artifacts:
+      max_bytes: 5242880
+      total_bytes: 52428800
+  - id: lint
+    run: node scripts/check.mjs lint
+    timeout: 120
+  - id: typecheck
+    run: node scripts/check.mjs typecheck
+    timeout: 120
+  - id: production-build
+    run: node scripts/check.mjs build
+    timeout: 300
