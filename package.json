@@ -1,0 +1,8 @@
+{
+  "name": "zenjev",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24 <25" },
+  "scripts": { "check:branding": "node --test checks/branding.test.mjs" }
+}
