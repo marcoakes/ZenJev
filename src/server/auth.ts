@@ -18,14 +18,15 @@ export async function authenticate(request:Request,write=false,admin=false):Prom
   const session=sid?await db.session.findUnique({where:{id:sid},include:{user:true}}):null;
   if(!session||session.expiresAt<=new Date())throw new HttpError(401,'Authenticated session required');
   if(write&&request.headers.get('x-csrf-token')!==session.csrfToken)throw new HttpError(403,'CSRF token required');
-  if(write&&!['admin','reviewer'].includes(session.user.role))throw new HttpError(403,'Reviewer role required');
+  const endingOwnSession=request.method==='POST'&&url.pathname==='/api/auth/logout';
+  if(write&&!endingOwnSession&&!['admin','reviewer'].includes(session.user.role))throw new HttpError(403,'Reviewer role required');
   if(admin&&session.user.role!=='admin')throw new HttpError(403,'Administrator role required');
   return {id:session.user.id,role:session.user.role as Actor['role'],demo:false,csrfToken:session.csrfToken};
 }
 const loginFailures=new Map<string,{count:number;until:number}>();
 export async function login(request:Request) {
-  const origin=request.headers.get('origin'),url=new URL(request.url);
-  if(origin&&origin!==url.origin)throw new HttpError(403,'Cross-origin login rejected');
+  const origin=request.headers.get('origin'),url=new URL(request.url),configured=new URL(process.env.APP_BASE_URL??'http://127.0.0.1:3000');
+  if(origin&&origin!==url.origin&&origin!==configured.origin)throw new HttpError(403,'Cross-origin login rejected');
   let body:{username?:unknown;password?:unknown};try{body=JSON.parse(await readBoundedText(request,16384));}catch(error){if(error instanceof HttpError)throw error;throw new HttpError(400,'Invalid login JSON');}
   if(!body||typeof body.username!=='string'||typeof body.password!=='string'||body.username.trim().length<1||body.username.length>128||body.password.length<1||body.password.length>1024)throw new HttpError(400,'Username and password must have valid bounded lengths');
   const now=Date.now();for(const [key,value] of loginFailures){if(value.until<=now)loginFailures.delete(key);}

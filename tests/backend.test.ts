@@ -1,5 +1,5 @@
 import { beforeAll,afterAll,beforeEach,describe,it,expect,vi } from 'vitest';
-import { createHmac } from 'node:crypto';
+import { createHmac, randomBytes } from 'node:crypto';
 const database=process.env.TEST_DATABASE_URL;
 const suite=database?describe:describe.skip;
 let db:typeof import('../src/server/db').db;
@@ -142,6 +142,42 @@ suite('PostgreSQL persisted workflows (isolated test database)',()=>{
   await db.session.create({data:{id:'test-session',userId:user.id,csrfToken:'test-csrf',expiresAt:new Date(Date.now()+100000)}});
   const noCsrf=await api(new Request('https://deployment.example/api/settings',{method:'POST',headers:{cookie:'zenjev_session=test-session'},body:'{}'}),['settings']);expect(noCsrf.status).toBe(403);
   const viewer=await api(new Request('https://deployment.example/api/settings',{method:'POST',headers:{cookie:'zenjev_session=test-session','x-csrf-token':'test-csrf'},body:'{}'}),['settings']);expect(viewer.status).toBe(403);
+ });
+ it('viewer logout requires origin and CSRF checks and ends only its own session',async()=>{
+  const {hashPassword}=await import('../src/server/auth');
+  const user=await db.user.create({data:{username:'test-viewer-logout',passwordHash:hashPassword(randomBytes(32).toString('base64url')),role:'viewer'}});
+  const sid=randomBytes(32).toString('hex'),otherSid=randomBytes(32).toString('hex'),csrfToken=randomBytes(24).toString('hex');
+  const call=(path:string,token?:string,origin='https://deployment.example',method='POST')=>api(new Request(`https://deployment.example/api/${path}`,{method,headers:{cookie:`zenjev_session=${sid}`,origin,...(token?{'x-csrf-token':token}:{})},body:method==='GET'?undefined:'{}'}),path.split('/'));
+  try {
+   await db.session.createMany({data:[sid,otherSid].map(id=>({id,userId:user.id,csrfToken,expiresAt:new Date(Date.now()+100000)}))});
+   expect((await call('auth/logout')).status).toBe(403);
+   expect((await call('auth/logout','incorrect-csrf')).status).toBe(403);
+   expect((await call('auth/logout',csrfToken,'https://attacker.example')).status).toBe(403);
+   expect((await call('settings',csrfToken)).status).toBe(403);
+   expect((await call('auth/logout',csrfToken,'https://deployment.example','DELETE')).status).toBe(403);
+   expect(await db.session.count({where:{userId:user.id}})).toBe(2);
+   const logout=await call('auth/logout',csrfToken);expect(logout.status).toBe(200);expect(logout.headers.get('set-cookie')).toContain('Max-Age=0');
+   expect(await db.session.findUnique({where:{id:sid}})).toBeNull();
+   expect(await db.session.count({where:{id:otherSid,userId:user.id}})).toBe(1);
+   expect((await call('auth/me',undefined,'https://deployment.example','GET')).status).toBe(401);
+  } finally {await db.user.delete({where:{id:user.id}});}
+ });
+ it('login accepts the configured reverse-proxy origin and rejects unrelated origins',async()=>{
+  const {login,hashPassword}=await import('../src/server/auth');
+  const password=randomBytes(32).toString('base64url');
+  const user=await db.user.create({data:{username:'test-configured-login-origin',passwordHash:hashPassword(password),role:'reviewer'}});
+  const previous=process.env.APP_BASE_URL;
+  const call=(origin:string)=>login(new Request('http://localhost:3001/api/auth/login',{method:'POST',headers:{origin,'content-type':'application/json','x-forwarded-host':'127.0.0.1:3001'},body:JSON.stringify({username:user.username,password})}));
+  try {
+   process.env.APP_BASE_URL='http://127.0.0.1:3001';
+   expect((await call('http://127.0.0.1:3001')).status).toBe(200);
+   expect(await db.session.count({where:{userId:user.id}})).toBe(1);
+   for(const origin of ['https://attacker.example','http://127.0.0.1:3999'])await expect(call(origin)).rejects.toMatchObject({status:403,message:'Cross-origin login rejected'});
+   expect(await db.session.count({where:{userId:user.id}})).toBe(1);
+  } finally {
+   if(previous===undefined)delete process.env.APP_BASE_URL;else process.env.APP_BASE_URL=previous;
+   await db.user.delete({where:{id:user.id}});
+  }
  });
  it('login rejects oversized bodies and lengths and caps concurrent username failures with expiry',async()=>{
   const {login}=await import('../src/server/auth');const call=(username:string,password='wrong')=>login(new Request('http://127.0.0.1:3000/api/auth/login',{method:'POST',body:JSON.stringify({username,password})}));

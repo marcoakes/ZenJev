@@ -41,15 +41,16 @@ async function api(path: string, body?: JsonObject): Promise<ApiData> {
   return result;
 }
 
-function useResource(path: string, poll = 0) {
+function useResource(path: string, poll = 0, refreshKey = path) {
   const sequence = useRef(0);
   const [state, setState] = useState<{ path: string; data: ApiData | null; error: string }>({ path: '', data: null, error: '' });
   const reload = useCallback(() => {
     const request = ++sequence.current;
     return api(path).then(data => { if (request === sequence.current) setState({ path, data, error: '' }); }, error => { if (request === sequence.current) setState(previous => ({ path, data: previous.path === path ? previous.data : null, error: error instanceof Error ? error.message : 'Unable to load records.' })); });
   }, [path]);
-  useEffect(() => { void reload(); const timer = poll ? setInterval(() => void reload(), poll) : null; return () => { if (timer) clearInterval(timer); }; }, [reload, poll]);
-  return { data: state.path === path ? state.data : null, error: state.path === path ? state.error : '', loading: state.path !== path, reload };
+  const clear = useCallback(() => { ++sequence.current; setState({ path: '', data: null, error: '' }); }, []);
+  useEffect(() => { void reload(); const timer = poll ? setInterval(() => void reload(), poll) : null; return () => { if (timer) clearInterval(timer); }; }, [reload, poll, refreshKey]);
+  return { data: state.path === path ? state.data : null, error: state.path === path ? state.error : '', loading: state.path !== path, reload, clear };
 }
 
 function useDialogFocus(open: boolean, close: () => void) {
@@ -98,21 +99,30 @@ function Stat({ label, value, note, icon }: { label: string; value: ReactNode; n
 
 export function WorkbenchShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState('');
   const isMobile = useSyncExternalStore(subscribeMobileViewport, mobileViewport, serverViewport);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const navigationDialog = useDialogFocus(isMobile && menuOpen && !aboutOpen, closeMenu);
   const closeAbout = useCallback(() => setAboutOpen(false), []);
   const aboutDialog = useDialogFocus(aboutOpen, closeAbout);
-  const health = useResource('/health', 15000);
-  const session = useResource('/auth/me', 15000);
+  const health = useResource('/health', 15000, pathname);
+  const session = useResource('/auth/me', 15000, pathname);
   const actor = session.data?.actor;
   const h = health.data;
   const settings = h?.settings;
   const dataMode = settings?.dataMode || null;
   const provider = settings?.jevMode || null;
   const currentNav = NAV.find(n => pathname.startsWith(n.href));
+  const signOut = async () => {
+    setSigningOut(true); setSignOutError('');
+    try { await api('/auth/logout', {}); csrfToken = ''; session.clear(); health.clear(); closeMenu(); router.replace('/login'); router.refresh(); }
+    catch (error) { setSignOutError(error instanceof Error ? error.message : 'Unable to sign out.'); }
+    finally { setSigningOut(false); }
+  };
   return <div className="app-shell">
     <a className="skip-link" href="#main-content">Skip to main content</a>
     <aside ref={navigationDialog} id="primary-sidebar" className={`sidebar ${menuOpen ? 'open' : ''}`} aria-label="Main navigation" role={isMobile && menuOpen ? 'dialog' : undefined} aria-modal={isMobile && menuOpen ? true : undefined} aria-hidden={isMobile && !menuOpen ? true : undefined} inert={isMobile && !menuOpen}>
@@ -121,7 +131,7 @@ export function WorkbenchShell({ children }: { children: ReactNode }) {
       <div className="workspace-label"><span className="workspace-avatar">ZJ</span><div><strong>Support operations</strong><small>{dataMode === 'demo' ? 'Synthetic workspace' : dataMode ? 'Connected workspace' : 'Checking workspace'}</small></div><MoreHorizontal size={16} /></div>
       <div className="nav-label">WORKBENCH</div>
       <nav>{NAV.slice(0, 4).map(({ href, label, icon: Icon }) => <Link key={href} className={`nav-item ${pathname.startsWith(href) ? 'active' : ''}`} href={href} onClick={() => setMenuOpen(false)} aria-current={pathname.startsWith(href) ? 'page' : undefined}><Icon size={18} /><span>{label}</span>{pathname.startsWith(href) && <span className="nav-active-dot" />}</Link>)}</nav>
-      <div className="sidebar-bottom"><div className="safety-card"><div><ShieldCheck size={17} /><strong>Review comes first.</strong></div><p>Decisions are suggestions. Every action has a preview and an audit trail.</p><span className="tiny-label">HUMAN-IN-THE-LOOP</span></div><Link className={`nav-item ${pathname === '/settings' ? 'active' : ''}`} href="/settings" onClick={() => setMenuOpen(false)}><Settings2 size={18} />Settings</Link><button className="nav-item about-button" onClick={() => { if (isMobile) closeMenu(); setAboutOpen(true); }}><CircleHelp size={18} />About ZenJev</button><div className="workspace-footer"><span className="operator-avatar">L</span><div><strong>{actor?.demo ? 'Local operator' : actor?.id || 'Operator unavailable'}</strong><small>{actor?.demo ? 'Loopback workspace' : actor ? `${actor.role} session` : 'Sign-in status unavailable'}</small></div><LockKeyhole size={15} /></div></div>
+      <div className="sidebar-bottom"><div className="safety-card"><div><ShieldCheck size={17} /><strong>Review comes first.</strong></div><p>Decisions are suggestions. Every action has a preview and an audit trail.</p><span className="tiny-label">HUMAN-IN-THE-LOOP</span></div><Link className={`nav-item ${pathname === '/settings' ? 'active' : ''}`} href="/settings" onClick={() => setMenuOpen(false)}><Settings2 size={18} />Settings</Link><button className="nav-item about-button" onClick={() => { if (isMobile) closeMenu(); setAboutOpen(true); }}><CircleHelp size={18} />About ZenJev</button>{actor && !actor.demo && pathname !== '/login' && <button className="nav-item" onClick={() => void signOut()} disabled={signingOut}>{signingOut ? <Loader2 size={18} className="spin" /> : <ArrowLeft size={18} />}Sign out</button>}{signOutError && <p className="field-error" role="alert">{signOutError}</p>}<div className="workspace-footer"><span className="operator-avatar">L</span><div><strong>{actor?.demo ? 'Local operator' : actor?.id || 'Operator unavailable'}</strong><small>{actor?.demo ? 'Loopback workspace' : actor ? `${actor.role} session` : 'Sign-in status unavailable'}</small></div><LockKeyhole size={15} /></div></div>
     </aside>
     {isMobile && menuOpen && <button className="sidebar-scrim" onClick={closeMenu} aria-label="Dismiss navigation backdrop" tabIndex={-1} />}
     <div className="workspace-main"><div className="topbar"><div className="breadcrumb"><button className="icon-button mobile-menu" aria-label="Open navigation" aria-expanded={menuOpen} aria-controls="primary-sidebar" onClick={() => setMenuOpen(true)}><Menu size={20} /></button><span>Workspace</span><span className="breadcrumb-divider">/</span><strong>{currentNav?.label || 'ZenJev'}</strong></div><div className="mode-badges" aria-label="Workspace modes"><Badge dot tone="pink">{dataMode === 'demo' ? 'Synthetic data' : dataMode ? 'Live data' : 'Data mode unavailable'}</Badge><Badge dot>{provider === 'mock' ? 'Mock decisions' : provider ? 'Jev decisions' : 'Provider unavailable'}</Badge><Badge tone="quiet"><LockKeyhole size={11} />{!dataMode ? 'Write mode unavailable' : dataMode === 'demo' ? 'Dry run only' : settings?.allowLiveWrites ? 'Approved writes' : 'Writes disabled'}</Badge></div></div>

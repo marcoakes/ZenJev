@@ -47,7 +47,13 @@ async function signIn(page: Page, account: (typeof accounts)[number]) {
     page.waitForResponse(response => new URL(response.url()).pathname === '/api/auth/login' && response.request().method() === 'POST'),
     page.getByRole('button', { name: 'Sign in', exact: true }).click(),
   ]);
-  expect(login.status()).toBe(200);
+  let failureReason = 'Login must establish an authenticated session';
+  if (!login.ok()) {
+    const failure = await login.json().catch(() => null) as { error?: unknown } | null;
+    const knownErrors = ['Cross-origin login rejected', 'Invalid credentials', 'Invalid login JSON', 'Username and password must have valid bounded lengths'];
+    if (typeof failure?.error === 'string' && knownErrors.includes(failure.error)) failureReason = failure.error;
+  }
+  expect(login.status(), failureReason).toBe(200);
   await expect(page).toHaveURL('http://127.0.0.1:3001/tickets');
   await expect(page.locator('tbody tr')).toHaveCount(15);
   const current = await browserRequest(page, '/api/auth/me');
@@ -56,6 +62,21 @@ async function signIn(page: Page, account: (typeof accounts)[number]) {
   expect({ id: actor.id, role: actor.role, demo: actor.demo }).toEqual({ id: account.id, role: account.role, demo: false });
   expect(actor.csrfToken.length > 0).toBe(true);
   return actor.csrfToken;
+}
+
+async function signOut(page: Page, account: (typeof accounts)[number]) {
+  const [logout] = await Promise.all([
+    page.waitForResponse(response => new URL(response.url()).pathname === '/api/auth/logout' && response.request().method() === 'POST'),
+    page.getByRole('button', { name: 'Sign out', exact: true }).click(),
+  ]);
+  expect(logout.status()).toBe(200);
+  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
+  expect((await browserRequest(page, '/api/auth/me')).status).toBe(401);
+  expect(await db.session.count({ where: { userId: account.id } })).toBe(0);
+  expect((await page.context().cookies()).some(value => value.name === 'zenjev_session')).toBe(false);
+  await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toHaveCount(0);
+  await page.goto('/tickets');
+  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
 }
 
 test.beforeAll(async ({ request }) => {
@@ -132,13 +153,7 @@ test('A-11: real reviewer login enforces session cookies, CSRF, admin boundary a
     return { source: ticket.source, status: ticket.decision?.status, provider: ticket.decision?.provider };
   }, { timeout: 45000 }).toEqual({ source: 'synthetic', status: 'succeeded', provider: 'mock' });
 
-  const logout = await browserRequest(page, '/api/auth/logout', {}, token);
-  expect(logout.status).toBe(200);
-  expect((await browserRequest(page, '/api/auth/me')).status).toBe(401);
-  expect(await db.session.count({ where: { userId: account.id } })).toBe(0);
-  expect((await page.context().cookies()).some(value => value.name === 'zenjev_session')).toBe(false);
-  await page.goto('/tickets');
-  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
+  await signOut(page, account);
 });
 
 test('A-11: real viewer login can read synthetic tickets but cannot mutate or configure', async ({ page }) => {
@@ -153,4 +168,5 @@ test('A-11: real viewer login can read synthetic tickets but cannot mutate or co
   await expect(page.getByText('Configuration changes require an administrator. Your current role is viewer.', { exact: true })).toBeVisible();
   await expect(page.getByRole('spinbutton', { name: 'Destination review threshold', exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Save configuration', exact: true })).toBeDisabled();
+  await signOut(page, accounts[1]);
 });
