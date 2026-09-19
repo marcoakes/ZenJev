@@ -17,11 +17,11 @@ gates:
   - id: domain-provider-contracts
     run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts
     timeout: 120
-    proves: [SW-03, SW-04, SW-05, SW-07, SW-08, SW-09, SW-10]
+    proves: [SW-04, SW-07, SW-08, SW-09, SW-10]
   - id: persistence-workflow
     run: node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts
     timeout: 240
-    proves: [SW-01, SW-02, SW-03, SW-04, SW-05, SW-06, SW-10]
+    proves: [SW-03, SW-05, SW-06]
   - id: browser
     run: node scripts/check.mjs browser tests/browser/workbench.spec.ts
     timeout: 300
