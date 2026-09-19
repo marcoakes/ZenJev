@@ -306,11 +306,13 @@ export function AuditPage() {
 }
 
 export function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const login = async (e: React.FormEvent) => { e.preventDefault(); setBusy(true); setError(''); try { await api('/auth/login', { username, password }); setPassword(''); router.push('/tickets'); router.refresh(); } catch (e) { setError(e instanceof Error ? e.message : 'Sign-in failed.'); } finally { setBusy(false); } };
+  const login = async (e: React.FormEvent) => { e.preventDefault(); setBusy(true); setError(''); try { await api('/auth/login', { username, password }); setPassword('');
+    // The authentication boundary must discard prefetched anonymous redirects.
+    window.location.replace(new URL('/tickets', window.location.origin).href);
+  } catch (e) { setError(e instanceof Error ? e.message : 'Sign-in failed.'); } finally { setBusy(false); } };
   return <div className="page login-page"><section className="panel login-panel"><div className="panel-padding"><LockKeyhole size={25} /><div className="eyebrow">AUTHENTICATED WORKSPACE</div><h1>Welcome to ZenJev</h1><p>Sign in with the local account created by your workspace administrator.</p>{error && <ErrorNotice message={error} />}<form onSubmit={e => void login(e)}><label className="field-label" htmlFor="username">Username</label><input id="username" autoComplete="username" required value={username} onChange={e => setUsername(e.target.value)} /><label className="field-label" htmlFor="password">Password</label><input id="password" type="password" autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} /><button className="button primary full-width" disabled={busy}>{busy ? <Loader2 size={15} className="spin" /> : <ArrowRight size={15} />}Sign in</button></form><p className="login-help">No shared default password. Ask your administrator to use the documented account bootstrap command.</p></div></section></div>;
 }

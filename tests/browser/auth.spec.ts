@@ -54,6 +54,11 @@ async function signIn(page: Page, account: (typeof accounts)[number]) {
     if (typeof failure?.error === 'string' && knownErrors.includes(failure.error)) failureReason = failure.error;
   }
   expect(login.status(), failureReason).toBe(200);
+  await expect.poll(async () => (await page.context().cookies()).some(cookie => cookie.name === 'zenjev_session' && cookie.value.length > 0), { message: 'Successful login stores a session cookie (value never recorded)' }).toBe(true);
+  await expect.poll(async () => {
+    try { return await page.evaluate(async () => (await fetch('/api/auth/me', { cache: 'no-store' })).status); }
+    catch { return 0; } // A full navigation can replace the document during this status-only probe.
+  }, { message: 'The new session authenticates before checking destination navigation' }).toBe(200);
   await expect(page).toHaveURL('http://127.0.0.1:3001/tickets');
   await expect(page.locator('tbody tr')).toHaveCount(15);
   const current = await browserRequest(page, '/api/auth/me');
