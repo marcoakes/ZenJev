@@ -1,0 +1,524 @@
+{
+  "recordedAt": "2026-09-19T15:47:02.241Z",
+  "source": "Local running production app API after executed CUA review",
+  "dataMode": "synthetic",
+  "provider": "mock",
+  "health": {
+    "database": "connected",
+    "worker": "healthy",
+    "liveIntegrationsVerified": false
+  },
+  "engineering": [
+    {
+      "id": "issue-001",
+      "number": "241",
+      "repository": "zenjev-demo/integrations",
+      "ticketCount": 3,
+      "organizationCount": 3,
+      "tickets": [
+        "ticket-002",
+        "ticket-003",
+        "ticket-001"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "f5b04298-d65c-49d7-b38c-729fbc9e9212",
+      "state": "succeeded",
+      "type": "route",
+      "receipt": {
+        "label": "Dry run — no external change",
+        "actionId": "f5b04298-d65c-49d7-b38c-729fbc9e9212",
+        "operation": "route",
+        "simulated": true,
+        "completedAt": "2026-09-19T15:12:01.287Z",
+        "externalCalls": 0,
+        "intendedMutation": {
+          "tags": [
+            "zenjev_reviewed"
+          ],
+          "reason": "",
+          "groupId": "104",
+          "destination": "integrations",
+          "ticketSourceId": "1001",
+          "updatedAtSource": "2026-09-17T09:02:00.000Z"
+        }
+      },
+      "payloadHash": "7c492116ab57d6553c228a7273ac2da56de21da1b19114e282e3131b10aa22db"
+    }
+  ],
+  "evaluation": [
+    {
+      "id": "cmu8j2pu7000zecaqnh75vpj1",
+      "task": "initial_routing",
+      "split": "held_out",
+      "provider": "mock",
+      "dataSource": "synthetic",
+      "metrics": {
+        "total": 24,
+        "latency": {
+          "p50": 0.1722919999738224,
+          "p95": 1.094334000023082,
+          "count": 24
+        },
+        "coverage": 0,
+        "eligible": 0,
+        "threshold": 0.99,
+        "provenance": [
+          "synthetic/mock"
+        ],
+        "reviewRate": 1,
+        "modelLatency": {
+          "p50": null,
+          "p95": null,
+          "count": 0
+        },
+        "missingLabels": 0,
+        "missedCritical": 0,
+        "routingCorrect": 0,
+        "baselineAccuracy": 0.3333333333333333,
+        "decisionFailures": 0,
+        "labelledEligible": 0,
+        "routingPrecision": null,
+        "engineeringRecall": 1,
+        "retrievalFailures": 0,
+        "issueLinkPrecision": null,
+        "candidateRecallAt10": 1,
+        "issueLinkDenominator": 0,
+        "engineeringDenominator": 8,
+        "candidateRecallDenominator": 8
+      },
+      "predictionsSha256": "54cad7027341e26b2818377d080a6130cc3fcf46acc44212150e604ae79888ab"
+    },
+    {
+      "id": "cmu8j28a6000xecaqccg4ua3f",
+      "task": "initial_routing",
+      "split": "held_out",
+      "provider": "mock",
+      "dataSource": "synthetic",
+      "metrics": {
+        "total": 24,
+        "latency": {
+          "p50": 0.1722919999738224,
+          "p95": 1.094334000023082,
+          "count": 24
+        },
+        "coverage": 0.3333333333333333,
+        "eligible": 8,
+        "threshold": 0.8,
+        "provenance": [
+          "synthetic/mock"
+        ],
+        "reviewRate": 0.6666666666666666,
+        "modelLatency": {
+          "p50": null,
+          "p95": null,
+          "count": 0
+        },
+        "missingLabels": 0,
+        "missedCritical": 0,
+        "routingCorrect": 8,
+        "baselineAccuracy": 0.3333333333333333,
+        "decisionFailures": 0,
+        "labelledEligible": 8,
+        "routingPrecision": 1,
+        "engineeringRecall": 1,
+        "retrievalFailures": 0,
+        "issueLinkPrecision": null,
+        "candidateRecallAt10": 1,
+        "issueLinkDenominator": 0,
+        "engineeringDenominator": 8,
+        "candidateRecallDenominator": 8
+      },
+      "predictionsSha256": "54cad7027341e26b2818377d080a6130cc3fcf46acc44212150e604ae79888ab"
+    }
+  ],
+  "settings": {
+    "dataMode": "demo",
+    "jevMode": "mock",
+    "allowLiveWrites": false,
+    "allowLiveDataProcessing": false,
+    "includeInternalNotes": false
+  },
+  "audit": [
+    {
+      "id": "cmu8j59ok0012ecaqoon4n1nb",
+      "actor": "local-demo-reviewer",
+      "action": "settings.updated",
+      "recordId": "workspace",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:16:08.132Z"
+    },
+    {
+      "id": "cmu8j4u5g0011ecaqgynhzd60",
+      "actor": "local-demo-reviewer",
+      "action": "settings.updated",
+      "recordId": "workspace",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:15:48.004Z"
+    },
+    {
+      "id": "cmu8j2puu0010ecaqt23wx4nw",
+      "actor": "local-demo-reviewer",
+      "action": "evaluation.recomputed",
+      "recordId": "cmu8j2pu7000zecaqnh75vpj1",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:14:09.127Z"
+    },
+    {
+      "id": "cmu8j28bq000yecaqu6z5o6xd",
+      "actor": "local-demo-reviewer",
+      "action": "evaluation.completed",
+      "recordId": "cmu8j28a6000xecaqccg4ua3f",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:13:46.406Z"
+    },
+    {
+      "id": "cmu8j13ev000wecaqi5y3w46j",
+      "actor": "local-demo-reviewer",
+      "action": "association.approved",
+      "recordId": "ticket-003",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:12:53.383Z"
+    },
+    {
+      "id": "cmu8j12pj000tecaq7d6i5cxr",
+      "actor": "local-demo-reviewer",
+      "action": "association.approved",
+      "recordId": "ticket-002",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:12:52.472Z"
+    },
+    {
+      "id": "cmu8izz7y002fecap1yh6h8ou",
+      "actor": "worker",
+      "action": "action.dry_run",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:12:01.295Z"
+    },
+    {
+      "id": "cmu8izz3n000qecaqecudkvah",
+      "actor": "local-demo-reviewer",
+      "action": "action.queued",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:12:01.139Z"
+    },
+    {
+      "id": "cmu8izyo3000oecaqkmlqrfyk",
+      "actor": "local-demo-reviewer",
+      "action": "action.approved",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:12:00.579Z"
+    },
+    {
+      "id": "cmu8izlu9000lecaqlpkib4ls",
+      "actor": "local-demo-reviewer",
+      "action": "action.proposed",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:11:43.954Z"
+    },
+    {
+      "id": "cmu8izle8000kecaq5qjouwei",
+      "actor": "local-demo-reviewer",
+      "action": "association.approved",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:11:43.377Z"
+    },
+    {
+      "id": "cmu8itwjo002cecap9z8b0a35",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-005",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.893Z"
+    },
+    {
+      "id": "cmu8itwhr0027ecap2ypmzoeu",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-003",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.823Z"
+    },
+    {
+      "id": "cmu8itwfd0022ecapchwisvpw",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-002",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.737Z"
+    },
+    {
+      "id": "cmu8itwd5001xecap9ot5huk8",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.658Z"
+    },
+    {
+      "id": "cmu8itwb8001secapa6j86r1b",
+      "actor": "worker",
+      "action": "decision.failed",
+      "recordId": "ticket-013",
+      "provider": "mock",
+      "outcome": "failed",
+      "createdAt": "2026-09-19T15:07:17.588Z"
+    },
+    {
+      "id": "cmu8itw91001necapi5go26i4",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-012",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.510Z"
+    },
+    {
+      "id": "cmu8itw7x001iecapaervj53f",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-011",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.470Z"
+    },
+    {
+      "id": "cmu8itw6x001decap0fb7euwg",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-010",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.434Z"
+    },
+    {
+      "id": "cmu8itw5p0018ecap5sahgude",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-009",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.390Z"
+    },
+    {
+      "id": "cmu8itw4i0013ecapmczltbop",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-008",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.346Z"
+    },
+    {
+      "id": "cmu8itw3b000yecapjmjfftht",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-007",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.303Z"
+    },
+    {
+      "id": "cmu8itw23000tecapttdufcx6",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-006",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.260Z"
+    },
+    {
+      "id": "cmu8itw11000oecapiob3lozu",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-005",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.222Z"
+    },
+    {
+      "id": "cmu8itw02000jecap60ozs73y",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-004",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.186Z"
+    },
+    {
+      "id": "cmu8itvz5000eecapzvk3p6gx",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-003",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.154Z"
+    },
+    {
+      "id": "cmu8itvya0009ecapv2kz8gek",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-002",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.122Z"
+    },
+    {
+      "id": "cmu8itvxc0004ecaptg6fc6pe",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:17.089Z"
+    },
+    {
+      "id": "cmu8itvim000decaqm4sv72oy",
+      "actor": "local-demo-reviewer",
+      "action": "demo.reset",
+      "recordId": "workspace",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T15:07:16.559Z"
+    },
+    {
+      "id": "cmu8hrzi70004ec0wqmr4k69u",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-013",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:37:48.800Z"
+    },
+    {
+      "id": "cmu8h7gy0001nec6h1c7cg8v3",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-012",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:51.625Z"
+    },
+    {
+      "id": "cmu8h7gmw001iec6hs1cwgnn9",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-011",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:51.224Z"
+    },
+    {
+      "id": "cmu8h7gdd001dec6h3vkuex5s",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-010",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:50.881Z"
+    },
+    {
+      "id": "cmu8h7g6f0018ec6h0msakhgb",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-009",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:50.631Z"
+    },
+    {
+      "id": "cmu8h7g1q0013ec6hhxxy5zwx",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-008",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:50.462Z"
+    },
+    {
+      "id": "cmu8h7fug000yec6h3tnbi1y6",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-007",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:50.200Z"
+    },
+    {
+      "id": "cmu8h7fq7000tec6holoqqqfe",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-006",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:50.047Z"
+    },
+    {
+      "id": "cmu8h7fll000oec6hue4p0qih",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-005",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:49.882Z"
+    },
+    {
+      "id": "cmu8h7fi0000jec6hy91eeowr",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-004",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:49.752Z"
+    },
+    {
+      "id": "cmu8h7fej000eec6h97ctvbat",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-003",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:49.627Z"
+    },
+    {
+      "id": "cmu8h7fb20009ec6hapabk3nl",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-002",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:49.503Z"
+    },
+    {
+      "id": "cmu8h7f5t0004ec6ho70lbnrc",
+      "actor": "worker",
+      "action": "decision.completed",
+      "recordId": "ticket-001",
+      "provider": "mock",
+      "outcome": "succeeded",
+      "createdAt": "2026-09-19T14:21:49.313Z"
+    }
+  ]
+}

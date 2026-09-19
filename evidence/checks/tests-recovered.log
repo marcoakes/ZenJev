@@ -1,0 +1,20 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev[39m
+
+ [32m✓[39m tests/backend.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 9193[2mms[22m[39m
+   [32m✓[39m PostgreSQL persisted workflows (isolated test database) [2m(23)[22m
+     [33m[2m✓[22m[39m SW-01 idempotent seed persists 100 tickets, 20 issues, 12 organisations, 200 separate labels[33m 1509[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-08/SW-09 frozen predictions omit future comments and threshold changes cause zero new calls[33m 469[2mms[22m[39m
+     [33m[2m✓[22m[39m retention CLI dry-run and apply remove only selected old records and preserve audit[33m 848[2mms[22m[39m
+ [32m✓[39m tests/providers.test.ts [2m([22m[2m27 tests[22m[2m)[22m[32m 208[2mms[22m[39m
+ [32m✓[39m tests/domain.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m tests/provider-integration-orchestration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 568[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m76 passed[39m[22m[90m (76)[39m
+[2m   Start at [22m 16:05:20
+[2m   Duration [22m 11.67s[2m (tests 95%, import 3%, transform 2%)[22m
+
+[2m    Isolate [22m [33m4 workers spawned[39m[2m · ~261ms startup each (spawn + environment, per file)[22m
+[2m            [22m [2mat least ~782ms faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+

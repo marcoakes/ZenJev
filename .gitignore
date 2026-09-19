@@ -9,3 +9,5 @@ test-results/
 playwright-report/
 .wringer/runs/
 .DS_Store
+*.tsbuildinfo
+work/

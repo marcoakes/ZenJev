@@ -1,0 +1,52 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev[39m
+
+ [31m❯[39m tests/backend.test.ts [2m([22m[2m18 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 18126[2mms[22m[39m
+   [31m❯[39m PostgreSQL persisted workflows (isolated test database) [2m(18)[22m
+     [33m[2m✓[22m[39m SW-01 idempotent seed persists 100 tickets, 20 issues, 12 organisations, 200 separate labels[33m 3079[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-02 three wordings propose the same stored issue; ambiguous sign-in requires review[33m 399[2mms[22m[39m
+     [33m[2m✓[22m[39m full persisted local association -> exact dry-run preview -> approval -> receipt[33m 377[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-03 synthetic tickets remain dry-run when credentials and write flags are deliberately supplied[33m 375[2mms[22m[39m
+     [32m✓[39m SW-04 absent live key persists a failed Jev run without mock fallback[32m 119[2mms[22m[39m
+     [32m✓[39m SW-05 edit invalidates approval and source ticket target cannot change[32m 211[2mms[22m[39m
+     [33m[2m✓[22m[39m stale ticket and mode changes block an approved action server-side[33m 400[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-06 duplicate execution produces one local receipt, expired lease becomes reconciliation[33m 623[2mms[22m[39m
+     [32m✓[39m leased jobs are claimed once and an expired lease is recoverable[32m 45[2mms[22m[39m
+     [32m✓[39m SW-07 internal notes stay out of snapshots/drafts and editing cannot disclose them[32m 132[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-08/SW-09 frozen predictions omit future comments and threshold changes cause zero new calls[33m 974[2mms[22m[39m
+     [33m[2m✓[22m[39m SW-10 invalid candidates, destinations and anonymous nonlocal mutations are denied[33m 446[2mms[22m[39m
+     [32m✓[39m authenticated session requires CSRF and viewer cannot approve[32m 164[2mms[22m[39m
+[31m     [31m×[31m audit records are append-only at the database layer[39m[32m 42[2mms[22m[39m
+     [33m[2m✓[22m[39m simulated uncertain creation and backlink failure retain issue marker and never duplicate[33m 1004[2mms[22m[39m
+     [33m[2m✓[22m[39m app tags and internal integration notes require exact separate approval and stay dry-run[33m 338[2mms[22m[39m
+     [32m✓[39m signed webhook receipt and enqueue commit once, invalid/oversize requests enqueue nothing[32m 39[2mms[22m[39m
+     [32m✓[39m read APIs return real persisted counts, candidates, actions, health and evaluation data[32m 209[2mms[22m[39m
+ [32m✓[39m tests/provider-integration-orchestration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 770[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/backend.test.ts[2m > [22mPostgreSQL persisted workflows (isolated test database)[2m > [22maudit records are append-only at the database layer
+[31m[1mPrismaClientKnownRequestError[22m: 
+Invalid `expect(db.auditEvent.update()` invocation in
+/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev/tests/backend.test.ts:117:205
+
+  114  const viewer=await api(new Request('https://deployment.example/api/settings',{method:'POST',headers:{cookie:'zenjev_session=test-session','x-csrf-token':'test-csrf'},body:'{}'}),['settings']);expect(viewer.status).toBe(403);
+  115 });
+  116 it('audit records are append-only at the database layer',async()=>{
+→ 117  const entry=await flow.audit('test','test.audit','workspace','succeeded');await expect(db.auditEvent.update(
+Server has closed the connection.[39m
+[90m [2m❯[22m ei.handleRequestError node_modules/@prisma/client/src/runtime/RequestHandler.ts:[2m228:13[22m[39m
+[90m [2m❯[22m ei.handleAndLogRequestError node_modules/@prisma/client/src/runtime/RequestHandler.ts:[2m174:12[22m[39m
+[90m [2m❯[22m ei.request node_modules/@prisma/client/src/runtime/RequestHandler.ts:[2m143:12[22m[39m
+[90m [2m❯[22m a node_modules/@prisma/client/src/runtime/getPrismaClient.ts:[2m833:24[22m[39m
+[36m [2m❯[22m tests/backend.test.ts:[2m117:185[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m23 passed[39m[22m[90m (24)[39m
+[2m   Start at [22m 15:37:34
+[2m   Duration [22m 20.00s[2m (tests 98%, transform 1%, import 1%)[22m
+

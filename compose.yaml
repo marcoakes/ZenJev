@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17.10-bookworm
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: zenjev_demo
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - zenjev_demo:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demo -d zenjev_demo"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+volumes:
+  zenjev_demo:

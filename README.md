@@ -4,30 +4,62 @@
 
 **Less noise. Smarter support.**
 
-A Jev-powered Zendesk-to-GitHub support workbench, built and verified through Wringer.
+A working Zendesk-to-GitHub support workbench: inspect evidence and uncertainty, associate reports with existing issues, approve exact handoff previews, and inspect durable receipts. Includes 100 synthetic tickets, 20 issues, 12 fictional organisations, a separate worker and a saved-prediction evaluation lab.
 
-## Current state
+## Start the offline demo
 
-This repository currently contains the original build specification, the unchanged approved artwork, and executable asset-integrity checks. The application has **not yet been implemented**. No demo startup command is available yet.
-
-The supplied attachments were individual Markdown and PNG files; no ZenJev ZIP was found. They have been copied without alteration. The intended remote is `marcoakes/ZenJev`; an authenticated lookup returned HTTP 404 on 19 September 2026. Nothing has been published or created remotely.
-
-The requested contained Wringer route is blocked in the current coding session: Apple Container status and image inspection return `Operation not permitted`. The connected Wringer profile belongs to an unrelated reports demo. Its approvals and remaining allowance do not cover ZenJev.
-
-See [build status](docs/build-status.md), [execution decision](docs/execution-decision.md), [credentials](docs/credentials.md), and the complete [build specification](ASTRA_MASTER_BUILD.md).
-
-## Available verification
-
-Requires Node.js 24. No packages, keys, network, or database are needed:
+Requires Node.js **24**, npm and a modern browser. Installation downloads pinned dependencies; the running demo needs no Jev, Zendesk, GitHub or model credentials.
 
 ```sh
-npm run check:branding
+npm ci --ignore-scripts
+npm run setup
+npm run demo:portable
 ```
 
-These checks verify the supplied files only. They are not evidence of a working application, Jev connectivity, browser accessibility, or software acceptance.
+Open **http://127.0.0.1:3000/tickets**. Startup migrates and idempotently seeds the database. Keep the terminal running; Ctrl+C stops only processes it owns. Persistent data is in ignored `.local/`. Existing data is preserved; use the app's explicitly confirmed synthetic reset for a repeatable walkthrough.
 
-## Planned application defaults
+`demo:portable` explicitly uses persistent PGlite PostgreSQL/WASM on loopback ports 55432 (demo) and 55433 (isolated tests). It works in this coding sandbox, whose OS policy blocks native PostgreSQL shared memory. It is a development option with multiplexed sessions, **not native PostgreSQL concurrency evidence**. Do not expose its unauthenticated loopback database to a network.
 
-`DATA_MODE=demo`, `JEV_MODE=mock`, `ALLOW_LIVE_WRITES=false`, `ALLOW_LIVE_DATA_PROCESSING=false`, `INCLUDE_INTERNAL_NOTES_IN_MODEL=false`.
+For native PostgreSQL 17, use `npm run demo` after setup. It uses pinned project-local binaries, or an existing PostgreSQL at port 55432 with the documented demo credentials. Alternatively run `docker compose up -d db` first. Native test setup needs `ZENJEV_TEST_DATABASE_URL=postgresql://demo:demo@127.0.0.1:55432/zenjev_test`. Neither native nor Compose execution was successfully verified in this sandbox.
 
-Jev access is pending. The completed application must persist simulation provenance and keep synthetic data incapable of external writes, even when credentials are supplied.
+For a production-mode local preview, stop the development server, run `npm run build`, then `npm run demo:portable:production`. This remains a synthetic local preview, not a production deployment.
+
+## Use it
+
+The [demo script](docs/demo-script.md) walks through three reports matching one issue, ambiguity/abstention, precise previews, invalidated approvals, dry-run receipts and saved-prediction threshold simulation. All six screens are implemented: tickets, detail, engineering, evaluation, settings and audit. The full supplied poster appears in About; the pink/black/cream workbench keeps ticket evidence primary.
+
+Defaults are **Synthetic data / Mock decisions / Dry run only**. Every external mutation requires explicit live configuration, real ticket and Jev provenance, current reviewer authorisation, an allowlisted destination and a current exact approval. The ordinary demo strips inherited provider/build keys. Live Jev failures remain failures; they never become mock successes.
+
+## Verify
+
+Start the app, then in another terminal:
+
+```sh
+npm run db:test:prepare
+npm run check:fresh-setup
+npm run check:branding
+npm run lint
+npm run typecheck
+npm test
+npm run test:browser
+```
+
+If Chromium is not already installed, `npx playwright install chromium` downloads the pinned browser runtime (setup traffic only). Tests use the isolated `zenjev_test` database; the browser suite explicitly resets the synthetic demo. Never point test configuration at live data. Stop dev before production build to avoid concurrent Next output generation.
+
+Standalone harness verification uses the separately reviewed [marcoakes/wringer](https://github.com/marcoakes/wringer) checkout:
+
+```sh
+WRINGER_BINARY=/absolute/path/to/wringer/dist/wring npm run verify:wringer
+```
+
+The gates are in `.wringer.yaml`; the app and databases must already be running. This is **trusted_local** verification, not contained execution or a fabricated human approval. See [actual test report](docs/test-report.md), [requirement evidence](docs/requirement-evidence.md), and [build status](docs/build-status.md) for outcomes and limits.
+
+`node scripts/check-handoff.mjs` audits the delivered source/evidence hashes and result structure offline. It does not rerun the application checks or grant acceptance. Headless Chromium could not launch under this host's macOS sandbox; the required browser gate remains failed and separate executed in-app browser observations are retained.
+
+## Integration and operations
+
+Jev, GitHub and Zendesk HTTP adapters are implemented and fixture-tested. **No live application integration or external write was exercised.** Jev access remains pending. Read [integrations](docs/integrations.md), [Jev activation](docs/jev-activation.md), [credential observations](docs/credentials.md) and `.env.example` before configuring real data. Build-worker keys never belong in the product environment.
+
+`npm run admin:bootstrap -- USERNAME` reads a password from stdin or the explicitly provided environment variable; it never prints it or accepts it as a command argument. `npm run retention -- --source=synthetic --before=2001-01-01T00:00:00Z` reports counts only; add `--apply` to delete eligible records after review. Outstanding/uncertain actions block deletion and immutable audit remains.
+
+This is the separate local **ZenJev** repository. The intended remote is `marcoakes/ZenJev`; no hosted repository, push, PR or deployment was created. [Decisions](docs/decisions.md) records the delegated-agent review route, runtime deviations and remaining live/native verification. The original [master build specification](ASTRA_MASTER_BUILD.md) is preserved unchanged.

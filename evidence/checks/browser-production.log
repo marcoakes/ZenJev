@@ -1,0 +1,50 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium] › tests/browser/workbench.spec.ts:20:1 › SW-01 ZJ-05: seeded queue, live worker, search, pagination and keyboard (1ms)
+  -  2 [chromium] › tests/browser/workbench.spec.ts:36:1 › SW-02 SW-11: three reports link to one existing issue; ambiguous report abstains
+  -  3 [chromium] › tests/browser/workbench.spec.ts:51:1 › SW-03 SW-05: exact preview approval and persisted dry-run receipt
+  -  4 [chromium] › tests/browser/workbench.spec.ts:64:1 › SW-09: threshold recomputes stored predictions and preserves provider call count
+  -  5 [chromium] › tests/browser/workbench.spec.ts:75:1 › ZJ-04: exact artwork served locally, uncropped and with meaningful alt text
+  -  6 [chromium] › tests/browser/workbench.spec.ts:84:1 › ZJ-05 A-18: primary screens have no serious accessibility errors or document overflow
+
+
+  1) [chromium] › tests/browser/workbench.spec.ts:20:1 › SW-01 ZJ-05: seeded queue, live worker, search, pagination and keyboard 
+
+    Error: browserType.launch: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /Users/marc/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/n8/bx4t2r951kn9bfs540fq17gw0000gn/T/playwright_chromiumdev_profile-YCiaKS --remote-debugging-pipe --no-startup-window
+    <launched> pid=56435
+    [pid=56435][err] [0919/160718.548240:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+    [pid=56435][err] [0919/160718.584699:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+    [pid=56435][err] [0919/160718.610428:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.56435: Permission denied (1100)
+    Call log:
+      - <launching> /Users/marc/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/n8/bx4t2r951kn9bfs540fq17gw0000gn/T/playwright_chromiumdev_profile-YCiaKS --remote-debugging-pipe --no-startup-window
+      - <launched> pid=56435
+      - [pid=56435][err] [0919/160718.548240:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+      - [pid=56435][err] [0919/160718.584699:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+      - [pid=56435][err] [0919/160718.610428:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.56435: Permission denied (1100)
+      - [pid=56435] <gracefully close start>
+      - [pid=56435] <kill>
+      - [pid=56435] <will force kill>
+      - [pid=56435] exception while trying to kill process: Error: kill EPERM
+      - [pid=56435] <process did exit: exitCode=null, signal=SIGTRAP>
+      - [pid=56435] starting temporary directories cleanup
+      - [pid=56435] finished temporary directories cleanup
+      - [pid=56435] <gracefully close end>
+
+
+    Error Context: test-results/workbench-SW-01-ZJ-05-seed-1a6ec-rch-pagination-and-keyboard-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-SW-01-ZJ-05-seed-1a6ec-rch-pagination-and-keyboard-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-SW-01-ZJ-05-seed-1a6ec-rch-pagination-and-keyboard-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/browser/workbench.spec.ts:20:1 › SW-01 ZJ-05: seeded queue, live worker, search, pagination and keyboard 
+  5 did not run

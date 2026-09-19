@@ -1,26 +1,19 @@
-# Build status — 19 September 2026
+# ZenJev build status — 19 September 2026
 
-State: source/branding bootstrap prepared; application implementation has not started. No software-completion claim.
+The application is implemented in this separate local repository: all six functional screens, persisted synthetic data, PostgreSQL/Prisma schema, independent durable worker, mock/Jev decisions, guarded GitHub/Zendesk adapters, exact approvals, audit, reconciliation, privacy, evaluation and operational scripts. See [actual test report](test-report.md) for completed checks and remaining verification; implementation alone is not a passing test result.
 
-## Observed setup
+## Observed environment and route
 
-- Separate product repository: this `ZenJev` directory. Original complete brief and approved image preserved.
-- Harness checkout: `/Users/marc/Claude/wringer`, clean at `7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4`.
-- Built Wringer: `1.0.0-alpha.14`; Bun `1.4.2`; Node `v24.19.0`; npm `11.17.0`; Apple Container `1.3.1`.
-- Connected MCP workspace is an unrelated reports demonstration. Two existing stopped runs retain their original spent/uncertain reservations. Neither was modified, resumed or treated as ZenJev approval.
-- `container system status` and `container image list` both fail with `Error: The operation couldn’t be completed. Operation not permitted`, including after network permission was granted. Installed images, containment, resource/network enforcement and cleanup remain unmeasured.
-- PostgreSQL, `psql`, and Docker are not on PATH. Existing source runtime recipes do not provision PostgreSQL. Browser cache exists; browser execution is untested.
-- Metadata-only Wringer diagnostics found both requested provider Keychain entries. GitHub identity was verified as `marcoakes`. See credentials report.
-- No hosted ZenJev repository was accessible to the authenticated read-only lookup (HTTP 404). None was created.
+- Harness checkout `/Users/marc/Claude/wringer` was inspected at `7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4`; built Wringer alpha.14 / Bun1.4.2. No harness source was changed.
+- Connected MCP workspace belonged to an unrelated reports demo. Its stopped jobs/reservations/approvals were not reused or changed.
+- Apple Container1.3.1 `system status` and `image list` returned Operation not permitted. Containment and an ACP end-to-end journey remain unmeasured.
+- The conversation's delegated-review instruction authorised the prepared direct-build route. Codex and coding-session subagents built the product; standalone trusted-local Wringer checks supply machine evidence. No human approval was fabricated.
+- Node24.19.0, npm11.17.0, Next16.3.5, React19.3.0 and Prisma6.19.3 are locked. Native PostgreSQL17.10 initialization failed at shared-memory creation in the sandbox. The explicitly documented portable option persists PostgreSQL/WASM data with PGlite; native concurrency and Compose remain unverified here.
+- Dependency reads later stalled before app code, including tiny-file reads with negligible CPU. A fresh `npm ci --ignore-scripts` from the unchanged lockfile recovered Next version startup to0.22s. The old dependency directory is retained ignored under `.local/dependencies-before-reinstall`; it contains reproducible dependencies, not customer data. Build CPU parallelism and Node heap are bounded for this host.
+- Metadata-only Keychain diagnostics located the declared build-provider entries. No password was returned or injected into product code. GitHub preflight identity was verified as marcoakes; the intended repository lookup returned404. No remote repository was created.
 
-## Completed and outstanding
+## Delivery boundaries
 
-Completed: full 979-line specification read; repository boundary inspection; original PNG hash/dimensions confirmed; relative README link; executable asset checks; secret-free prerequisite evidence.
+No live Jev, Zendesk or application GitHub integration was contacted. No external ticket/issue mutation, paid provider smoke, separate API build worker, push, PR, visibility change or deployment occurred. Jev access remains pending. Mock metrics are simulation, not real model performance. Coding-app usage is not a measured Wringer provider bill.
 
-Outstanding: every functional application requirement, full SW-01–SW-12 checks, UI/browser portions of ZJ-01/ZJ-04/ZJ-05, migrations, data, worker, adapters, tests and application startup. Jev/Zendesk/live writes were not contacted. No model-provider smoke request or separate paid ACP worker ran. Codex and its local subagents performed preflight; their coding-app usage is not a Wringer provider-usage measurement.
-
-The brief's §5 and Part I §4 require an explicit owner choice before a direct build with standalone verification replaces the blocked contained route. Existing source and controller have not been changed to bypass that boundary. See the concrete [execution decision](execution-decision.md).
-
-## Resumable next action
-
-Select the documented trusted-local route, or make the declared contained runtime available and review a ZenJev-specific profile. Then freeze real acceptance definitions, implement the offline workflow, and execute source-bound checks. Never record owner approval or usability judgement on the owner's behalf. Remote delivery remains a separate decision.
+The full original979-line brief and1254×1254 PNG are preserved unchanged. The README uses the canonical relative image link. Startup is documented, idempotent and credential-free. Agent review is recorded separately from the owner's personal usability verdict; only actual executed evidence in the report should be read as a test result.

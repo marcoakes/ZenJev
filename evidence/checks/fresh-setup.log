@@ -1,0 +1,30 @@
+{"check":"fresh-portable-setup","phase":"migrate-empty-database"}
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "zenjev_test", schema "public" at "127.0.0.1:55435"
+
+5 migrations found in prisma/migrations
+
+Applying migration `202609190001_initial`
+Applying migration `202609190002_audit_append_only`
+Applying migration `202609190003_backlink_parent`
+Applying migration `202609190004_export_rate`
+Applying migration `202609190005_configurable_policy`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 202609190001_initial/
+    └─ migration.sql
+  └─ 202609190002_audit_append_only/
+    └─ migration.sql
+  └─ 202609190003_backlink_parent/
+    └─ migration.sql
+  └─ 202609190004_export_rate/
+    └─ migration.sql
+  └─ 202609190005_configurable_policy/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+{"check":"fresh-portable-setup","phase":"seed-first-pass"}
+{"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":13}
+{"check":"fresh-portable-setup","status":"failed","error":"Expected values to be strictly equal:\n+ actual - expected\n\n+ 1789636440000\n- 1789632840000\n        ^\n"}

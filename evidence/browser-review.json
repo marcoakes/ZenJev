@@ -1,0 +1,103 @@
+{
+  "reviewer": "Codex delegated agent",
+  "humanOwnerVerdict": null,
+  "recordedAt": "2026-09-19T15:49:48.314Z",
+  "baseURL": "http://127.0.0.1:3000",
+  "browser": "Codex in-app browser",
+  "data": "Synthetic fixtures",
+  "checks": [
+    {
+      "check": "Queue search and pagination",
+      "result": "passed",
+      "observed": "15 rows, page2, search returns8 known matching reports"
+    },
+    {
+      "check": "Exact preview approval and persisted receipt",
+      "result": "passed",
+      "observed": "UI proposed -> approved -> succeeded; saved receipt says Dry run — no external change; externalCalls0"
+    },
+    {
+      "check": "Three support reports match one issue",
+      "result": "passed",
+      "observed": "Engineering shows issue241,3tickets,3organisations after three UI approvals"
+    },
+    {
+      "check": "Ambiguous report abstains",
+      "result": "passed",
+      "observed": "Ticket1005 unknown40%, needs review, no clear match; override explanation required"
+    },
+    {
+      "check": "Threshold simulator",
+      "result": "passed",
+      "observed": "Held-out24 predictions;80% cutoff8eligible;99% cutoff0eligible; UI records no provider calls and unchanged24 saved predictions"
+    },
+    {
+      "check": "Settings persistence",
+      "result": "passed",
+      "observed": "Retention31 persisted through reload; restored30; live flags remain disabled"
+    },
+    {
+      "check": "Original artwork and keyboard dialog",
+      "result": "passed",
+      "observed": {
+        "alt": "ZenJev: a meditating ninja in pink, black and cream, with retro support-workflow panels.",
+        "display": [
+          301.5,
+          301.5
+        ],
+        "natural": [
+          1254,
+          1254
+        ]
+      },
+      "focus": "Close -> Back to workbench -> Close; Escape returns About trigger"
+    },
+    {
+      "check": "Failed evaluation prevents action preparation",
+      "result": "passed",
+      "ticket": "ticket-013",
+      "disabledAssociations": 10,
+      "issueDraftDisabled": true
+    },
+    {
+      "check": "Mobile navigation and queue width",
+      "result": "passed",
+      "heading": "Ticket queue",
+      "viewport": 390,
+      "width": 375
+    },
+    {
+      "check": "No-result search and clear",
+      "result": "passed",
+      "emptyHeading": "No tickets in this view"
+    },
+    {
+      "check": "Mobile ticket detail",
+      "result": "passed",
+      "heading": "Webhook retries stop after timeout",
+      "viewport": 390,
+      "width": 375
+    },
+    {
+      "check": "Mobile drawer keyboard and accessibility",
+      "result": "passed",
+      "closed": {
+        "hidden": "true",
+        "inert": true,
+        "visibility": "hidden"
+      },
+      "openedRole": "dialog",
+      "initialFocus": "Close navigation",
+      "backwardFocus": "About ZenJev",
+      "forwardFocus": "Close navigation",
+      "restoredFocus": "Open navigation"
+    }
+  ],
+  "retentionRestoredTo": 30,
+  "consoleObservations": [],
+  "limitations": [
+    "This is executed in-app browser review, not a passing Playwright or Axe suite.",
+    "Headless Chromium is blocked by macOS Mach bootstrap permissions.",
+    "No live providers, paid requests, external writes or publication."
+  ]
+}

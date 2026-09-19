@@ -1,0 +1,281 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model WorkspaceSettings {
+  id String @id @default("workspace")
+  dataMode String @default("demo")
+  jevMode String @default("mock")
+  allowLiveWrites Boolean @default(false)
+  allowLiveDataProcessing Boolean @default(false)
+  includeInternalNotes Boolean @default(false)
+  threshold Float @default(0.8)
+  policyThresholds Json @default("{\"routingConfidence\":0.8,\"engineering\":0.7,\"missingInfo\":0.5,\"multipleIssues\":0.5,\"matchProbability\":0.9,\"matchMargin\":0.15}")
+  teamCriteria Json @default("{\"support\":\"General product usage or setup assistance\",\"billing\":\"Invoices, charges or subscription administration\",\"identity\":\"Authentication, permissions or sign-in failures\",\"integrations\":\"Webhooks, external connectors or integration behaviour\",\"platform\":\"Core service failures or platform availability\",\"unknown\":\"Evidence is insufficient or no single team is appropriate\"}")
+  repositories Json
+  teamMappings Json
+  rubricVersion String @default("triage-v1")
+  replayState String @default("paused")
+  replayCursor Int @default(0)
+  retentionDays Int @default(30)
+  updatedAt DateTime @updatedAt
+}
+model Ticket {
+  id String @id
+  source String @default("synthetic")
+  account String @default("demo")
+  sourceId String
+  number String
+  subject String
+  organization String
+  currentTeam String @default("support")
+  status String @default("open")
+  reviewState String @default("pending")
+  version Int @default(1)
+  fingerprint String?
+  attachments Int @default(0)
+  incidentGroup String
+  active Boolean @default(true)
+  sourceUpdatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments TicketComment[]
+  snapshots TicketSnapshot[]
+  decisions DecisionRun[]
+  links TicketIssueLink[]
+  actions ProposedAction[]
+  @@unique([account, sourceId])
+  @@index([active, createdAt])
+}
+model TicketComment {
+  id String @id
+  ticketId String
+  ticket Ticket @relation(fields:[ticketId],references:[id],onDelete:Cascade)
+  sourceId String
+  visibility String
+  authorType String @default("customer")
+  text String
+  integrationReceipt Boolean @default(false)
+  createdAt DateTime
+  @@unique([ticketId,sourceId])
+}
+model TicketSnapshot {
+  id String @id @default(cuid())
+  ticketId String
+  ticket Ticket @relation(fields:[ticketId],references:[id],onDelete:Cascade)
+  ticketVersion Int
+  contentHash String
+  asOf DateTime
+  input Json
+  omissions Json
+  includeInternalNotes Boolean
+  createdAt DateTime @default(now())
+  decisions DecisionRun[]
+  @@index([ticketId,contentHash])
+}
+model GitHubIssue {
+  id String @id
+  repository String
+  number String
+  title String
+  body String
+  state String
+  labels Json
+  private Boolean
+  source String @default("synthetic")
+  createdAt DateTime
+  updatedAt DateTime
+  links TicketIssueLink[]
+  @@unique([repository,number])
+}
+model CandidateSnapshot {
+  id String @id @default(cuid())
+  decisionId String @unique
+  decision DecisionRun @relation(fields:[decisionId],references:[id],onDelete:Cascade)
+  candidates Json
+  retrievalVersion String
+  status String @default("succeeded")
+  asOf DateTime
+}
+model DecisionRun {
+  id String @id @default(cuid())
+  ticketId String
+  ticket Ticket @relation(fields:[ticketId],references:[id],onDelete:Cascade)
+  snapshotId String
+  snapshot TicketSnapshot @relation(fields:[snapshotId],references:[id],onDelete:Cascade)
+  ticketVersion Int
+  provider String
+  dataSource String
+  requestedModel String
+  reportedModel String?
+  status String
+  output Json?
+  error String?
+  inputTokens Int?
+  outputTokens Int?
+  providerLatencyMs Float?
+  processingLatencyMs Float?
+  createdAt DateTime @default(now())
+  candidateSnapshot CandidateSnapshot?
+  actions ProposedAction[]
+  @@index([ticketId,createdAt])
+}
+model TicketIssueLink {
+  id String @id @default(cuid())
+  ticketId String
+  ticket Ticket @relation(fields:[ticketId],references:[id],onDelete:Cascade)
+  issueId String
+  issue GitHubIssue @relation(fields:[issueId],references:[id],onDelete:Cascade)
+  status String @default("approved")
+  reviewer String
+  reason String?
+  decisionId String
+  createdAt DateTime @default(now())
+  @@unique([ticketId,issueId])
+}
+model ProposedAction {
+  id String @id @default(cuid())
+  ticketId String
+  ticket Ticket @relation(fields:[ticketId],references:[id],onDelete:Cascade)
+  decisionId String
+  decision DecisionRun @relation(fields:[decisionId],references:[id])
+  ticketVersion Int
+  type String
+  destination String
+  payload Json
+  payloadHash String
+  mode String
+  provider String
+  dataSource String
+  state String @default("proposed")
+  dedupKey String @unique
+  receipt Json?
+  error String?
+  parentActionId String?
+  remoteIssueId String?
+  remoteIssueUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  approvals Approval[]
+  attempts ActionAttempt[]
+  @@index([ticketId,state])
+  @@index([parentActionId])
+}
+model Approval {
+  id String @id @default(cuid())
+  actionId String
+  action ProposedAction @relation(fields:[actionId],references:[id],onDelete:Cascade)
+  reviewer String
+  reviewerRole String
+  bindingHash String
+  expiresAt DateTime
+  invalidatedAt DateTime?
+  createdAt DateTime @default(now())
+}
+model ActionAttempt {
+  id String @id @default(cuid())
+  actionId String
+  action ProposedAction @relation(fields:[actionId],references:[id],onDelete:Cascade)
+  operation String
+  state String
+  marker String
+  receipt Json?
+  error String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model AuditEvent {
+  id String @id @default(cuid())
+  actor String
+  action String
+  recordId String
+  provider String
+  outcome String
+  details Json
+  createdAt DateTime @default(now())
+  @@index([recordId,createdAt])
+}
+model SyncCursor {
+  id String @id
+  provider String
+  cursor String?
+  lastSuccessAt DateTime?
+  nextAllowedAt DateTime?
+  error String?
+  updatedAt DateTime @updatedAt
+}
+model WebhookReceipt {
+  id String @id
+  account String
+  ticketId String
+  bodyHash String
+  receivedAt DateTime @default(now())
+}
+model Job {
+  id String @id @default(cuid())
+  kind String
+  payload Json
+  dedupKey String @unique
+  state String @default("queued")
+  attempts Int @default(0)
+  maxAttempts Int @default(4)
+  availableAt DateTime @default(now())
+  leaseUntil DateTime?
+  claimedBy String?
+  lastError String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([state,availableAt,leaseUntil])
+}
+model EvaluationLabel {
+  id String @id
+  ticketId String
+  task String
+  split String
+  incidentGroup String
+  asOf DateTime
+  destination String
+  engineering Boolean
+  critical Boolean
+  issueId String?
+  datasetVersion String
+  @@unique([ticketId,task])
+}
+model EvaluationRun {
+  id String @id @default(cuid())
+  task String
+  split String
+  provider String
+  dataSource String
+  datasetVersion String
+  threshold Float
+  settings Json
+  predictions Json
+  metrics Json
+  providerCalls Int
+  createdAt DateTime @default(now())
+}
+model User {
+  id String @id @default(cuid())
+  username String @unique
+  passwordHash String
+  role String @default("reviewer")
+  createdAt DateTime @default(now())
+  sessions Session[]
+}
+model Session {
+  id String @id
+  userId String
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  csrfToken String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+model WorkerHealth {
+  id String @id
+  lastSeenAt DateTime
+  lastJobId String?
+}

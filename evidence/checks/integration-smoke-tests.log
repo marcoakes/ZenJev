@@ -1,0 +1,10 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev[39m
+
+ [32m✓[39m tests/integration-smoke.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 16:51:21
+[2m   Duration [22m 392ms[2m (import 45%, transform 38%, tests 15%, worker 2%)[22m
+
