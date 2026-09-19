@@ -97,6 +97,8 @@ try {
   await readiness('http://127.0.0.1:3001/api/settings', [authApp], true);
   try { await verify('wringer-workflows', ['fresh-offline-setup', 'branding', 'domain-provider-contracts', 'persistence-workflow', 'browser']); }
   catch (error) { failures.push(error.message); console.error(error.message); }
+  try { await verify('wringer-auth', ['browser-auth']); }
+  catch (error) { failures.push(error.message); console.error(error.message); }
   if (git('rev-parse', 'HEAD') !== source || git('status', '--porcelain')) throw new Error('Source changed during CI verification');
   if (failures.length) throw new Error(failures.join('; '));
   report.status = 'passed';

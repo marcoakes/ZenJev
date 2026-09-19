@@ -41,3 +41,9 @@ gates:
   - id: native-concurrency
     run: node scripts/check-native.mjs
     timeout: 180
+  - id: browser-auth
+    run: node scripts/check.mjs browser tests/browser/auth.spec.ts
+    timeout: 180
+    artifacts:
+      max_bytes: 5242880
+      total_bytes: 52428800
