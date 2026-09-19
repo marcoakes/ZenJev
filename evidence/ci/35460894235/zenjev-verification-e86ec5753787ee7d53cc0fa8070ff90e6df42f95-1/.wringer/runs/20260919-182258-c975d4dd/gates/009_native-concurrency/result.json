@@ -1,0 +1,11 @@
+{
+  "gate_id": "native-concurrency",
+  "command": "node scripts/check-native.mjs",
+  "exit_code": 0,
+  "duration_ms": 9940,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "passed"
+}

@@ -1,6 +1,6 @@
 # Integrations
 
-The offline application uses synthetic tickets and issues plus a deterministic mock decision provider. Real adapters are implemented and exercised with intercepted HTTP contracts. No Jev, Zendesk or GitHub account was contacted by the product verification tests; no external mutation was performed. A configured credential is shown as **configured, unverified**, never as a successful connection.
+The offline application uses synthetic tickets and issues plus a deterministic mock decision provider. Real adapters are implemented and ordinary verification tests intercept HTTP. Separate bounded live checks succeeded for one synthetic Jev request and one GitHub repository metadata GET; [release verification](release-verification.md) records their exact scope. No real issue/ticket was read or mutated. A configured credential is shown as **configured, unverified** until a connection has actually been checked; the saved smoke evidence does not automatically change workspace configuration.
 
 ## Credential and activation boundary
 
@@ -71,6 +71,8 @@ DATA_MODE=live ALLOW_LIVE_WRITES=false ALLOW_LIVE_DATA_PROCESSING=false \
 
 This performs one repository metadata GET. It confirms authentication/visibility metadata for that target, not issue-read or write permission.
 
+The actual [19 September smoke](../evidence/live/github-smoke-20260919-active-helper.json) succeeded for `marcoakes/ZenJev`, returning `repositoryPrivate: true` after exactly one GET, with a 15-second deadline and zero retries. The existing active-account helper was captured privately and supplied only to the clean child environment; the credential was never printed, persisted or put in arguments. No issue retrieval, customer-data processing, model call or mutation occurred. The [earlier explicit-user lookup failure](../evidence/live/github-smoke-20260919.json) remains unchanged as historical evidence; using the active helper required no source, scope or authentication change.
+
 For Zendesk, inject `ZENDESK_SUBDOMAIN`, `ZENDESK_OAUTH_CLIENT_ID`, `ZENDESK_OAUTH_CLIENT_SECRET`, and `ZENDESK_OAUTH_SCOPES` privately. The smoke accepts only `read` and/or `tickets:read` scopes; write scopes are rejected before HTTP. Replace `123` with an explicitly reviewed ticket:
 
 ```sh
@@ -80,4 +82,4 @@ DATA_MODE=live ALLOW_LIVE_WRITES=false ALLOW_LIVE_DATA_PROCESSING=false \
 
 This performs at most one OAuth token-acquisition POST and one ticket GET; token issuance is the only permitted POST. Each request has a 15-second deadline and zero retries. Output contains fixed status/provider fields, request and record counts, zero model/mutation counts, and GitHub privacy metadata where applicable. It excludes ticket text, target/account identifiers, tokens and exception/response bodies. A failed check exits nonzero with an error category and HTTP status only.
 
-Offline tests in [integration-smoke.test.ts](../tests/integration-smoke.test.ts) intercept HTTP and assert fail-closed flags/targets/scopes, the exact bounded request sequences, no retries and canary-free output. **No real provider smoke was performed during this build.** Token discovery, documentation checks and contract tests do not constitute live authentication or production readiness.
+Offline tests in [integration-smoke.test.ts](../tests/integration-smoke.test.ts) intercept HTTP and assert fail-closed flags/targets/scopes, exact bounded request sequences, no retries and canary-free output. The separate live Jev and GitHub metadata checks provide only their recorded connectivity/schema/visibility evidence. GitHub issue retrieval/ingestion and writes, Zendesk OAuth/ingestion/webhooks, all customer-data workflows and production readiness remain unverified.

@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "zenjev.ci-verification.v1",
+  "sourceCommit": "e86ec5753787ee7d53cc0fa8070ff90e6df42f95",
+  "harnessCommit": "7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4",
+  "startedAt": "2026-09-19T18:22:24.145Z",
+  "runtime": "v24.20.0",
+  "platform": "linux",
+  "dataMode": "synthetic",
+  "provider": "mock",
+  "commands": [
+    {
+      "label": "migrate-demo",
+      "binary": "/opt/hostedtoolcache/node/24.20.0/x64/bin/node",
+      "args": [
+        "node_modules/prisma/build/index.js",
+        "migrate",
+        "deploy"
+      ],
+      "startedAt": "2026-09-19T18:22:24.331Z",
+      "finishedAt": "2026-09-19T18:22:27.446Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "migrate-test",
+      "binary": "/opt/hostedtoolcache/node/24.20.0/x64/bin/node",
+      "args": [
+        "node_modules/prisma/build/index.js",
+        "migrate",
+        "deploy"
+      ],
+      "startedAt": "2026-09-19T18:22:27.453Z",
+      "finishedAt": "2026-09-19T18:22:28.423Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "seed-demo-first",
+      "binary": "/opt/hostedtoolcache/node/24.20.0/x64/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/seed.ts"
+      ],
+      "startedAt": "2026-09-19T18:22:28.423Z",
+      "finishedAt": "2026-09-19T18:22:29.368Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "seed-demo-second",
+      "binary": "/opt/hostedtoolcache/node/24.20.0/x64/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/seed.ts"
+      ],
+      "startedAt": "2026-09-19T18:22:29.368Z",
+      "finishedAt": "2026-09-19T18:22:30.151Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "wringer-build",
+      "binary": "/home/runner/work/ZenJev/ZenJev/wringer/dist/wring",
+      "args": [
+        "verify",
+        "--repo",
+        "/home/runner/work/ZenJev/ZenJev/ZenJev",
+        "--serial",
+        "--gate",
+        "lint",
+        "--gate",
+        "typecheck",
+        "--gate",
+        "production-build",
+        "--json"
+      ],
+      "startedAt": "2026-09-19T18:22:30.151Z",
+      "finishedAt": "2026-09-19T18:22:58.224Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "wringer-native",
+      "binary": "/home/runner/work/ZenJev/ZenJev/wringer/dist/wring",
+      "args": [
+        "verify",
+        "--repo",
+        "/home/runner/work/ZenJev/ZenJev/ZenJev",
+        "--serial",
+        "--gate",
+        "native-concurrency",
+        "--json"
+      ],
+      "startedAt": "2026-09-19T18:22:58.224Z",
+      "finishedAt": "2026-09-19T18:23:08.531Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "wringer-workflows",
+      "binary": "/home/runner/work/ZenJev/ZenJev/wringer/dist/wring",
+      "args": [
+        "verify",
+        "--repo",
+        "/home/runner/work/ZenJev/ZenJev/ZenJev",
+        "--serial",
+        "--gate",
+        "fresh-offline-setup",
+        "--gate",
+        "branding",
+        "--gate",
+        "domain-provider-contracts",
+        "--gate",
+        "persistence-workflow",
+        "--gate",
+        "browser",
+        "--json"
+      ],
+      "startedAt": "2026-09-19T18:23:10.087Z",
+      "finishedAt": "2026-09-19T18:23:45.321Z",
+      "code": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    {
+      "label": "wringer-auth",
+      "binary": "/home/runner/work/ZenJev/ZenJev/wringer/dist/wring",
+      "args": [
+        "verify",
+        "--repo",
+        "/home/runner/work/ZenJev/ZenJev/ZenJev",
+        "--serial",
+        "--gate",
+        "browser-auth",
+        "--json"
+      ],
+      "startedAt": "2026-09-19T18:23:45.321Z",
+      "finishedAt": "2026-09-19T18:24:03.805Z",
+      "code": 1,
+      "signal": null,
+      "timedOut": false
+    }
+  ],
+  "databases": [
+    {
+      "name": "demo",
+      "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "database": "zenjev_demo",
+      "version_number": 170011
+    },
+    {
+      "name": "test",
+      "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "database": "zenjev_test",
+      "version_number": 170011
+    }
+  ],
+  "bundles": [
+    {
+      "path": ".wringer/runs/20260919-182230-e1d96538",
+      "sourceCommit": "e86ec5753787ee7d53cc0fa8070ff90e6df42f95",
+      "result": {
+        "status": "passed",
+        "failed_gate": null
+      }
+    },
+    {
+      "path": ".wringer/runs/20260919-182258-c975d4dd",
+      "sourceCommit": "e86ec5753787ee7d53cc0fa8070ff90e6df42f95",
+      "result": {
+        "status": "passed",
+        "failed_gate": null
+      }
+    },
+    {
+      "path": ".wringer/runs/20260919-182310-176d21e4",
+      "sourceCommit": "e86ec5753787ee7d53cc0fa8070ff90e6df42f95",
+      "result": {
+        "status": "passed",
+        "failed_gate": null
+      }
+    },
+    {
+      "path": ".wringer/runs/20260919-182345-773f254d",
+      "sourceCommit": "e86ec5753787ee7d53cc0fa8070ff90e6df42f95",
+      "result": {
+        "status": "failed",
+        "failed_gate": "browser-auth"
+      }
+    }
+  ],
+  "status": "failed",
+  "limitations": [
+    "Synthetic fixture tests do not validate production credentials or live provider writes.",
+    "Human usability approval is not manufactured by CI."
+  ],
+  "error": "wringer-auth failed; inspect work/ci/wringer-auth.log",
+  "finishedAt": "2026-09-19T18:24:04.816Z"
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": "wringer.checks.v1",
+  "checks": [
+    {
+      "gate_id": "fresh-offline-setup",
+      "run": "node scripts/check-fresh-setup.mjs",
+      "run_sha256": "ebbfbb8708485189b60a92ada47b05d6a52e7009bad077b480a8a61ed849eb97",
+      "files": {
+        "scripts/check-fresh-setup.mjs": "38be1426a8f586ccbbad671310ebc15bb57a5f4c3292bf41b2137ac2c36445ac"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "branding",
+      "run": "node --test checks/branding.test.mjs",
+      "run_sha256": "4ffdca910aadcc5d1bcdf0ef97148dc43dd48ad55e72e8d2e05a2c66f6ad5f34",
+      "files": {
+        "checks/branding.test.mjs": "a553e7618e6d67249ada15dfc2502f6730cbba7e8dd2623d87cdaf6c46f5df0a"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "domain-provider-contracts",
+      "run": "node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts",
+      "run_sha256": "990f7c0854afc8be95049e39b0605120b1c2fa0a600a0caec0e2d8000214468f",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f",
+        "tests/domain.test.ts": "1ea51b1699967b1fdffa6b0dedb47b758af98bbec118e79169827218fe46070e",
+        "tests/integration-smoke.test.ts": "a59545bca9e0ccf641289781beec3de2b9a89a559f68c9a33a20de9d0d7a8237",
+        "tests/keychain-jev.test.ts": "a831ef67b190111ac87d8ca0435d0a15285f2aa841d4f8037eacd49da7697eaa",
+        "tests/providers.test.ts": "b3b5098f5831fb5b8ee4cdac8a0aef3b0657c0adfed036d6e1cb597f7de5ff9d"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "persistence-workflow",
+      "run": "node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts",
+      "run_sha256": "16e81b9b3b7b039e118f2ab185584f6fa6df4ca11dd10bdd6247bb3cfd54871c",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f",
+        "tests/backend.test.ts": "79dd2b175e44d836d2900ef802626b551981ef36b913d0417fcab88ee86217a9",
+        "tests/provider-integration-orchestration.test.ts": "38484b60354fc5bc500bea4353a2e7a5922e8cc79e9172c53bb15e2e2d9877c0"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "browser",
+      "run": "node scripts/check.mjs browser tests/browser/workbench.spec.ts",
+      "run_sha256": "6c53d38213a8fade85600f9877e1e78ed806348efb2232696fb5b7d586404ec4",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f",
+        "tests/browser/workbench.spec.ts": "9e283cab2b9b6ef296071767876029de212dc5b52a91a1389329e4b2a4586289"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "lint",
+      "run": "node scripts/check.mjs lint",
+      "run_sha256": "3c85eeeca7f6a4ed9de5d3fa5aad9698f6e3a94880be68e1d2d09868cf1c8eb3",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "typecheck",
+      "run": "node scripts/check.mjs typecheck",
+      "run_sha256": "4361ef561f8604689fdfeda39693650be831dfe5090e49e568355bc793d77884",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "production-build",
+      "run": "node scripts/check.mjs build",
+      "run_sha256": "dfe4595bda882d9508311b77ab65b39030a6b1d7cb0afcd9b2de5094e307090d",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "native-concurrency",
+      "run": "node scripts/check-native.mjs",
+      "run_sha256": "18708797a6dc866c56242add10dfb1a49749465010bd9d4aea481db39ed53e88",
+      "files": {
+        "scripts/check-native.mjs": "5b925e401dd57e9cc452bb915ac68828808746aaf3fe7bca63d9c85f2eabe77c"
+      },
+      "coverage": "command-and-files"
+    },
+    {
+      "gate_id": "browser-auth",
+      "run": "node scripts/check.mjs browser tests/browser/auth.spec.ts",
+      "run_sha256": "37b21bf2be157745a841a17dca985a9ef5665ea78ea2eb55e786ff66b901fa3e",
+      "files": {
+        "scripts/check.mjs": "b5d9a878448efbd193c18b80d199b8cb7cc4c4676bad178752b643c2cd70fc1f",
+        "tests/browser/auth.spec.ts": "9e26721b553d71b1abcc3749cbc2c0f8378f9747d36235225f56ae981ed922f6"
+      },
+      "coverage": "command-and-files"
+    }
+  ],
+  "limits": [
+    "Only files explicitly named in a shell command are hashed. A command-only identity cannot detect changes in implicitly discovered checks.",
+    "Identity is captured before execution. A gate that edits a check, executes it and restores it can evade a before/after comparison."
+  ]
+}

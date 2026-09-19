@@ -1,0 +1,17 @@
+{
+  "schema": "zenjev-publication.v1",
+  "recordedAt": "2026-09-19T18:58:46.106650+00:00",
+  "repository": {
+    "defaultBranchRef": {
+      "name": "main"
+    },
+    "isPrivate": true,
+    "nameWithOwner": "marcoakes/ZenJev",
+    "url": "https://github.com/marcoakes/ZenJev"
+  },
+  "testedSourceCommit": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "sourcePushVerified": true,
+  "hostedDeployment": false,
+  "visibilityChanged": false,
+  "note": "Owner authorised private repository creation and source publication. Later documentation-only delivery commit is recorded in the external delivery receipt."
+}

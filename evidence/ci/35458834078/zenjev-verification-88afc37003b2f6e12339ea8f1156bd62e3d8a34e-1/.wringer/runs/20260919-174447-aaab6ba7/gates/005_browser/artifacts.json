@@ -1,0 +1,67 @@
+{
+  "schema_version": "wringer.gate-artifacts.v1",
+  "gate": "browser",
+  "artifacts": [
+    {
+      "name": "browser-results.json",
+      "bytes": 14070,
+      "sha256": "a52aca8803e8021e5e9e72c98414d363908cf30941a0f196f0bb6febe535111f",
+      "media_type": "application/json",
+      "redacted": true
+    },
+    {
+      "name": "detail-mobile.png",
+      "bytes": 264368,
+      "sha256": "c041e059f3601e9add120d3fddac1ad8b79a2931d3afc3ffe7e286c6aeda57a7",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "engineering-desktop.png",
+      "bytes": 120702,
+      "sha256": "d4b7db50a298d9e901e65235eae91f1b1edee8978405e199243d0ec382035159",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "evaluation-desktop.png",
+      "bytes": 201892,
+      "sha256": "8fc4c0c8bee71783d7a9a40c8bcc18992fef57fae24ecc963ac23fe395abbc9a",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "playwright/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "media_type": "application/json",
+      "redacted": true
+    },
+    {
+      "name": "ticket-detail-desktop.png",
+      "bytes": 336160,
+      "sha256": "30e088a065a33f7d9b922d3e6bf13183736306e3b07077597881ff456fcc7b7e",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "tickets-desktop.png",
+      "bytes": 226651,
+      "sha256": "44350cf07a1840f3854c520d537eff60ccdfa212a664e6810285e9aa41cc5bc6",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "tickets-mobile.png",
+      "bytes": 135444,
+      "sha256": "10e2a6e04d215eef14d834d89cf6299561cc5b8a8fd44bc75aa6d6a317d3b971",
+      "media_type": "image/png",
+      "redacted": false
+    }
+  ],
+  "omitted": [],
+  "limits": [
+    "Artifacts record bytes and media types, not what the artifacts demonstrate. Binary artifacts cannot be redacted and are explicitly marked redacted:false.",
+    "Gate artifacts remain local and must not be transmitted by delivery by default."
+  ]
+}

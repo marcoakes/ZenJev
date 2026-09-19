@@ -1,0 +1,11 @@
+{
+  "gate_id": "fresh-offline-setup",
+  "command": "node scripts/check-fresh-setup.mjs",
+  "exit_code": 0,
+  "duration_ms": 7899,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "passed"
+}

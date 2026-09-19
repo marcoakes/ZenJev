@@ -1,0 +1,199 @@
+schema_version: wringer.spec.v1
+# This is a source-controlled acceptance definition, not a fabricated owner approval.
+# In the inspected harness, approved:false permits standalone gate execution but
+# suppresses acceptance.json. Read actual gate results and the requirement matrix.
+approved: false
+title: ZenJev — complete support workbench and honest verification evidence
+intent: |
+  Build the complete application in the separate ZenJev repository,
+  using marcoakes/wringer as the development and verification harness.
+
+  Use the supplied public/branding/zenjev-hero.png unchanged.
+  Keep its relative README link and apply the documented pink,
+  black and cream visual identity to the app.
+
+  Follow all existing Keychain, mock-Jev, approval, testing and
+  handoff requirements. Deliver working software and actual test
+  evidence, not another proposal.
+open_questions: []
+criteria:
+  - id: SW-01
+    title: Fresh offline setup, migration and idempotent seed work without external credentials
+    required: true
+    guidance: >-
+      Inspect fresh-offline-setup, persistence-workflow and browser results. A genuinely empty
+      database must accept every migration; two seeds must preserve 100 synthetic tickets,
+      20 issues, 12 organisations, separate evaluator labels and immutable source snapshots.
+      The documented application and separate worker must reach a usable synthetic/mock
+      queue without external credentials. Runtime provenance is mandatory: portable PGlite
+      results do not establish native PostgreSQL startup or a clean dependency installation.
+      This also covers the no-credential-startup acceptance requirement.
+  - id: SW-02
+    title: Three differently worded synthetic reports can link to the same known issue; ambiguous reports remain in review
+    required: true
+    guidance: >-
+      Inspect persistence-workflow, domain-provider-contracts and browser results. All three
+      webhook reports must select the same stored issue identity, retain distinct affected
+      organisations, support approved local associations and appear together on the engineering
+      board. The ambiguous sign-in report must remain in review without an invented match.
+      These are synthetic workflow results, not measurements of live Jev accuracy.
+  - id: SW-03
+    title: Synthetic data can never cause a real external write, even when credentials are present
+    required: true
+    guidance: >-
+      Inspect direct server/worker negatives and adapter write-call counts in persistence-workflow
+      and domain-provider-contracts, plus the browser dry-run journey. Deliberately supplied fake
+      credentials and enabled flags must still leave synthetic actions dry-run, with zero provider
+      writes or write-related metadata calls. Persist the intended mutation and an explicit
+      Dry run — no external change receipt. Do not substitute UI-disabled controls for enforcement.
+  - id: SW-04
+    title: A failed or missing live Jev provider never silently becomes a mock success
+    required: true
+    guidance: >-
+      Inspect the real native Jev HTTP request/response contract fixtures and error assertions in
+      domain-provider-contracts and the failed-run records in persistence-workflow. Preserve requested
+      provider/model provenance, explicit errors and unknown usage when absent. A missing key,
+      authentication failure, timeout or malformed response must not substitute mock, Claude or
+      Codex output. Successful mocked HTTP contracts do not claim live connectivity or model quality.
+  - id: SW-05
+    title: Edited previews and stale ticket snapshots invalidate prior approval
+    required: true
+    guidance: >-
+      Inspect persistence-workflow and domain-provider-contracts for exact payload, destination,
+      source ticket, ticket/decision version, provider/data/action mode, reviewer and expiry binding.
+      Edits must invalidate approval; stale or unauthorised actions must not execute. Controlled
+      interleavings must prevent a late edit from resetting an executing action or a late approval
+      from authorising an edited preview. Native multi-session concurrency remains a separate,
+      presently unverified runtime property.
+  - id: SW-06
+    title: Duplicate webhooks, worker crashes, expired leases and ambiguous writes do not cause blind repeated actions
+    required: true
+    guidance: >-
+      Inspect persistence-workflow and provider-integration orchestration assertions for atomic
+      lease claims, recovery, deduplication, bounded retries and persisted sync cursors. Valid signed
+      webhooks must enqueue durably once; invalid, stale, oversized or replayed notifications must
+      not create duplicate work. Cursor recovery must not skip a page. An uncertain mutation must
+      require reconciliation, and a created issue must survive backlink failure so only the separately
+      approved missing step is attempted. Distinguish injected failures and portable scheduling from
+      native crash/concurrency tests or actual remote reconciliation.
+  - id: SW-07
+    title: Internal notes, secrets and disallowed customer information stay out of GitHub drafts and portable evidence
+    required: true
+    guidance: >-
+      Inspect domain-provider-contracts, persistence-workflow and final artifact inspection. Exclude
+      internal notes from model input by default, preserve visibility, record opt-in and prohibit
+      copying internal-note evidence into engineering drafts. Redact known identifiers and secret
+      canaries, strip build credentials from child runtimes, prevent active markup/remote-image loads
+      and never fetch ticket-supplied URLs or attachments. Canary tests establish bounded behavior;
+      automated redaction is imperfect and does not replace inspection of final logs and artifacts.
+  - id: SW-08
+    title: Held-out labels and future ticket information never enter prediction context
+    required: true
+    guidance: >-
+      Inspect domain-provider-contracts and persistence-workflow for separate evaluator labels,
+      incident-level split integrity, immutable source snapshots and explicit decision timestamps.
+      Initial routing and later engineering escalation must use only their permitted snapshot.
+      Future comments, edited future subjects, final assignments, resolution data and issue content
+      newer than the decision timestamp must not enter provider or retrieval input. The provider
+      must not import evaluator labels. Validate this on fixtures without claiming unseen live-data quality.
+  - id: SW-09
+    title: Threshold changes recompute saved prediction metrics without new provider calls or live routing
+    required: true
+    guidance: >-
+      Inspect domain-provider-contracts, persistence-workflow and the browser threshold simulator.
+      Recompute from frozen predictions, labels and policy provenance; preserve failed evaluations
+      and correct denominators, missing labels, abstentions, zero-denominator N/A results and distinct
+      retrieval/decision failures. Confirm zero additional provider calls. The control must remain a
+      routing review-threshold simulator and must not approve actions or enable live automation.
+  - id: SW-10
+    title: Non-allowlisted destinations, unsupported actions and unauthorised requests are rejected server-side
+    required: true
+    guidance: >-
+      Inspect domain-provider-contracts and persistence-workflow for fixed team options, stored
+      candidate bounds, allowlisted destinations, authenticated roles, session/origin/CSRF checks and
+      bounded login handling. Restrict the local bypass to loopback synthetic data. Writes require
+      current approval, real data, live Jev and explicit live-processing/write controls. Re-fetch private
+      repository visibility, prohibit public-repository writes and preserve unrelated Zendesk tags and
+      fields using safe_update/updated_stamp. No mocked contract is a live-account verification.
+  - id: SW-11
+    title: The reviewer can inspect the ticket, uncertainty, issue candidate and exact proposed action
+    required: true
+    guidance: >-
+      Inspect browser assertions and rendered evidence for conversation chronology, visible
+      public/internal distinctions, omitted-context warnings, saved distributions/policy, model/mode
+      provenance, bounded issue candidates, editable exact previews, local associations, approval and
+      receipt history. Check real controls and persisted outcomes rather than static screenshots alone.
+      The separate HUMAN-USABILITY criterion preserves the required genuine owner judgment; passing
+      browser tests or delegated agent inspection cannot supply that judgment.
+  - id: SW-12
+    title: Handoff evidence names the exact checked source, data/model modes, commands and unmet requirements
+    required: true
+    guidance: >-
+      This is intentionally not presented as a runtime gate pass. Inspect the final test report,
+      source commit/fingerprint, sealed Wringer bundle, startup instructions, requirement matrix and
+      screenshot/trace paths. Separate implementation from actual execution, live from mocked
+      integrations, portable from native PostgreSQL, contained from standalone trusted-local checks,
+      agent review from owner judgment, and local delivery from publication. Include failures, skips,
+      missing approvals and reproducible next steps. Documentation existence alone does not prove this.
+  - id: ZJ-01
+    title: Product, README and UI identity is ZenJev; the intended target is marcoakes/ZenJev and Wringer remains separate
+    required: true
+    guidance: >-
+      Inspect the branding gate for repository/package identity and rendered/source evidence for
+      application metadata and navigation. Preserve the separate product repository and lowercase
+      zenjev package identifier. A named GitHub destination must not be described as created or published
+      without a separate observed and authorised remote operation.
+  - id: ZJ-02
+    title: The approved PNG exists at the canonical tracked path without alteration
+    required: true
+    guidance: >-
+      The branding gate must decode the real tracked public/branding/zenjev-hero.png, establish
+      1254 by 1254 dimensions and SHA-256
+      12d814fe08a70d57764a0c8d27ad6b0bb43f9b7706407b79a6d05217c1a54d7d,
+      and verify that Git does not ignore or filter it. No replacement, recolouring, crop or text pointer
+      may substitute for the original artwork.
+  - id: ZJ-03
+    title: The README uses a working relative link to the supplied artwork
+    required: true
+    guidance: >-
+      The branding gate must resolve the root README embed public/branding/zenjev-hero.png with the
+      specified alt text. Reject absolute machine paths, sandbox URLs, attachment dependencies and
+      nonexistent files. Keep the real text heading and product description alongside the artwork.
+  - id: ZJ-04
+    title: The app serves the image offline without distortion and remains usable on desktop and a narrow viewport
+    required: true
+    guidance: >-
+      The browser gate must verify the local image response, natural dimensions, exact alt text,
+      square uncropped rendering and absence of external asset requests. Desktop and narrow layouts
+      must retain usable primary actions without document overflow. Use the actual rendered app;
+      the approved poster is not a screenshot of working software.
+  - id: ZJ-05
+    title: The branded UI remains an operational workbench with simulation provenance and accessibility intact
+    required: true
+    guidance: >-
+      Inspect browser checks and rendered evidence for readable tables, semantic controls, keyboard
+      focus, loading/error states, explicit data/provider/write badges and pink, black and cream styling.
+      Keep the queue primary and the full poster in a compact About surface. Serious accessibility
+      violations, console errors, broken primary controls or misleading live/model-performance labels
+      must not be hidden by decorative branding. Accessibility automation is not a complete human audit.
+  - id: HUMAN-USABILITY
+    title: The owner personally judges the current workbench understandable and useful
+    required: true
+    human: true
+    guidance: >-
+      Preserve the brief's separate genuine human criteria: the queue is understandable; uncertainty
+      is not misleading; internal and public content are visibly distinct; the precise proposed action
+      is sufficiently clear to approve; and the application feels useful. The owner must inspect the
+      current source-bound application and supply their own judgment. Codex/subagent review, screenshots,
+      browser checks and the delegated engineering instruction must not be recorded as Marc's personal
+      judgment, signature or human-presence event. No judgment is supplied by this file.
+tasks:
+  - id: source-bound-final-verification
+    brief: docs/execution-decision.md
+    dir: .
+    objective: >-
+      Run the existing declared standalone gates against the committed ZenJev source, preserve their
+      actual outcomes and execution limits, and complete the independent requirement-to-evidence matrix.
+      Do not launch new paid workers, fabricate an approved spec or human judgment, mutate the Wringer
+      harness, or publish the product. This entry describes local verification work only; it is not a
+      spending grant, future live activation or remote delivery approval.

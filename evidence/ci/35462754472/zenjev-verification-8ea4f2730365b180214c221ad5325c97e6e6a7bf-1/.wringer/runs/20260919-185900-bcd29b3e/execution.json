@@ -1,0 +1,13 @@
+{
+  "schema_version": "wringer.execution.v1",
+  "backend": "local",
+  "execution_mode": "trusted_local",
+  "gates": [
+    "browser-auth"
+  ],
+  "worker_execution": null,
+  "limits": [
+    "A local command runs with the invoking user's privileges. A container record describes requested runtime flags; it does not claim resistance to a container escape.",
+    "Only environment names explicitly allowed are forwarded to containers. Files in the writable repository mount remain accessible to the commands it runs."
+  ]
+}

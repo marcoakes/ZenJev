@@ -1,0 +1,11 @@
+{
+  "gate_id": "browser",
+  "command": "node scripts/check.mjs browser tests/browser/workbench.spec.ts",
+  "exit_code": 0,
+  "duration_ms": 25866,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "passed"
+}

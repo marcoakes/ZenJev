@@ -1,0 +1,18 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/home/runner/work/ZenJev/ZenJev/ZenJev[39m
+
+[90mstdout[2m | tests/native-concurrency.test.ts[2m > [22m[2mNative PostgreSQL 17: independent processes, real locks and crash recovery
+[22m[39m{"event":"native_database_verified","version":"PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit","independentBackendPids":[241,242]}
+
+ [32m✓[39m tests/native-concurrency.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 9418[2mms[22m[39m
+   [32m✓[39m Native PostgreSQL 17: independent processes, real locks and crash recovery [2m(4)[22m
+     [33m[2m✓[22m[39m a simultaneous approval cannot survive a replacement preview on another database connection[33m 910[2mms[22m[39m
+     [33m[2m✓[22m[39m two simultaneous independent workers claim a queued job exactly once[33m 679[2mms[22m[39m
+     [33m[2m✓[22m[39m a killed claimant is recovered by a fresh process after its real lease expires[33m 2734[2mms[22m[39m
+     [33m[2m✓[22m[39m a process killed after execution reservation is reconciled without replaying the action[33m 3273[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 19:22:58
+[2m   Duration [22m 9.60s[2m (tests 99%)[22m
+

@@ -1,0 +1,11 @@
+{
+  "gate_id": "typecheck",
+  "command": "node scripts/check.mjs typecheck",
+  "exit_code": 0,
+  "duration_ms": 6131,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "passed"
+}

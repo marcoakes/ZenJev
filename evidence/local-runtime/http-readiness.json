@@ -1,0 +1,81 @@
+{
+  "at": "2026-09-19T19:00:26.878Z",
+  "healthStatus": 200,
+  "health": {
+    "status": "ok",
+    "database": "connected",
+    "worker": {
+      "status": "healthy",
+      "lastSeenAt": "2026-09-19T19:00:26.600Z"
+    },
+    "workers": [
+      {
+        "id": "worker-9632",
+        "lastSeenAt": "2026-09-19T19:00:26.600Z",
+        "lastJobId": "cmu8r5g1h000cecdf3g8mkw4y"
+      }
+    ],
+    "jobs": [
+      {
+        "_count": 13,
+        "state": "succeeded"
+      }
+    ],
+    "sync": [],
+    "settings": {
+      "id": "workspace",
+      "dataMode": "demo",
+      "jevMode": "mock",
+      "allowLiveWrites": false,
+      "allowLiveDataProcessing": false,
+      "includeInternalNotes": false,
+      "threshold": 0.8,
+      "policyThresholds": {
+        "engineering": 0.7,
+        "matchMargin": 0.15,
+        "missingInfo": 0.5,
+        "multipleIssues": 0.5,
+        "matchProbability": 0.9,
+        "routingConfidence": 0.8
+      },
+      "teamCriteria": {
+        "billing": "Invoices, charges or subscription administration",
+        "support": "General product usage or setup assistance",
+        "unknown": "Evidence is insufficient or no single team is appropriate",
+        "identity": "Authentication, permissions or sign-in failures",
+        "platform": "Core service failures or platform availability",
+        "integrations": "Webhooks, external connectors or integration behaviour"
+      },
+      "repositories": [
+        "zenjev-demo/integrations",
+        "zenjev-demo/platform",
+        "zenjev-demo/identity"
+      ],
+      "teamMappings": {
+        "billing": "102",
+        "support": "101",
+        "unknown": null,
+        "identity": "103",
+        "platform": "105",
+        "integrations": "104"
+      },
+      "rubricVersion": "triage-v1",
+      "replayState": "paused",
+      "replayCursor": 0,
+      "retentionDays": 30,
+      "updatedAt": "2026-09-19T19:00:12.080Z",
+      "connections": {
+        "jev": "Mock \u2014 no credentials needed",
+        "github": "Not configured \u2014 synthetic issue index",
+        "zendesk": "Not configured \u2014 synthetic tickets"
+      },
+      "liveActivation": "Environment configuration, authenticated reviewer and explicit per-action approval required"
+    },
+    "liveIntegrationsVerified": false
+  },
+  "ticketsStatus": 200,
+  "ticketsTotal": 100,
+  "rows": 15,
+  "pageStatus": 200,
+  "pageIncludesZenJev": true
+}

@@ -1,0 +1,12 @@
+✔ ZJ-02: approved PNG bytes and fully decompressible image data (24.957163ms)
+✔ ZJ-03: root README resolves the exact relative image and alt text (2.194359ms)
+✔ ZJ-01 (repository portion): exact product and package identity (0.446013ms)
+✔ ZJ-02: canonical image is tracked and not ignored (6.517936ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.665214

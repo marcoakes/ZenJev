@@ -1,0 +1,9 @@
+bun install v1.4.2 (744846f84)
+
++ @types/bun@1.4.1
++ playwright@1.63.0
++ typescript@5.9.3
++ ajv@8.20.0
++ ajv-formats@3.0.1
+
+14 packages installed [199.00ms]

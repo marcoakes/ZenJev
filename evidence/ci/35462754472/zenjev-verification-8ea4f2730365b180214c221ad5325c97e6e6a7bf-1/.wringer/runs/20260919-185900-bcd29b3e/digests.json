@@ -1,0 +1,23 @@
+{
+  "schema_version": "wringer.digests.v1",
+  "algorithm": "sha256",
+  "files": {
+    ".wringer.yaml": "83f1763b4e72a086805998f4e0806806f5c82025bf9a252487ba33c26f34b3c6",
+    "checks.json": "c8e3207c37c2b1a6d95e3ba65e302a26ff76fc721677f6ddbe2c7997756bf087",
+    "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence.jsonl": "737e180fdbb44f03747d4ff098497094695031ff17fd5071816b294d3c53222f",
+    "execution.json": "a55603065336be6571a72ed9a9eaeeed767979d68b5f2e930f633fb6bb9c2d20",
+    "gates/010_browser-auth/artifacts.json": "e93cfbb2dbf73b62a14415a91d2b18502f2814471bc3829e507234cb20bce1db",
+    "gates/010_browser-auth/artifacts/browser-results.json": "13fca0acd0664218bd9cc9d8f968fe7d180eae0dab14c755d65e31f58111342c",
+    "gates/010_browser-auth/artifacts/playwright/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "gates/010_browser-auth/result.json": "aeb893b964322ba1bd6835154f835765dc57dc39f2a27582fb9032ae94d29dfe",
+    "gates/010_browser-auth/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/010_browser-auth/stdout.log": "07fdd8ad9053e5eafaf756ddde01c7f131f5d414ce02c933ab49e4bb787a0492",
+    "manifest.json": "8c305e8d7dec4c7d63b135dc02f6e5e4f96b64cb0adbec5063b1547948f2fd73",
+    "snapshot.json": "9aa3077784df2d08132d54c5621c1061114491b29bee843dd9d143b549cf675b",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.md": "c5e5862b2cde5ee1f13f092596360f17fc5942a73c06956712cae9f6e41ed13a",
+    "untracked.json": "122e9a353ad1734d4c4cc961738ddb2b2d7ed41d5df845b2fe62dc96b1af5584",
+    "wringer.spec.yaml": "0e1702ee0ddf67cf12f163772ee4a3504bd894ae396e1a70fc86aa0751126074"
+  }
+}

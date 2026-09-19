@@ -1,0 +1,15 @@
+{
+  "schema_version": "wringer.evidence.v1",
+  "run_id": "20260919-185722-917fe331",
+  "started_at": "2026-09-19T18:57:22.591Z",
+  "repo": {
+    "root": ".",
+    "head_sha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+    "branch": "main",
+    "dirty": false
+  },
+  "result": {
+    "status": "passed",
+    "failed_gate": null
+  }
+}

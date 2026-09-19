@@ -1,0 +1,53 @@
+{
+  "schema_version": "wringer.gate-artifacts.v1",
+  "gate": "browser",
+  "artifacts": [
+    {
+      "name": "detail-mobile.png",
+      "bytes": 264103,
+      "sha256": "43ff77fb6ebf626dbd4f60620807afdcce3ce3f986537dd0773679e889c8d757",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "engineering-desktop.png",
+      "bytes": 120452,
+      "sha256": "63987f285969bedf5a5a2dd0327e2baf65efb86ee7ef9d0e1b1610d778e70da6",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "evaluation-desktop.png",
+      "bytes": 201856,
+      "sha256": "e3a6b419bdab92a95f7dbd48d92ddd295217ebba2fc5ceb63e48cc0ff6c699fc",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "ticket-detail-desktop.png",
+      "bytes": 336349,
+      "sha256": "4b3f0cb1b15a3558dfc1f8485b6af8e836868aa29b3ecd769acbdf062934b43c",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "tickets-desktop.png",
+      "bytes": 226651,
+      "sha256": "44350cf07a1840f3854c520d537eff60ccdfa212a664e6810285e9aa41cc5bc6",
+      "media_type": "image/png",
+      "redacted": false
+    },
+    {
+      "name": "tickets-mobile.png",
+      "bytes": 135444,
+      "sha256": "10e2a6e04d215eef14d834d89cf6299561cc5b8a8fd44bc75aa6d6a317d3b971",
+      "media_type": "image/png",
+      "redacted": false
+    }
+  ],
+  "omitted": [],
+  "limits": [
+    "Artifacts record bytes and media types, not what the artifacts demonstrate. Binary artifacts cannot be redacted and are explicitly marked redacted:false.",
+    "Gate artifacts remain local and must not be transmitted by delivery by default."
+  ]
+}

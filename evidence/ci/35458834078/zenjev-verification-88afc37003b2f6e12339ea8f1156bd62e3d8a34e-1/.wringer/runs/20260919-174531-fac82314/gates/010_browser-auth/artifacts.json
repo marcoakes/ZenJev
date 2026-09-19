@@ -1,0 +1,32 @@
+{
+  "schema_version": "wringer.gate-artifacts.v1",
+  "gate": "browser-auth",
+  "artifacts": [
+    {
+      "name": "browser-results.json",
+      "bytes": 8505,
+      "sha256": "87cbdb3cc50043b78c1fbd03e072168647cd7cb5450ce1aad7d4df225b25e0f1",
+      "media_type": "application/json",
+      "redacted": true
+    },
+    {
+      "name": "playwright/.last-run.json",
+      "bytes": 145,
+      "sha256": "b01a833ff42aac223403bd02c8cc26179107dca3d786025f13daac0e0060bf12",
+      "media_type": "application/json",
+      "redacted": true
+    },
+    {
+      "name": "playwright/auth-A-11-real-reviewer-lo-37b02-nd-logout-on-synthetic-data-chromium/error-context.md",
+      "bytes": 10453,
+      "sha256": "f2bfac580435e07811e5123dcad4024b9b1614a71d2de6b4fcf818d0d6d25506",
+      "media_type": "text/markdown",
+      "redacted": true
+    }
+  ],
+  "omitted": [],
+  "limits": [
+    "Artifacts record bytes and media types, not what the artifacts demonstrate. Binary artifacts cannot be redacted and are explicitly marked redacted:false.",
+    "Gate artifacts remain local and must not be transmitted by delivery by default."
+  ]
+}

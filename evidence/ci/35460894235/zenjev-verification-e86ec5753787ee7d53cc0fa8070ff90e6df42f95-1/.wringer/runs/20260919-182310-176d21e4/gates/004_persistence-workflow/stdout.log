@@ -1,0 +1,14 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/home/runner/work/ZenJev/ZenJev/ZenJev[39m
+
+ [32m✓[39m tests/backend.test.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 3544[2mms[22m[39m
+   [32m✓[39m PostgreSQL persisted workflows (isolated test database) [2m(25)[22m
+     [33m[2m✓[22m[39m SW-01 idempotent seed persists 100 tickets, 20 issues, 12 organisations, 200 separate labels[33m 561[2mms[22m[39m
+     [33m[2m✓[22m[39m retention CLI dry-run and apply remove only selected old records and preserve audit[33m 599[2mms[22m[39m
+ [32m✓[39m tests/provider-integration-orchestration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 443[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m31 passed[39m[22m[90m (31)[39m
+[2m   Start at [22m 19:23:18
+[2m   Duration [22m 4.29s[2m (tests 97%, transform 2%, import 1%)[22m
+

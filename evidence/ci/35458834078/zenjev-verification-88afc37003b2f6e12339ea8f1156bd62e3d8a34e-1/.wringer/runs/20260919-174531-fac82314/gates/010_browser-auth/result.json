@@ -1,0 +1,11 @@
+{
+  "gate_id": "browser-auth",
+  "command": "node scripts/check.mjs browser tests/browser/auth.spec.ts",
+  "exit_code": 1,
+  "duration_ms": 3743,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "failed"
+}

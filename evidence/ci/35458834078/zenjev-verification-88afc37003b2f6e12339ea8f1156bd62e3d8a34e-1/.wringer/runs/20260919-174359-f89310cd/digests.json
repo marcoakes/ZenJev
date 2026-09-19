@@ -1,0 +1,26 @@
+{
+  "schema_version": "wringer.digests.v1",
+  "algorithm": "sha256",
+  "files": {
+    ".wringer.yaml": "83f1763b4e72a086805998f4e0806806f5c82025bf9a252487ba33c26f34b3c6",
+    "checks.json": "0ae9af4cfdf5ff4adbbba787b860b9b3e2d8ea626490e5f7a5184a3733569587",
+    "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence.jsonl": "5cb95e27c319c66cb70097f576a787352961402b68efa8b9261f451f10feb42c",
+    "execution.json": "915a2a5769dcebd4acd7d7a689e9a6a3a22108fe94dec0eec8415f8ded5d6292",
+    "gates/006_lint/result.json": "da7932cd464d637f822ebe14c195a515b8e2b9079ab58a434d59857562030fdf",
+    "gates/006_lint/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/006_lint/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/007_typecheck/result.json": "7389e8f4c3fa73d58a2696e1d2d5a5ba403ddbb8b65803d235311d011373fc84",
+    "gates/007_typecheck/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/007_typecheck/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/008_production-build/result.json": "b1157424b87d3d67ef72f557cf14e08244047f2d79253935939a5d0d20aafe9b",
+    "gates/008_production-build/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/008_production-build/stdout.log": "68a2e9140895ad6866dff6767332530d48c4606db690135d03767bfbbc2cf384",
+    "manifest.json": "a6b5755544fe20c29de5849843e5e364a75cf48228939d51a5b7132d0e1c259e",
+    "snapshot.json": "d973206a757744f7b735a1ed861bdd038d3e5272223ace8295079a2740c0a98f",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.md": "b123d93e897cfa6a2a0f61ad306e6a8f325a7a38833a5efc3d78359e5a3029e2",
+    "untracked.json": "122e9a353ad1734d4c4cc961738ddb2b2d7ed41d5df845b2fe62dc96b1af5584",
+    "wringer.spec.yaml": "0e1702ee0ddf67cf12f163772ee4a3504bd894ae396e1a70fc86aa0751126074"
+  }
+}

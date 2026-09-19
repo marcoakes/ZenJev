@@ -1,0 +1,16 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/home/runner/work/ZenJev/ZenJev/ZenJev[39m
+
+ [32m✓[39m tests/providers.test.ts [2m([22m[2m27 tests[22m[2m)[22m[32m 105[2mms[22m[39m
+ [32m✓[39m tests/domain.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/keychain-jev.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 136[2mms[22m[39m
+ [32m✓[39m tests/integration-smoke.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m61 passed[39m[22m[90m (61)[39m
+[2m   Start at [22m 18:41:44
+[2m   Duration [22m 1.37s[2m (import 40%, tests 35%, transform 23%, worker 2%)[22m
+
+[2m    Isolate [22m [33m4 workers spawned[39m[2m · ~104ms startup each (spawn + environment, per file)[22m
+[2m            [22m [2mat least ~311ms faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+

@@ -1,0 +1,298 @@
+{
+  "schemaVersion": "zenjev.ci-seal-audit.v1",
+  "auditKind": "Offline validation of downloaded evidence; no product tests or gates rerun",
+  "startedAt": "2026-09-19T17:51:59.988Z",
+  "githubRun": {
+    "id": 35458763894,
+    "url": "https://github.com/marcoakes/ZenJev/actions/runs/35458763894",
+    "status": "completed",
+    "conclusion": "success",
+    "sourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6"
+  },
+  "harness": {
+    "commit": "7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4",
+    "runtime": "Bun 1.4.2",
+    "importPath": "/Users/marc/Claude/wringer/packages/engine/src/io.ts",
+    "validationCall": "await validateDigests(bundleDirectory)"
+  },
+  "expectedSourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6",
+  "bundles": [
+    {
+      "path": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570",
+      "runId": "20260919-174048-cd631570",
+      "startedAt": "2026-09-19T17:40:48.856Z",
+      "finishedAt": "2026-09-19T17:41:23.728Z",
+      "sourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6",
+      "cleanSource": true,
+      "recordedResult": {
+        "status": "passed",
+        "failed_gate": null
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "gates": [
+        {
+          "id": "lint",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 6691,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/006_lint/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/006_lint/stdout.log"
+        },
+        {
+          "id": "typecheck",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 7922,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/007_typecheck/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/007_typecheck/stdout.log"
+        },
+        {
+          "id": "production-build",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 20235,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/008_production-build/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174048-cd631570/gates/008_production-build/stdout.log"
+        }
+      ]
+    },
+    {
+      "path": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174124-fc9638c3",
+      "runId": "20260919-174124-fc9638c3",
+      "startedAt": "2026-09-19T17:41:24.192Z",
+      "finishedAt": "2026-09-19T17:41:33.963Z",
+      "sourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6",
+      "cleanSource": true,
+      "recordedResult": {
+        "status": "passed",
+        "failed_gate": null
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "gates": [
+        {
+          "id": "native-concurrency",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 9753,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174124-fc9638c3/gates/009_native-concurrency/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174124-fc9638c3/gates/009_native-concurrency/stdout.log",
+          "recordedPassedTests": 4,
+          "countEvidence": "Tests  4 passed",
+          "nativeDatabase": {
+            "event": "native_database_verified",
+            "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+            "independentBackendPids": [
+              236,
+              237
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec",
+      "runId": "20260919-174136-b8b2f0ec",
+      "startedAt": "2026-09-19T17:41:36.461Z",
+      "finishedAt": "2026-09-19T17:42:17.485Z",
+      "sourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6",
+      "cleanSource": true,
+      "recordedResult": {
+        "status": "passed",
+        "failed_gate": null
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "gates": [
+        {
+          "id": "fresh-offline-setup",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 7899,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/001_fresh-offline-setup/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/001_fresh-offline-setup/stdout.log",
+          "freshSetup": {
+            "check": "fresh-portable-setup",
+            "status": "passed",
+            "startedEmpty": true,
+            "seedPasses": 2,
+            "tickets": 100,
+            "synthetic_tickets": 100,
+            "organizations": 12,
+            "comments": 300,
+            "issues": 20,
+            "labels": 200,
+            "snapshots": 400,
+            "jobs": 13,
+            "actions": 0,
+            "migrations": [
+              "202609190001_initial",
+              "202609190002_audit_append_only",
+              "202609190003_backlink_parent",
+              "202609190004_export_rate",
+              "202609190005_configurable_policy"
+            ],
+            "snapshotIntegrity": "400 source snapshots unchanged across both seeds",
+            "credentials": "excluded from child processes",
+            "runtime": "PGlite PostgreSQL over dedicated loopback TCP",
+            "port": 55435,
+            "limitation": "Does not verify native PostgreSQL startup, multiprocess concurrency or a fresh dependency installation",
+            "ownedTemporaryDatabaseRemoved": true
+          }
+        },
+        {
+          "id": "branding",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 137,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/002_branding/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/002_branding/stdout.log",
+          "recordedPassedTests": 4,
+          "countEvidence": "\u2139 pass 4"
+        },
+        {
+          "id": "domain-provider-contracts",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 1811,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/003_domain-provider-contracts/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/003_domain-provider-contracts/stdout.log",
+          "recordedPassedTests": 61,
+          "countEvidence": "Tests  61 passed"
+        },
+        {
+          "id": "persistence-workflow",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 5282,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/004_persistence-workflow/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/004_persistence-workflow/stdout.log",
+          "recordedPassedTests": 29,
+          "countEvidence": "Tests  29 passed"
+        },
+        {
+          "id": "browser",
+          "status": "passed",
+          "exitCode": 0,
+          "timedOut": false,
+          "durationMs": 25866,
+          "resultFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/005_browser/result.json",
+          "stdoutFile": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/.wringer/runs/20260919-174136-b8b2f0ec/gates/005_browser/stdout.log",
+          "recordedPassedTests": 7,
+          "countEvidence": "7 passed (",
+          "browserArtifacts": {
+            "files": [
+              {
+                "name": "detail-mobile.png",
+                "bytes": 264103,
+                "sha256": "43ff77fb6ebf626dbd4f60620807afdcce3ce3f986537dd0773679e889c8d757"
+              },
+              {
+                "name": "engineering-desktop.png",
+                "bytes": 120452,
+                "sha256": "63987f285969bedf5a5a2dd0327e2baf65efb86ee7ef9d0e1b1610d778e70da6"
+              },
+              {
+                "name": "evaluation-desktop.png",
+                "bytes": 201856,
+                "sha256": "e3a6b419bdab92a95f7dbd48d92ddd295217ebba2fc5ceb63e48cc0ff6c699fc"
+              },
+              {
+                "name": "ticket-detail-desktop.png",
+                "bytes": 336349,
+                "sha256": "4b3f0cb1b15a3558dfc1f8485b6af8e836868aa29b3ecd769acbdf062934b43c"
+              },
+              {
+                "name": "tickets-desktop.png",
+                "bytes": 226651,
+                "sha256": "44350cf07a1840f3854c520d537eff60ccdfa212a664e6810285e9aa41cc5bc6"
+              },
+              {
+                "name": "tickets-mobile.png",
+                "bytes": 135444,
+                "sha256": "10e2a6e04d215eef14d834d89cf6299561cc5b8a8fd44bc75aa6d6a317d3b971"
+              }
+            ],
+            "omitted": []
+          }
+        }
+      ]
+    }
+  ],
+  "testCounts": {
+    "native-concurrency": 4,
+    "branding": 4,
+    "domain-provider-contracts": 61,
+    "persistence-workflow": 29,
+    "browser": 7
+  },
+  "issues": [],
+  "limitations": [
+    "This audit verifies downloaded seal/hash-chain integrity and reads recorded test results; it is not a new test execution.",
+    "Synthetic mock-provider tests do not prove live Zendesk/GitHub writes or human usability approval."
+  ],
+  "totalPassedTestCases": 105,
+  "totalPassedGates": 9,
+  "finishedAt": "2026-09-19T17:52:00.081Z",
+  "status": "passed",
+  "additionalArtifactAvailability": {
+    "workCiDirectory": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/work/ci",
+    "workCiFiles": [
+      "authenticated-app.log",
+      "browser-install.log",
+      "migrate-demo.log",
+      "migrate-test.log",
+      "npm-ci.log",
+      "production-app.log",
+      "seed-demo-first.log",
+      "seed-demo-second.log",
+      "setup.log",
+      "verification.json",
+      "worker.log",
+      "wringer-build.log",
+      "wringer-install.log",
+      "wringer-native.log",
+      "wringer-workflows.log"
+    ],
+    "testResultsDirectory": "zenjev-verification-873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6-1/test-results",
+    "testResultsFiles": [
+      ".last-run.json",
+      "browser-results.json"
+    ],
+    "correction": "Explicit filesystem inspection confirms these directories are present; an earlier rg listing obeyed gitignore and hid them."
+  },
+  "ciVerificationSummary": {
+    "sourceCommit": "873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6",
+    "harnessCommit": "7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4",
+    "status": "passed",
+    "databases": [
+      {
+        "name": "demo",
+        "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "database": "zenjev_demo",
+        "version_number": 170011
+      },
+      {
+        "name": "test",
+        "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "database": "zenjev_test",
+        "version_number": 170011
+      }
+    ]
+  }
+}

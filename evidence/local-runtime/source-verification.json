@@ -1,0 +1,14 @@
+{
+  "sourceSha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "treeSha": "c817e7eb63c5a53d167b5ba4f9942ba0594e9125",
+  "treeTruncated": false,
+  "checkedBlobs": 197,
+  "mismatches": [],
+  "archiveSha256": "bbf52f04c220c02a44691f876df3b5bfc7ffebbe992af71de6de20489b45b91f",
+  "packageLockSha256": "0463c4b578187f6e3db1c4aa1ee17479ca8fcf3c138fc786971974390ce7f0fd",
+  "matchesPreparedDependenciesLock": true,
+  "githubTreeApiResponseSha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "githubTreeApiRequestRef": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "treeShaVerificationCommand": "git rev-parse 8ea4f2730365b180214c221ad5325c97e6e6a7bf^{tree}",
+  "blobIdentityRecheckedAgainstGitTree": true
+}

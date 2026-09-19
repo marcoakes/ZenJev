@@ -1,31 +1,25 @@
 # ZenJev build status — 19 September 2026
 
-> Historical offline-build baseline. See [live activation and release verification](release-verification.md) for the later Jev and publication phase and superseding verification results.
+ZenJev is implemented and published in the separate private [marcoakes/ZenJev repository](https://github.com/marcoakes/ZenJev). It includes six functional screens, persistent synthetic data, Prisma migrations, an independent durable worker, mock/Jev decisions, guarded GitHub/Zendesk adapters, exact approvals, audit, reconciliation, privacy controls and evaluation.
 
-The application is implemented in this separate local repository: all six functional screens, persisted synthetic data, PostgreSQL/Prisma schema, independent durable worker, mock/Jev decisions, guarded GitHub/Zendesk adapters, exact approvals, audit, reconciliation, privacy, evaluation and operational scripts. See [actual test report](test-report.md) for completed checks and remaining verification; implementation alone is not a passing test result.
+## Final verified source
 
-## Checked source and outcome
+The final [Linux run 35462754472](https://github.com/marcoakes/ZenJev/actions/runs/35462754472) **passed all ten gates and 109 counted cases** on `8ea4f2730365b180214c221ad5325c97e6e6a7bf`. It verifies native PostgreSQL 17.11 concurrency/recovery, production Chromium workbench journeys, authenticated sessions and roles, and Axe checks across six routes.
 
-- Checked application/configuration commit: `29ca2c671e779fec93a2bee7bd9bca4043b3e3eb`, local `main`, clean at both harness run starts. Implementation parent: `2aa858ead23aa99651f40d67f53ddaf850f95cc0`.
-- Wringer run `20260919-155421-529bca54`: fresh setup, branding, 52 contract/domain/smoke tests and 29 persistence/orchestration tests passed; required Chromium browser gate failed before page creation, with six subsequent cases not run.
-- Wringer run `20260919-155502-8ad2b474`: separately selected lint, typecheck and production build all passed on the same source. Aggregate seven passed gates, one failed; no overall acceptance or successful Axe result.
-- Both sealed bundles passed the unchanged harness's offline digest validation. Logs, results, launch trace and screenshots are retained under `evidence/`; the [manifest](../evidence/verification-manifest.json) binds application files and retained artifacts by SHA-256.
-- Twelve recorded in-app browser review checks supplement the machine results. The five usability judgments and the agent's verdict are filled in [delegated review](delegated-review.md). Owner personal verdict remains null; `wringer.spec.yaml` remains unapproved and produces no fabricated acceptance report.
+The [final seal audit](../evidence/ci/35462754472/seal-audit.json) verified four sealed bundles, their digests and clean exact-source identity. The historical baseline passed nine gates and 105 cases on `873b3d91faeaf4eba5cda3f60570b5b5f5d2ebe6`. Two intervening authentication attempts failed before the final repair passed. Their source-bound records remain in the [test report](test-report.md).
 
-Resumable next verification: run the unchanged browser suite on a host that permits Chromium, then verify native PostgreSQL/Compose and the documented account-specific read-only smoke commands when live access is available. No paid smoke, real ticket processing, deployment or remote publication is needed to use the offline workbench.
+One bounded synthetic Jev request succeeded: `jev-1.13.0`, 747 input / 193 output tokens, zero retries. Its [safe result](../evidence/live/jev-smoke-20260919.json) is separate from mock evaluation and CI. The [app GitHub metadata smoke](../evidence/live/github-smoke-20260919-active-helper.json) also succeeded: one GET confirmed the repository is private, with zero retries, issue reads, model calls or mutations. The earlier credential-lookup failure remains historical evidence. GitHub issue retrieval/ingestion, Zendesk and all external ticket/issue writes remain unverified.
 
-## Observed environment and route
+## Runtime and repository boundaries
 
-- Harness checkout `/Users/marc/Claude/wringer` was inspected at `7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4`; built Wringer alpha.14 / Bun1.4.2. No harness source was changed.
-- Connected MCP workspace belonged to an unrelated reports demo. Its stopped jobs/reservations/approvals were not reused or changed.
-- Apple Container1.3.1 `system status` and `image list` returned Operation not permitted. Containment and an ACP end-to-end journey remain unmeasured.
-- The conversation's delegated-review instruction authorised the prepared direct-build route. Codex and coding-session subagents built the product; standalone trusted-local Wringer checks supply machine evidence. No human approval was fabricated.
-- Node24.19.0, npm11.17.0, Next16.3.5, React19.3.0 and Prisma6.19.3 are locked. Native PostgreSQL17.10 initialization failed at shared-memory creation in the sandbox. The explicitly documented portable option persists PostgreSQL/WASM data with PGlite; native concurrency and Compose remain unverified here.
-- Dependency reads later stalled before app code, including tiny-file reads with negligible CPU. A fresh `npm ci --ignore-scripts` from the unchanged lockfile recovered Next version startup to0.22s. The old dependency directory is retained ignored under `.local/dependencies-before-reinstall`; it contains reproducible dependencies, not customer data. Build CPU parallelism and Node heap are bounded for this host.
-- Metadata-only Keychain diagnostics located the declared build-provider entries. No password was returned or injected into product code. GitHub preflight identity was verified as marcoakes; the intended repository lookup returned404. No remote repository was created.
+The harness remains the unchanged `marcoakes/wringer` checkout at `7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4`, Wringer alpha.14 / Bun 1.4.2. The product uses Node 24, Next 16.3.5 and Prisma 6.19.3. CI runs trusted-local commands against a clean application checkout; it is not a contained ACP build or a demonstrated red-first history.
 
-## Delivery boundaries
+On the original Mac, Apple Container and native PostgreSQL startup were blocked by OS policy, and headless Chromium failed at Mach bootstrap. Those historical failures are retained. Linux CI later supplied successful native/browser evidence; it did not alter the host's restrictions. The fresh portable setup check still uses PGlite and is explicitly distinguished from native concurrency testing.
 
-No live Jev, Zendesk or application GitHub integration was contacted. No external ticket/issue mutation, paid provider smoke, separate API build worker, push, PR, visibility change or deployment occurred. Jev access remains pending. Mock metrics are simulation, not real model performance. Coding-app usage is not a measured Wringer provider bill.
+Dependency-read stalls previously recovered after reinstalling from the unchanged lockfile. The original Documents installation now has offloaded/dataless files and its database remains preserved and unrecovered. A **new isolated synthetic preview** is running at http://127.0.0.1:3000 from `/private/tmp/zenjev-runtime-iy3rBO/app` on the exact final tested source. Production build and HTTP/health checks passed; database is connected, worker is healthy and all 13 seed jobs completed. The queue rendered 100 tickets. Prior local actions, associations and history were not migrated. [Runtime provenance](../evidence/local-runtime/provenance.json) records the new database and preserved original.
 
-The full original979-line brief and1254×1254 PNG are preserved unchanged. The README uses the canonical relative image link. Startup is documented, idempotent and credential-free. Agent review is recorded separately from the owner's personal usability verdict; only actual executed evidence in the report should be read as a test result.
+## Delivery and review
+
+The 979-line original brief and 1254 × 1254 PNG remain unchanged, including the relative README image link. The private GitHub repository is published; no hosted deployment or visibility change is included. No real customer data or provider write has been used for verification.
+
+The usability review is filled by **Codex as a delegated agent**. Marc's personal verdict remains null and no human-presence approval is fabricated. The [release record](release-verification.md), [actual test report](test-report.md) and [requirement evidence](requirement-evidence.md) are the current handoff references. The older local manifest and sealed bundles remain historical, source-bound records, not evidence for later commits.

@@ -1,0 +1,95 @@
+{
+  "recordedAt": "2026-09-19T19:01:41.766200+00:00",
+  "purpose": "Restore an available local production demo using verified final source and a new isolated synthetic database; this is not recovery of the prior reviewed database.",
+  "sourceSha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "sourceRepository": "https://github.com/marcoakes/ZenJev",
+  "sourceVerification": {
+    "sourceSha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+    "treeSha": "c817e7eb63c5a53d167b5ba4f9942ba0594e9125",
+    "treeTruncated": false,
+    "checkedBlobs": 197,
+    "mismatches": [],
+    "archiveSha256": "bbf52f04c220c02a44691f876df3b5bfc7ffebbe992af71de6de20489b45b91f",
+    "packageLockSha256": "0463c4b578187f6e3db1c4aa1ee17479ca8fcf3c138fc786971974390ce7f0fd",
+    "matchesPreparedDependenciesLock": true,
+    "githubTreeApiResponseSha": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+    "githubTreeApiRequestRef": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+    "treeShaVerificationCommand": "git rev-parse 8ea4f2730365b180214c221ad5325c97e6e6a7bf^{tree}",
+    "blobIdentityRecheckedAgainstGitTree": true
+  },
+  "canonicalRepository": "/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev",
+  "isolatedRuntimeDirectory": "/private/tmp/zenjev-runtime-iy3rBO/app",
+  "url": "http://127.0.0.1:3000",
+  "ownedToolSessionId": 64294,
+  "startupCommand": "env -i PATH=\"$PATH\" HOME=\"$HOME\" node scripts/demo.mjs --portable --production",
+  "stopInstruction": "Send Ctrl+C to owned tool session64294 to stop this app, worker, and both owned portable database servers.",
+  "newSyntheticDemo": true,
+  "originalDataRecovered": false,
+  "originalDataPreserved": true,
+  "originalDataDirectories": [
+    "/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev/.local/portable-zenjev_demo",
+    "/Users/marc/Documents/Codex/2026-09-19/bash-extract-the-attached-zenjev-handoff-3/outputs/ZenJev/.local/portable-zenjev_test"
+  ],
+  "newDataDirectories": [
+    "/private/tmp/zenjev-runtime-iy3rBO/app/.local/portable-zenjev_demo",
+    "/private/tmp/zenjev-runtime-iy3rBO/app/.local/portable-zenjev_test"
+  ],
+  "engine": "PGlite0.5.8 / PostgreSQL18.3 WASM portable development runtime",
+  "nativeConcurrencyEvidence": false,
+  "liveProviderCalls": false,
+  "liveProviderCredentialsPresent": false,
+  "build": {
+    "command": "env -i PATH=\"$PATH\" HOME=\"$HOME\" node scripts/check.mjs build",
+    "exitCode": 0,
+    "log": "build.log"
+  },
+  "readiness": {
+    "at": "2026-09-19T19:01:07.836Z",
+    "version": "18.3",
+    "tickets": 100,
+    "issues": 20,
+    "organizations": 12,
+    "labels": 200,
+    "live_tickets": 0,
+    "live_issues": 0,
+    "successful_jobs": 13
+  },
+  "knownLimitations": [
+    "The prior Documents/iCloud-backed database still needs hydration/recovery and was not reset, moved, or replaced. Its prior links, actions and audit history are not copied into this new demo.",
+    "Runtime and fresh synthetic data are under /private/tmp and may be removed by operating-system temporary-file cleanup. The canonical repository remains outputs/ZenJev.",
+    "Portable runtime proves local demo availability; native concurrency proof is supplied separately by GitHub CI on PostgreSQL17.11.",
+    "Local readiness covers source hashes, production build, HTTP responses, database seed counts and worker completion. It does not replace the independently recorded CI tests or human approval."
+  ],
+  "artifacts": [
+    {
+      "path": "build.log",
+      "bytes": 892,
+      "sha256": "eae0ee5486ff22176648e6b51a977e9c553f94a0b718be32a34383b16b0d352a"
+    },
+    {
+      "path": "database-readiness.json",
+      "bytes": 200,
+      "sha256": "ead56c7f9a9c6ec984fd15117fd77f7889f3c51c4554c25e0133a6a6f89bf1c8"
+    },
+    {
+      "path": "http-readiness.json",
+      "bytes": 2392,
+      "sha256": "38c5b4796079d2b93d94d536d195f098bee8b7f156c36fe67777cef7f65eccc0"
+    },
+    {
+      "path": "ports-before-launch.json",
+      "bytes": 201,
+      "sha256": "f4594e84b4baf9942d829d28e21f44334e4d8144a5b04e514cc3526fe975caf1"
+    },
+    {
+      "path": "runtime.log",
+      "bytes": 1713,
+      "sha256": "53a36ceed313ee6ea1cd5a98066fddf59f1ad04a473affd43d057b514136a434"
+    },
+    {
+      "path": "source-verification.json",
+      "bytes": 700,
+      "sha256": "ca0d8b79b456f6a4c517d197364fa6e1a2f87595c57cf2a783dbe5521a4935e9"
+    }
+  ]
+}

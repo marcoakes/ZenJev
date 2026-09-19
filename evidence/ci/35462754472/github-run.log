@@ -1,0 +1,936 @@
+verify	Set up job	﻿2026-09-19T18:56:07.4323194Z Current runner version: '2.337.0'
+verify	Set up job	2026-09-19T18:56:07.4390789Z ##[group]Runner Image Provisioner
+verify	Set up job	2026-09-19T18:56:07.4392161Z Hosted Compute Agent
+verify	Set up job	2026-09-19T18:56:07.4393115Z Version: 20260828.587
+verify	Set up job	2026-09-19T18:56:07.4394122Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+verify	Set up job	2026-09-19T18:56:07.4395365Z Build Date: 2026-08-28T16:44:25Z
+verify	Set up job	2026-09-19T18:56:07.4396504Z Worker ID: {2f40b841-eae4-4235-9d68-8e1d15e4fbaa}
+verify	Set up job	2026-09-19T18:56:07.4400986Z Azure Region: westus3
+verify	Set up job	2026-09-19T18:56:07.4401954Z ##[endgroup]
+verify	Set up job	2026-09-19T18:56:07.4404131Z ##[group]Operating System
+verify	Set up job	2026-09-19T18:56:07.4405186Z Ubuntu
+verify	Set up job	2026-09-19T18:56:07.4405939Z 24.04.5
+verify	Set up job	2026-09-19T18:56:07.4417122Z LTS
+verify	Set up job	2026-09-19T18:56:07.4418141Z ##[endgroup]
+verify	Set up job	2026-09-19T18:56:07.4418955Z ##[group]Runner Image
+verify	Set up job	2026-09-19T18:56:07.4420048Z Image: ubuntu-24.04
+verify	Set up job	2026-09-19T18:56:07.4420953Z Version: 20260907.300.1
+verify	Set up job	2026-09-19T18:56:07.4422914Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+verify	Set up job	2026-09-19T18:56:07.4425550Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+verify	Set up job	2026-09-19T18:56:07.4427511Z ##[endgroup]
+verify	Set up job	2026-09-19T18:56:07.4429132Z ##[group]GITHUB_TOKEN Permissions
+verify	Set up job	2026-09-19T18:56:07.4432230Z Contents: read
+verify	Set up job	2026-09-19T18:56:07.4433127Z Metadata: read
+verify	Set up job	2026-09-19T18:56:07.4434000Z ##[endgroup]
+verify	Set up job	2026-09-19T18:56:07.4447507Z Secret source: Actions
+verify	Set up job	2026-09-19T18:56:07.4449145Z Cache mode: write
+verify	Set up job	2026-09-19T18:56:07.4450249Z Prepare workflow directory
+verify	Set up job	2026-09-19T18:56:07.5130341Z Prepare all required actions
+verify	Set up job	2026-09-19T18:56:07.5208018Z Getting action download info
+verify	Set up job	2026-09-19T18:56:07.8574009Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+verify	Set up job	2026-09-19T18:56:08.8855584Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+verify	Set up job	2026-09-19T18:56:09.6729313Z Download action repository 'oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76' (SHA:735343b667d3e6f658f44d0eca948eb6282f2b76)
+verify	Set up job	2026-09-19T18:56:10.3285802Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+verify	Set up job	2026-09-19T18:56:10.5945549Z Complete job name: verify
+verify	Initialize containers	﻿2026-09-19T18:56:10.6552124Z ##[group]Checking docker version
+verify	Initialize containers	2026-09-19T18:56:10.6567945Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+verify	Initialize containers	2026-09-19T18:56:10.7347308Z '1.48'
+verify	Initialize containers	2026-09-19T18:56:10.7354929Z Docker daemon API version: '1.48'
+verify	Initialize containers	2026-09-19T18:56:10.7355515Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+verify	Initialize containers	2026-09-19T18:56:10.7544977Z '1.48'
+verify	Initialize containers	2026-09-19T18:56:10.7555070Z Docker client API version: '1.48'
+verify	Initialize containers	2026-09-19T18:56:10.7560955Z ##[endgroup]
+verify	Initialize containers	2026-09-19T18:56:10.7563930Z ##[group]Clean up resources from previous jobs
+verify	Initialize containers	2026-09-19T18:56:10.7569403Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=7d6f51"
+verify	Initialize containers	2026-09-19T18:56:10.7738793Z ##[command]/usr/bin/docker network prune --force --filter "label=7d6f51"
+verify	Initialize containers	2026-09-19T18:56:10.7891956Z ##[endgroup]
+verify	Initialize containers	2026-09-19T18:56:10.7892432Z ##[group]Create local container network
+verify	Initialize containers	2026-09-19T18:56:10.7902979Z ##[command]/usr/bin/docker network create --label 7d6f51 github_network_87b9f798e3e242af9838aa3c482c2750
+verify	Initialize containers	2026-09-19T18:56:10.8540745Z 5407b2e5d28ec01432464ca34b79e08053c6220c1945c272a5af251691eaae1c
+verify	Initialize containers	2026-09-19T18:56:10.8557057Z ##[endgroup]
+verify	Initialize containers	2026-09-19T18:56:10.8583319Z ##[group]Starting demo-postgres service container
+verify	Initialize containers	2026-09-19T18:56:10.8607050Z ##[command]/usr/bin/docker pull postgres:17
+verify	Initialize containers	2026-09-19T18:56:11.6602711Z 17: Pulling from library/postgres
+verify	Initialize containers	2026-09-19T18:56:11.8974596Z 6b37362b3da7: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8975333Z 0725a8be915e: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8975972Z 71f55f60a786: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8976494Z 564dc3c4a6f9: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8977278Z 752819419f50: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8977807Z 8b51b9245051: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8978655Z 498b9ff7d682: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8979233Z 755a851127eb: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8979887Z bbe7b3469b20: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8980482Z 73872941ba23: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8980933Z 2f9b6cf2e417: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8981490Z 3feaebf93d15: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8982047Z 50e228e2fe6d: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8982616Z bed9376b51dc: Pulling fs layer
+verify	Initialize containers	2026-09-19T18:56:11.8983734Z 564dc3c4a6f9: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8984267Z 752819419f50: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8984846Z 8b51b9245051: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8985333Z 498b9ff7d682: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8985832Z 755a851127eb: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8986384Z bbe7b3469b20: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8987031Z 73872941ba23: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8987534Z 2f9b6cf2e417: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8987953Z 3feaebf93d15: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8988639Z 50e228e2fe6d: Waiting
+verify	Initialize containers	2026-09-19T18:56:11.8989204Z bed9376b51dc: Waiting
+verify	Initialize containers	2026-09-19T18:56:12.1746134Z 0725a8be915e: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.1780092Z 0725a8be915e: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.1787242Z 71f55f60a786: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.1788833Z 71f55f60a786: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.1931524Z 6b37362b3da7: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.1944559Z 6b37362b3da7: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.2538149Z 564dc3c4a6f9: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.2538806Z 564dc3c4a6f9: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.4662279Z 752819419f50: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.4680309Z 752819419f50: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.4683369Z 8b51b9245051: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.4684117Z 8b51b9245051: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.4684708Z 498b9ff7d682: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.4685669Z 498b9ff7d682: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.5242974Z 755a851127eb: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.5246711Z 755a851127eb: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.6327201Z 73872941ba23: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.6329977Z 73872941ba23: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.7126180Z 2f9b6cf2e417: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.7128075Z 2f9b6cf2e417: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.8069372Z 3feaebf93d15: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.8070573Z 3feaebf93d15: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.9037120Z 50e228e2fe6d: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.9062471Z 50e228e2fe6d: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.9943894Z bed9376b51dc: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.9946844Z bed9376b51dc: Download complete
+verify	Initialize containers	2026-09-19T18:56:12.9948527Z bbe7b3469b20: Verifying Checksum
+verify	Initialize containers	2026-09-19T18:56:12.9950137Z bbe7b3469b20: Download complete
+verify	Initialize containers	2026-09-19T18:56:13.4517264Z 6b37362b3da7: Pull complete
+verify	Initialize containers	2026-09-19T18:56:13.4798534Z 0725a8be915e: Pull complete
+verify	Initialize containers	2026-09-19T18:56:15.9796277Z 71f55f60a786: Pull complete
+verify	Initialize containers	2026-09-19T18:56:16.0338850Z 564dc3c4a6f9: Pull complete
+verify	Initialize containers	2026-09-19T18:56:16.3271683Z 752819419f50: Pull complete
+verify	Initialize containers	2026-09-19T18:56:16.4006916Z 8b51b9245051: Pull complete
+verify	Initialize containers	2026-09-19T18:56:16.4089317Z 498b9ff7d682: Pull complete
+verify	Initialize containers	2026-09-19T18:56:16.4209200Z 755a851127eb: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.2257706Z bbe7b3469b20: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.2448518Z 73872941ba23: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.2643834Z 2f9b6cf2e417: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.2797478Z 3feaebf93d15: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.2908346Z 50e228e2fe6d: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.3022760Z bed9376b51dc: Pull complete
+verify	Initialize containers	2026-09-19T18:56:20.3062048Z Digest: sha256:f4c66b820c6f974249089d3d16d86a3698eae11e8746eb6644b2271031e91232
+verify	Initialize containers	2026-09-19T18:56:20.3072953Z Status: Downloaded newer image for postgres:17
+verify	Initialize containers	2026-09-19T18:56:20.3081558Z docker.io/library/postgres:17
+verify	Initialize containers	2026-09-19T18:56:20.3146505Z ##[command]/usr/bin/docker create --name a3f4e7f81f814bfea45698816553affd_postgres17_139cee --label 7d6f51 --network github_network_87b9f798e3e242af9838aa3c482c2750 --network-alias demo-postgres -p 55432:5432 --health-cmd "pg_isready -U demo -d zenjev_demo" --health-interval 5s --health-timeout 5s --health-retries 12 -e "POSTGRES_USER=demo" -e "POSTGRES_PASSWORD=demo" -e "POSTGRES_DB=zenjev_demo" -e GITHUB_ACTIONS=true -e CI=true postgres:17
+verify	Initialize containers	2026-09-19T18:56:20.3426568Z b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:20.3446241Z ##[command]/usr/bin/docker start b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:20.5528869Z b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:20.5541239Z ##[command]/usr/bin/docker ps --all --filter id=b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+verify	Initialize containers	2026-09-19T18:56:20.5749507Z b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b Up Less than a second (health: starting)
+verify	Initialize containers	2026-09-19T18:56:20.5776216Z ##[command]/usr/bin/docker port b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:20.5997686Z 5432/tcp -> 0.0.0.0:55432
+verify	Initialize containers	2026-09-19T18:56:20.6005354Z 5432/tcp -> [::]:55432
+verify	Initialize containers	2026-09-19T18:56:20.6076330Z ##[endgroup]
+verify	Initialize containers	2026-09-19T18:56:20.6078590Z ##[group]Starting test-postgres service container
+verify	Initialize containers	2026-09-19T18:56:20.6080557Z ##[command]/usr/bin/docker pull postgres:17
+verify	Initialize containers	2026-09-19T18:56:21.1740161Z 17: Pulling from library/postgres
+verify	Initialize containers	2026-09-19T18:56:21.1797752Z Digest: sha256:f4c66b820c6f974249089d3d16d86a3698eae11e8746eb6644b2271031e91232
+verify	Initialize containers	2026-09-19T18:56:21.1798829Z Status: Image is up to date for postgres:17
+verify	Initialize containers	2026-09-19T18:56:21.1808869Z docker.io/library/postgres:17
+verify	Initialize containers	2026-09-19T18:56:21.1821883Z ##[command]/usr/bin/docker create --name 59c70f17a310491dae019ff5aeab9768_postgres17_a61993 --label 7d6f51 --network github_network_87b9f798e3e242af9838aa3c482c2750 --network-alias test-postgres -p 55433:5432 --health-cmd "pg_isready -U demo -d zenjev_test" --health-interval 5s --health-timeout 5s --health-retries 12 -e "POSTGRES_USER=demo" -e "POSTGRES_PASSWORD=demo" -e "POSTGRES_DB=zenjev_test" -e GITHUB_ACTIONS=true -e CI=true postgres:17
+verify	Initialize containers	2026-09-19T18:56:21.2082798Z b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Initialize containers	2026-09-19T18:56:21.2092633Z ##[command]/usr/bin/docker start b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Initialize containers	2026-09-19T18:56:21.4087772Z b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Initialize containers	2026-09-19T18:56:21.4104471Z ##[command]/usr/bin/docker ps --all --filter id=b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+verify	Initialize containers	2026-09-19T18:56:21.4374464Z b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040 Up Less than a second (health: starting)
+verify	Initialize containers	2026-09-19T18:56:21.4378694Z ##[command]/usr/bin/docker port b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Initialize containers	2026-09-19T18:56:21.4667840Z 5432/tcp -> 0.0.0.0:55433
+verify	Initialize containers	2026-09-19T18:56:21.4683005Z 5432/tcp -> [::]:55433
+verify	Initialize containers	2026-09-19T18:56:21.4707732Z ##[endgroup]
+verify	Initialize containers	2026-09-19T18:56:21.4722891Z ##[group]Waiting for all services to be ready
+verify	Initialize containers	2026-09-19T18:56:21.4744604Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:21.4966024Z starting
+verify	Initialize containers	2026-09-19T18:56:21.4999131Z demo-postgres service is starting, waiting 2 seconds before checking again.
+verify	Initialize containers	2026-09-19T18:56:23.5001074Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:23.5148117Z starting
+verify	Initialize containers	2026-09-19T18:56:23.5158028Z demo-postgres service is starting, waiting 3 seconds before checking again.
+verify	Initialize containers	2026-09-19T18:56:27.3679979Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Initialize containers	2026-09-19T18:56:27.3832966Z healthy
+verify	Initialize containers	2026-09-19T18:56:27.3849591Z demo-postgres service is healthy.
+verify	Initialize containers	2026-09-19T18:56:27.3850898Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Initialize containers	2026-09-19T18:56:27.3994134Z healthy
+verify	Initialize containers	2026-09-19T18:56:27.4004828Z test-postgres service is healthy.
+verify	Initialize containers	2026-09-19T18:56:27.4005639Z ##[endgroup]
+verify	Check out the exact application revision	﻿2026-09-19T18:56:27.4298095Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Check out the exact application revision	2026-09-19T18:56:27.4306559Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+verify	Check out the exact application revision	2026-09-19T18:56:27.4307320Z with:
+verify	Check out the exact application revision	2026-09-19T18:56:27.4307542Z   path: ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.4307784Z   persist-credentials: false
+verify	Check out the exact application revision	2026-09-19T18:56:27.4308072Z   repository: marcoakes/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.4311435Z   token: ***
+verify	Check out the exact application revision	2026-09-19T18:56:27.4311675Z   ssh-strict: true
+verify	Check out the exact application revision	2026-09-19T18:56:27.4311892Z   ssh-user: git
+verify	Check out the exact application revision	2026-09-19T18:56:27.4312096Z   clean: true
+verify	Check out the exact application revision	2026-09-19T18:56:27.4312314Z   sparse-checkout-cone-mode: true
+verify	Check out the exact application revision	2026-09-19T18:56:27.4312586Z   fetch-depth: 1
+verify	Check out the exact application revision	2026-09-19T18:56:27.4312791Z   fetch-tags: false
+verify	Check out the exact application revision	2026-09-19T18:56:27.4312999Z   show-progress: true
+verify	Check out the exact application revision	2026-09-19T18:56:27.4313283Z   lfs: false
+verify	Check out the exact application revision	2026-09-19T18:56:27.4313470Z   submodules: false
+verify	Check out the exact application revision	2026-09-19T18:56:27.4313676Z   set-safe-directory: true
+verify	Check out the exact application revision	2026-09-19T18:56:27.4314056Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:27.5564685Z Syncing repository: marcoakes/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.5579616Z ##[group]Getting Git version info
+verify	Check out the exact application revision	2026-09-19T18:56:27.5580454Z Working directory is '/home/runner/work/ZenJev/ZenJev/ZenJev'
+verify	Check out the exact application revision	2026-09-19T18:56:27.5581632Z [command]/usr/bin/git version
+verify	Check out the exact application revision	2026-09-19T18:56:27.5667939Z git version 2.55.0
+verify	Check out the exact application revision	2026-09-19T18:56:27.5748384Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:27.5778198Z Temporarily overriding HOME='/home/runner/work/_temp/4c4aeef5-1a24-404e-bd41-539b47d7bcc8' before making global git config changes
+verify	Check out the exact application revision	2026-09-19T18:56:27.5781736Z Adding repository directory to the temporary git global config as a safe directory
+verify	Check out the exact application revision	2026-09-19T18:56:27.5799185Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ZenJev/ZenJev/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.5816275Z ##[group]Initializing the repository
+verify	Check out the exact application revision	2026-09-19T18:56:27.5817335Z [command]/usr/bin/git init /home/runner/work/ZenJev/ZenJev/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.5968236Z hint: Using 'master' as the name for the initial branch. This default branch name
+verify	Check out the exact application revision	2026-09-19T18:56:27.5982662Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+verify	Check out the exact application revision	2026-09-19T18:56:27.5985336Z hint: to use in all of your new repositories, which will suppress this warning,
+verify	Check out the exact application revision	2026-09-19T18:56:27.5986314Z hint: call:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5987180Z hint:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5987771Z hint: 	git config --global init.defaultBranch <name>
+verify	Check out the exact application revision	2026-09-19T18:56:27.5988432Z hint:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5989032Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+verify	Check out the exact application revision	2026-09-19T18:56:27.5990031Z hint: 'development'. The just-created branch can be renamed via this command:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5990737Z hint:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5991167Z hint: 	git branch -m <name>
+verify	Check out the exact application revision	2026-09-19T18:56:27.5991658Z hint:
+verify	Check out the exact application revision	2026-09-19T18:56:27.5992291Z hint: Disable this message with "git config set advice.defaultBranchName false"
+verify	Check out the exact application revision	2026-09-19T18:56:27.5993390Z Initialized empty Git repository in /home/runner/work/ZenJev/ZenJev/ZenJev/.git/
+verify	Check out the exact application revision	2026-09-19T18:56:27.5995477Z [command]/usr/bin/git remote add origin https://github.com/marcoakes/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:27.6077796Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:27.6078298Z ##[group]Disabling automatic garbage collection
+verify	Check out the exact application revision	2026-09-19T18:56:27.6078738Z [command]/usr/bin/git config --local gc.auto 0
+verify	Check out the exact application revision	2026-09-19T18:56:27.6167483Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:27.6188320Z ##[group]Setting up auth
+verify	Check out the exact application revision	2026-09-19T18:56:27.6208079Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Check out the exact application revision	2026-09-19T18:56:27.6250973Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Check out the exact application revision	2026-09-19T18:56:27.6759251Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Check out the exact application revision	2026-09-19T18:56:27.6818999Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Check out the exact application revision	2026-09-19T18:56:27.7082560Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+verify	Check out the exact application revision	2026-09-19T18:56:27.7126346Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:27.7127797Z ##[group]Fetching the repository
+verify	Check out the exact application revision	2026-09-19T18:56:27.7138456Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8ea4f2730365b180214c221ad5325c97e6e6a7bf:refs/remotes/origin/main
+verify	Check out the exact application revision	2026-09-19T18:56:28.8158109Z From https://github.com/marcoakes/ZenJev
+verify	Check out the exact application revision	2026-09-19T18:56:28.8159543Z  * [new ref]         8ea4f2730365b180214c221ad5325c97e6e6a7bf -> origin/main
+verify	Check out the exact application revision	2026-09-19T18:56:28.8161945Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:28.8162686Z ##[group]Determining the checkout info
+verify	Check out the exact application revision	2026-09-19T18:56:28.8163652Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:28.8169615Z [command]/usr/bin/git sparse-checkout disable
+verify	Check out the exact application revision	2026-09-19T18:56:28.8226867Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+verify	Check out the exact application revision	2026-09-19T18:56:28.8259032Z ##[group]Checking out the ref
+verify	Check out the exact application revision	2026-09-19T18:56:28.8265614Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+verify	Check out the exact application revision	2026-09-19T18:56:28.8474474Z Switched to a new branch 'main'
+verify	Check out the exact application revision	2026-09-19T18:56:28.8478928Z branch 'main' set up to track 'origin/main'.
+verify	Check out the exact application revision	2026-09-19T18:56:28.8487521Z ##[endgroup]
+verify	Check out the exact application revision	2026-09-19T18:56:28.8547598Z [command]/usr/bin/git log -1 --format=%H
+verify	Check out the exact application revision	2026-09-19T18:56:28.8586922Z 8ea4f2730365b180214c221ad5325c97e6e6a7bf
+verify	Check out the exact application revision	2026-09-19T18:56:28.8596903Z ##[group]Removing auth
+verify	Check out the exact application revision	2026-09-19T18:56:28.8602597Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Check out the exact application revision	2026-09-19T18:56:28.8640373Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Check out the exact application revision	2026-09-19T18:56:28.8919595Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Check out the exact application revision	2026-09-19T18:56:28.8951630Z http.https://github.com/.extraheader
+verify	Check out the exact application revision	2026-09-19T18:56:28.8962561Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+verify	Check out the exact application revision	2026-09-19T18:56:28.9000385Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Check out the exact application revision	2026-09-19T18:56:28.9204427Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	﻿2026-09-19T18:56:28.9427631Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9429296Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9429640Z with:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9429846Z   repository: marcoakes/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9430131Z   ref: 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9430414Z   path: wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9430629Z   persist-credentials: false
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9433404Z   token: ***
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9433600Z   ssh-strict: true
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9433808Z   ssh-user: git
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9434010Z   clean: true
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9434238Z   sparse-checkout-cone-mode: true
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9434505Z   fetch-depth: 1
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9434716Z   fetch-tags: false
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9434976Z   show-progress: true
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9435318Z   lfs: false
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9435522Z   submodules: false
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9435734Z   set-safe-directory: true
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:28.9435966Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0437637Z Syncing repository: marcoakes/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0441981Z ##[group]Getting Git version info
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0450984Z Working directory is '/home/runner/work/ZenJev/ZenJev/wringer'
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0497275Z [command]/usr/bin/git version
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0538419Z git version 2.55.0
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0574429Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0598381Z Temporarily overriding HOME='/home/runner/work/_temp/b49f0ab7-680e-4b04-bc37-d9bba902c8b4' before making global git config changes
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0599702Z Adding repository directory to the temporary git global config as a safe directory
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0600872Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ZenJev/ZenJev/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0648291Z ##[group]Initializing the repository
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0649292Z [command]/usr/bin/git init /home/runner/work/ZenJev/ZenJev/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0699927Z hint: Using 'master' as the name for the initial branch. This default branch name
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0727762Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0916151Z hint: to use in all of your new repositories, which will suppress this warning,
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0917890Z hint: call:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0918997Z hint:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0919557Z hint: 	git config --global init.defaultBranch <name>
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0920285Z hint:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0920931Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0921788Z hint: 'development'. The just-created branch can be renamed via this command:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0922510Z hint:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0922899Z hint: 	git branch -m <name>
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0923349Z hint:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0923923Z hint: Disable this message with "git config set advice.defaultBranchName false"
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0924856Z Initialized empty Git repository in /home/runner/work/ZenJev/ZenJev/wringer/.git/
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0927043Z [command]/usr/bin/git remote add origin https://github.com/marcoakes/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0928914Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0929662Z ##[group]Disabling automatic garbage collection
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0930380Z [command]/usr/bin/git config --local gc.auto 0
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0976152Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0977236Z ##[group]Setting up auth
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.0997698Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1027070Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1340084Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1418628Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1735602Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1848360Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1858507Z ##[group]Fetching the repository
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:29.1878043Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8215677Z From https://github.com/marcoakes/wringer
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8217173Z  * branch            7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4 -> FETCH_HEAD
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8224588Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8225557Z ##[group]Determining the checkout info
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8227568Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8234642Z [command]/usr/bin/git sparse-checkout disable
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8287222Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8327310Z ##[group]Checking out the ref
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8328079Z [command]/usr/bin/git checkout --progress --force 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8989841Z Note: switching to '7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4'.
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8990701Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8998144Z You are in 'detached HEAD' state. You can look around, make experimental
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.8999285Z changes and commit them, and you can discard any commits you make in this
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9000285Z state without impacting any branches by switching back to a branch.
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9000866Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9001258Z If you want to create a new branch to retain commits you create, you may
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9002006Z do so (now or later) by using -c with the switch command. Example:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9002562Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9002864Z   git switch -c <new-branch-name>
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9003472Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9003745Z Or undo this operation with:
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9004172Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9004477Z   git switch -
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9004874Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9005351Z Turn off this advice by setting config variable advice.detachedHead to false
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9006018Z 
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9006928Z HEAD is now at 7ca2fb5 1.0.0-alpha.14 — the repairs a live run asked for
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9008760Z ##[endgroup]
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9051075Z [command]/usr/bin/git log -1 --format=%H
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9102211Z 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9103622Z ##[group]Removing auth
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9105310Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9141306Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9347640Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9378717Z http.https://github.com/.extraheader
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9387361Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9432098Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Check out the reviewed public Wringer harness	2026-09-19T18:56:30.9635683Z ##[endgroup]
+verify	Install Node 24	﻿2026-09-19T18:56:30.9834580Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Install Node 24	2026-09-19T18:56:30.9836111Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+verify	Install Node 24	2026-09-19T18:56:30.9836490Z with:
+verify	Install Node 24	2026-09-19T18:56:30.9836858Z   node-version: 24
+verify	Install Node 24	2026-09-19T18:56:30.9837129Z   cache: npm
+verify	Install Node 24	2026-09-19T18:56:30.9837372Z   cache-dependency-path: ZenJev/package-lock.json
+verify	Install Node 24	2026-09-19T18:56:30.9837745Z   always-auth: false
+verify	Install Node 24	2026-09-19T18:56:30.9837974Z   check-latest: false
+verify	Install Node 24	2026-09-19T18:56:30.9841119Z   token: ***
+verify	Install Node 24	2026-09-19T18:56:30.9841321Z ##[endgroup]
+verify	Install Node 24	2026-09-19T18:56:31.1453023Z Found in cache @ /opt/hostedtoolcache/node/24.20.0/x64
+verify	Install Node 24	2026-09-19T18:56:31.1457334Z (node:2811) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+verify	Install Node 24	2026-09-19T18:56:31.1458879Z (Use `node --trace-deprecation ...` to show where the warning was created)
+verify	Install Node 24	2026-09-19T18:56:31.1461934Z ##[group]Environment details
+verify	Install Node 24	2026-09-19T18:56:31.6914279Z node: v24.20.0
+verify	Install Node 24	2026-09-19T18:56:31.6915113Z npm: 11.19.0
+verify	Install Node 24	2026-09-19T18:56:31.6915644Z yarn: 1.22.22
+verify	Install Node 24	2026-09-19T18:56:31.6916575Z ##[endgroup]
+verify	Install Node 24	2026-09-19T18:56:31.6967924Z [command]/opt/hostedtoolcache/node/24.20.0/x64/bin/npm config get cache
+verify	Install Node 24	2026-09-19T18:56:31.8213193Z /home/runner/.npm
+verify	Install Node 24	2026-09-19T18:56:32.0796503Z Cache hit for: node-cache-Linux-x64-npm-32b6a32d2ea433695d52b0ac012e077799bfa186190fd6cef3eeabd1819f020a
+verify	Install Node 24	2026-09-19T18:56:32.0915967Z (node:2811) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+verify	Install Node 24	2026-09-19T18:56:33.2987725Z Received 37748736 of 218735199 (17.3%), 36.0 MBs/sec
+verify	Install Node 24	2026-09-19T18:56:34.2933898Z Received 197132288 of 218735199 (90.1%), 94.0 MBs/sec
+verify	Install Node 24	2026-09-19T18:56:34.4620579Z Received 218735199 of 218735199 (100.0%), 96.2 MBs/sec
+verify	Install Node 24	2026-09-19T18:56:34.4637848Z Cache Size: ~209 MB (218735199 B)
+verify	Install Node 24	2026-09-19T18:56:34.4708601Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ebcae5a2-7658-4079-b393-817aaee1ae8c/cache.tzst -P -C /home/runner/work/ZenJev/ZenJev --use-compress-program unzstd
+verify	Install Node 24	2026-09-19T18:56:34.7696824Z Cache restored successfully
+verify	Install Node 24	2026-09-19T18:56:34.7788535Z Cache restored from key: node-cache-Linux-x64-npm-32b6a32d2ea433695d52b0ac012e077799bfa186190fd6cef3eeabd1819f020a
+verify	Install pinned Bun for Wringer	﻿2026-09-19T18:56:34.7973748Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.7975023Z ##[group]Run oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.7975379Z with:
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.7975575Z   bun-version: 1.4.2
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.7975792Z   no-cache: false
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.7975993Z ##[endgroup]
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.9429886Z (node:2879) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:34.9430765Z (Use `node --trace-deprecation ...` to show where the warning was created)
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:35.1626479Z Cache hit for: Oe9u7NHSlRPRv8zbcT5YQCF7MDM=
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:35.1828922Z (node:2879) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.3657194Z Received 35684131 of 35684131 (100.0%), 34.8 MBs/sec
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.3658388Z Cache Size: ~34 MB (35684131 B)
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.3698767Z [command]/usr/bin/tar -xf /home/runner/work/_temp/10e455ce-d498-4669-9581-64118867c7a7/cache.tzst -P -C /home/runner/work/ZenJev/ZenJev --use-compress-program unzstd
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.5176155Z Cache restored successfully
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.5200823Z [command]/home/runner/.bun/bin/bun --revision
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.5244049Z 1.4.2+744846f84
+verify	Install pinned Bun for Wringer	2026-09-19T18:56:36.5245095Z Using a cached version of Bun: 1.4.2+744846f84
+verify	Install application dependencies without lifecycle scripts	﻿2026-09-19T18:56:36.5341686Z ##[group]Run mkdir -p work/ci
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:36.5342106Z ^[[36;1mmkdir -p work/ci^[[0m
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:36.5342643Z ^[[36;1menv -i PATH="$PATH" HOME="$HOME" npm ci --ignore-scripts --no-audit --no-fund 2>&1 | tee work/ci/npm-ci.log^[[0m
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:36.5343239Z ^[[36;1mnode scripts/setup.mjs 2>&1 | tee work/ci/setup.log^[[0m
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:36.5374506Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:36.5374892Z ##[endgroup]
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:44.1384131Z npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:49.9187397Z 
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:49.9188490Z added 464 packages in 13s
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.5078463Z Prisma schema loaded from prisma/schema.prisma
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9599547Z 
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9601643Z ✔ Generated Prisma Client (v6.19.3) to ./node_modules/@prisma/client in 140ms
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9602350Z 
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9602949Z Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9603676Z 
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9604960Z Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
+verify	Install application dependencies without lifecycle scripts	2026-09-19T18:56:51.9605806Z 
+verify	Install the pinned Chromium and system dependencies	﻿2026-09-19T18:56:51.9832884Z ##[group]Run env -i PATH="$PATH" HOME="$HOME" node node_modules/@playwright/test/cli.js install --with-deps chromium 2>&1 | tee work/ci/browser-install.log
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:51.9833896Z ^[[36;1menv -i PATH="$PATH" HOME="$HOME" node node_modules/@playwright/test/cli.js install --with-deps chromium 2>&1 | tee work/ci/browser-install.log^[[0m
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:51.9858327Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:51.9858858Z ##[endgroup]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.5574898Z Installing dependencies...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.5651844Z Switching to root user to install dependencies...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7389557Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7752891Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7757874Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7808897Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7858419Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.7898867Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.8338746Z Get:7 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:52.9820763Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [429 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0071334Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [478 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0649789Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1275 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0714957Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [294 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0783325Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0808743Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1689 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0909248Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [338 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0948461Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.0978358Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1580 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1065325Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [359 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1157582Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [45.7 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1168802Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [13.1 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1598420Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1648821Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [65.9 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1688348Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5764 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1705010Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [34.6 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1728103Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [18.7 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.1748163Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2289135Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1009 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2418376Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [214 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2458199Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.3 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2498949Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1208 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2668650Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [243 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2734891Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.2798430Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1449 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.3048949Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [336 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.3468694Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [11.3 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:53.4283053Z Get:35 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1408 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:58.1889380Z Fetched 12.2 MB in 2s (7112 kB/s)
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.1389474Z Reading package lists...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.1678865Z Reading package lists...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.3830720Z Building dependency tree...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.3848002Z Reading state information...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5870072Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5871384Z libasound2t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5872363Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5873266Z libatk-bridge2.0-0t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5874075Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5874908Z libatk1.0-0t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5875732Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5876927Z libatspi2.0-0t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5877927Z libcairo2 is already the newest version (1.18.0-3build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5878682Z libcairo2 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5879403Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5880208Z libcups2t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5880962Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5881680Z libdbus-1-3 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5882390Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5883073Z libdrm2 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5883730Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5884374Z libgbm1 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5885317Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.8).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5886039Z libglib2.0-0t64 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5887236Z libnspr4 is already the newest version (2:4.35-1.1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5887881Z libnspr4 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5888565Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5889360Z libnss3 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5890381Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5891176Z libpango-1.0-0 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5892170Z libx11-6 is already the newest version (2:1.8.7-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5893029Z libx11-6 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5893887Z libxcb1 is already the newest version (1.15-1ubuntu2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5894760Z libxcb1 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5895495Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5896331Z libxcomposite1 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5897393Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5898136Z libxdamage1 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5898934Z libxext6 is already the newest version (2:1.3.4-1build2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5899837Z libxext6 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5900648Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5902024Z libxfixes3 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5902889Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5903785Z libxkbcommon0 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5904670Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5905500Z libxrandr2 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5906345Z xvfb is already the newest version (2:21.1.12-1ubuntu1.6).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5907527Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5908618Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5909410Z libfontconfig1 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5910353Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5911360Z libfreetype6 set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5912338Z fonts-liberation is already the newest version (1:2.1.5-3).
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5913426Z fonts-liberation set to manually installed.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5914441Z The following additional packages will be installed:
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5915377Z   xfonts-encodings xfonts-utils
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5916114Z Recommended packages:
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.5916955Z   fonts-ipafont-mincho fonts-tlwg-loma
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6162441Z The following NEW packages will be installed:
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6164035Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6186783Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6188669Z   xfonts-utils
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6440935Z 0 upgraded, 9 newly installed, 0 to remove and 73 not upgraded.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6443524Z Need to get 21.1 MB of archives.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6444384Z After this operation, 79.5 MB of additional disk space will be used.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.6445381Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.7160283Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.8093993Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.9365315Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:56:59.9844465Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.0719227Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.2268349Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.2791287Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.3257540Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.3764846Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6519121Z Fetched 21.1 MB in 1s (28.2 MB/s)
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6763417Z Selecting previously unselected package fonts-ipafont-gothic.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6949440Z (Reading database ... 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6950029Z (Reading database ... 5%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6950512Z (Reading database ... 10%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6950993Z (Reading database ... 15%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6951415Z (Reading database ... 20%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6951850Z (Reading database ... 25%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6952155Z (Reading database ... 30%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6952396Z (Reading database ... 35%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6952648Z (Reading database ... 40%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6952886Z (Reading database ... 45%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6953141Z (Reading database ... 50%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.6997174Z (Reading database ... 55%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.8248529Z (Reading database ... 60%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:00.9852859Z (Reading database ... 65%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:01.1763032Z (Reading database ... 70%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:01.3294322Z (Reading database ... 75%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:01.5359266Z (Reading database ... 80%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:01.7260664Z (Reading database ... 85%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:01.9151900Z (Reading database ... 90%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.0468314Z (Reading database ... 95%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.0469430Z (Reading database ... 100%
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.0470718Z (Reading database ... 201818 files and directories currently installed.)
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.0513855Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.0608819Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.3357205Z Selecting previously unselected package fonts-freefont-ttf.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.3477618Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.3498776Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4447797Z Selecting previously unselected package fonts-tlwg-loma-otf.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4568956Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4575990Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4828109Z Selecting previously unselected package fonts-unifont.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4937868Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.4944420Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.6058880Z Selecting previously unselected package fonts-wqy-zenhei.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.6177891Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:02.6279025Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1208524Z Selecting previously unselected package xfonts-encodings.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1323074Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1333604Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1598455Z Selecting previously unselected package xfonts-utils.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1717023Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.1726274Z Unpacking xfonts-utils (1:7.7+6build3) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2061434Z Selecting previously unselected package xfonts-cyrillic.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2181655Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2195836Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2476336Z Selecting previously unselected package xfonts-scalable.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2596144Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2606046Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.2994863Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3111293Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3130254Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3153443Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3172803Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3236573Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3262018Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3279486Z Setting up xfonts-utils (1:7.7+6build3) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3318812Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3719598Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.3979905Z Processing triggers for man-db (2.12.0-4build2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.4001028Z Not building database; man-db/auto-update is not 'true'.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:03.4019112Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1268177Z 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1269241Z Running kernel seems to be up-to-date.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1270188Z 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1270718Z No services need to be restarted.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1271175Z 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1271535Z No containers need to be restarted.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1272121Z 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1272529Z No user sessions are running outdated binaries.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1272981Z 
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:04.1273559Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:05.2542120Z Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:05.6834380Z |                                                                                |   0% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:05.9470818Z |■■■■■■■■                                                                        |  10% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.0704189Z |■■■■■■■■■■■■■■■■                                                                |  20% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.2022450Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.2857922Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.4297721Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.5325007Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.6343767Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.7503159Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.8324488Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:06.9986879Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 186.8 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.3900904Z Chrome for Testing 153.0.8010.12 (playwright chromium v1243) downloaded to /home/runner/.cache/ms-playwright/chromium-1243
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.3921183Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7836306Z |                                                                                |   0% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7864137Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7884462Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7900377Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7925564Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7938461Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7953590Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7988283Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.7999659Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.8015254Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.8054892Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.8616500Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:10.8622261Z Downloading Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-headless-shell-linux64.zip
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.2907831Z |                                                                                |   0% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.4576085Z |■■■■■■■■                                                                        |  10% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.5856889Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.6502968Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.7175309Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.8034612Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.8409988Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.8868746Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:11.9638538Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:12.0022884Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:12.0412060Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.3 MiB
+verify	Install the pinned Chromium and system dependencies	2026-09-19T18:57:14.6893037Z Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1243
+verify	Build the exact Wringer revision	﻿2026-09-19T18:57:14.7102700Z ##[group]Run test "$(git rev-parse HEAD)" = 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7103787Z ^[[36;1mtest "$(git rev-parse HEAD)" = 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4^[[0m
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7104934Z ^[[36;1menv -i PATH="$PATH" HOME="$HOME" bun install --frozen-lockfile --ignore-scripts 2>&1 | tee ../ZenJev/work/ci/wringer-install.log^[[0m
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7106329Z ^[[36;1menv -i PATH="$PATH" HOME="$HOME" bun run build 2>&1 | tee ../ZenJev/work/ci/wringer-build.log^[[0m
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7141824Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7142403Z ##[endgroup]
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.7328391Z bun install v1.4.2 (744846f84)
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9500212Z 
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9507908Z + @types/bun@1.4.1
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9508508Z + playwright@1.63.0
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9509012Z + typescript@5.9.3
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9509535Z + ajv@8.20.0
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9510004Z + ajv-formats@3.0.1
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9510370Z 
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9510782Z 14 packages installed [219.00ms]
+verify	Build the exact Wringer revision	2026-09-19T18:57:14.9578440Z $ bun run scripts/build.ts
+verify	Build the exact Wringer revision	2026-09-19T18:57:15.3259137Z  [341ms]  bundle  308 modules
+verify	Build the exact Wringer revision	2026-09-19T18:57:15.4605127Z  [135ms] compile  dist/wring
+verify	Build the exact Wringer revision	2026-09-19T18:57:15.8007434Z  [328ms]  bundle  308 modules
+verify	Build the exact Wringer revision	2026-09-19T18:57:15.9405660Z  [140ms] compile  dist/wringer-headless
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.2627476Z  [312ms]  bundle  304 modules
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.4003237Z  [136ms] compile  dist/wringer-assistant
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.4319517Z    [6ms]  bundle  3 modules
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.5686780Z  [142ms] compile  dist/wringer-figma-broker
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.7655311Z Native distribution: /home/runner/work/ZenJev/ZenJev/wringer/dist
+verify	Build the exact Wringer revision	2026-09-19T18:57:16.7657026Z Documentation: 125 carried reference files; 14 private/local evidence links explicitly omitted.
+verify	Verify native persistence, recovery and production browser workflows	﻿2026-09-19T18:57:16.7740639Z ##[group]Run node scripts/ci-verify.mjs
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7741008Z ^[[36;1mnode scripts/ci-verify.mjs^[[0m
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7763506Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7763889Z env:
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7764201Z   WRINGER_BINARY: /home/runner/work/ZenJev/ZenJev/wringer/dist/wring
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7764657Z   WRINGER_REPOSITORY: /home/runner/work/ZenJev/ZenJev/wringer
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:16.7765022Z ##[endgroup]
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.4278399Z Prisma schema loaded from prisma/schema.prisma
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.4370665Z Datasource "db": PostgreSQL database "zenjev_demo", schema "public" at "127.0.0.1:55432"
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5042110Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5044098Z 5 migrations found in prisma/migrations
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5044734Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5686250Z Applying migration `202609190001_initial`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5947357Z Applying migration `202609190002_audit_append_only`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.5986896Z Applying migration `202609190003_backlink_parent`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6021752Z Applying migration `202609190004_export_rate`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6041666Z Applying migration `202609190005_configurable_policy`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6087876Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6109344Z ┌─────────────────────────────────────────────────────────┐
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6115452Z │  Update available 6.19.3 -> 8.0.0-rc.15                 │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6116222Z The following migration(s) have been applied:
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6118466Z │                                                         │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6120233Z │  This is a major update - please follow the guide at    │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6121348Z │  https://pris.ly/d/major-version-upgrade                │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6122276Z │                                                         │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6123039Z │  Run the following to update                            │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6123878Z │    npm i --save-dev prisma@latest                       │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6124719Z │    npm i @prisma/client@latest                          │
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6125630Z └─────────────────────────────────────────────────────────┘
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6126926Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6127085Z migrations/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6127502Z   └─ 202609190001_initial/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6127915Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6128402Z   └─ 202609190002_audit_append_only/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6137749Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6138405Z   └─ 202609190003_backlink_parent/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6139132Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6139845Z   └─ 202609190004_export_rate/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6140902Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6141510Z   └─ 202609190005_configurable_policy/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6142079Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6142528Z       
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:18.6143120Z All migrations have been successfully applied.
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.7098478Z Prisma schema loaded from prisma/schema.prisma
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.7169102Z Datasource "db": PostgreSQL database "zenjev_test", schema "public" at "127.0.0.1:55433"
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.7987458Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.7988501Z 5 migrations found in prisma/migrations
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.7989022Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.8623815Z Applying migration `202609190001_initial`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.8891838Z Applying migration `202609190002_audit_append_only`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.8929817Z Applying migration `202609190003_backlink_parent`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.8963939Z Applying migration `202609190004_export_rate`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.8985378Z Applying migration `202609190005_configurable_policy`
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9048462Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9058271Z The following migration(s) have been applied:
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9059069Z 
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9059308Z migrations/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9060065Z   └─ 202609190001_initial/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9060842Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9064531Z   └─ 202609190002_audit_append_only/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9065483Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9066122Z   └─ 202609190003_backlink_parent/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9067209Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9067738Z   └─ 202609190004_export_rate/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9068242Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9068789Z   └─ 202609190005_configurable_policy/
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9069331Z     └─ migration.sql
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9069733Z       
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:19.9070247Z All migrations have been successfully applied.
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:21.1178627Z {"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":13}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:57:22.1897526Z {"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":13}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:00.8972546Z {"status":"passed","failed_gate":null,"rerun":null,"evidence_dir":".wringer/runs/20260919-185722-917fe331","template_only":false,"exit_code":0,"manifest":{"schema_version":"wringer.evidence.v1","run_id":"20260919-185722-917fe331","started_at":"2026-09-19T18:57:22.591Z","repo":{"root":".","head_sha":"8ea4f2730365b180214c221ad5325c97e6e6a7bf","branch":"main","dirty":false},"result":{"status":"passed","failed_gate":null}},"results":[{"gate_id":"lint","command":"node scripts/check.mjs lint","exit_code":0,"duration_ms":7437,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"typecheck","command":"node scripts/check.mjs typecheck","exit_code":0,"duration_ms":8674,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"production-build","command":"node scripts/check.mjs build","exit_code":0,"duration_ms":22073,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"}]}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:11.6987926Z {"status":"passed","failed_gate":null,"rerun":null,"evidence_dir":".wringer/runs/20260919-185801-fd46504e","template_only":false,"exit_code":0,"manifest":{"schema_version":"wringer.evidence.v1","run_id":"20260919-185801-fd46504e","started_at":"2026-09-19T18:58:01.305Z","repo":{"root":".","head_sha":"8ea4f2730365b180214c221ad5325c97e6e6a7bf","branch":"main","dirty":false},"result":{"status":"passed","failed_gate":null}},"results":[{"gate_id":"native-concurrency","command":"node scripts/check-native.mjs","exit_code":0,"duration_ms":10278,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"}]}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.3478091Z ▲ Next.js 16.3.5
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.3517842Z - Local:         http://127.0.0.1:3000
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.3994648Z - Network:       http://127.0.0.1:3000
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.4038129Z ✓ Ready in 349ms
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.4779654Z ▲ Next.js 16.3.5
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.4781209Z - Local:         http://127.0.0.1:3001
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.5368588Z - Network:       http://127.0.0.1:3001
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.5370102Z ✓ Ready in 370ms
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.5919900Z ✓ Running next.config.ts took 86ms
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.6008495Z ✓ Running next.config.ts took 87ms
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:58:12.8579029Z {"event":"worker.started","workerId":"worker-4896","dataMode":"demo","jevMode":"mock"}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:59:00.5267660Z {"status":"passed","failed_gate":null,"rerun":null,"evidence_dir":".wringer/runs/20260919-185814-5f97de07","template_only":false,"exit_code":0,"manifest":{"schema_version":"wringer.evidence.v1","run_id":"20260919-185814-5f97de07","started_at":"2026-09-19T18:58:14.451Z","repo":{"root":".","head_sha":"8ea4f2730365b180214c221ad5325c97e6e6a7bf","branch":"main","dirty":false},"result":{"status":"passed","failed_gate":null}},"results":[{"gate_id":"fresh-offline-setup","command":"node scripts/check-fresh-setup.mjs","exit_code":0,"duration_ms":8899,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"branding","command":"node --test checks/branding.test.mjs","exit_code":0,"duration_ms":146,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"domain-provider-contracts","command":"node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts","exit_code":0,"duration_ms":1961,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"persistence-workflow","command":"node scripts/check.mjs test tests/backend.test.ts tests/provider-integration-orchestration.test.ts","exit_code":0,"duration_ms":5946,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"},{"gate_id":"browser","command":"node scripts/check.mjs browser tests/browser/workbench.spec.ts","exit_code":0,"duration_ms":28942,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"}]}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:59:07.5214850Z {"status":"passed","failed_gate":null,"rerun":null,"evidence_dir":".wringer/runs/20260919-185900-bcd29b3e","template_only":false,"exit_code":0,"manifest":{"schema_version":"wringer.evidence.v1","run_id":"20260919-185900-bcd29b3e","started_at":"2026-09-19T18:59:00.936Z","repo":{"root":".","head_sha":"8ea4f2730365b180214c221ad5325c97e6e6a7bf","branch":"main","dirty":false},"result":{"status":"passed","failed_gate":null}},"results":[{"gate_id":"browser-auth","command":"node scripts/check.mjs browser tests/browser/auth.spec.ts","exit_code":0,"duration_ms":6472,"timed_out":false,"stdout_truncated":false,"stderr_truncated":false,"optional":false,"status":"passed"}]}
+verify	Verify native persistence, recovery and production browser workflows	2026-09-19T18:59:08.5384636Z {"status":"passed","sourceCommit":"8ea4f2730365b180214c221ad5325c97e6e6a7bf","report":"work/ci/verification.json"}
+verify	Preserve actual results, failure logs, browser traces and screenshots	﻿2026-09-19T18:59:08.5521171Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5522495Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5522888Z with:
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5523198Z   name: zenjev-verification-8ea4f2730365b180214c221ad5325c97e6e6a7bf-1
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5523571Z   retention-days: 14
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5523813Z   include-hidden-files: true
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5524071Z   if-no-files-found: warn
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5524504Z   path: ZenJev/work/ci/**
+verify	Preserve actual results, failure logs, browser traces and screenshots	ZenJev/.wringer/runs/**
+verify	Preserve actual results, failure logs, browser traces and screenshots	ZenJev/test-results/**
+verify	Preserve actual results, failure logs, browser traces and screenshots	ZenJev/playwright-report/**
+verify	Preserve actual results, failure logs, browser traces and screenshots	
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5524961Z   compression-level: 6
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5525182Z   overwrite: false
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.5525401Z ##[endgroup]
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.7406317Z (node:6138) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.7409019Z (Use `node --trace-deprecation ...` to show where the warning was created)
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.8552086Z Multiple search paths detected. Calculating the least common ancestor of all paths
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.8553780Z The least common ancestor is /home/runner/work/ZenJev/ZenJev/ZenJev. This will be the root directory of the artifact
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.8554446Z With the provided path, there will be 106 files uploaded
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.8554940Z Artifact name is valid!
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:08.8555220Z Root directory input is valid!
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.1835193Z Beginning upload of artifact content to blob storage
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.3651599Z (node:6138) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.9098046Z Uploaded bytes 1282365
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.9737720Z Finished uploading artifact content to blob storage!
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.9739014Z SHA256 digest of uploaded artifact zip is 608aea78e043d47c5709499b080bcf51e3b06fd10d21a960107163885c46ac3c
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:09.9742896Z Finalizing artifact upload
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:10.2327703Z Artifact zenjev-verification-8ea4f2730365b180214c221ad5325c97e6e6a7bf-1.zip successfully finalized. Artifact ID 10591015460
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:10.2330054Z Artifact zenjev-verification-8ea4f2730365b180214c221ad5325c97e6e6a7bf-1 has been successfully uploaded! Final size is 1282365 bytes. Artifact ID is 10591015460
+verify	Preserve actual results, failure logs, browser traces and screenshots	2026-09-19T18:59:10.2335639Z Artifact download URL: https://github.com/marcoakes/ZenJev/actions/runs/35462754472/artifacts/10591015460
+verify	Post Install pinned Bun for Wringer	﻿2026-09-19T18:59:10.2512078Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Post Install pinned Bun for Wringer	2026-09-19T18:59:10.2513306Z Post job cleanup.
+verify	Post Install pinned Bun for Wringer	2026-09-19T18:59:10.3910953Z (node:6194) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+verify	Post Install pinned Bun for Wringer	2026-09-19T18:59:10.3912755Z (Use `node --trace-deprecation ...` to show where the warning was created)
+verify	Post Install Node 24	﻿2026-09-19T18:59:10.4017675Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Post Install Node 24	2026-09-19T18:59:10.4018892Z Post job cleanup.
+verify	Post Install Node 24	2026-09-19T18:59:10.5642062Z (node:6202) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+verify	Post Install Node 24	2026-09-19T18:59:10.5643844Z (Use `node --trace-deprecation ...` to show where the warning was created)
+verify	Post Install Node 24	2026-09-19T18:59:10.5648041Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-32b6a32d2ea433695d52b0ac012e077799bfa186190fd6cef3eeabd1819f020a, not saving cache.
+verify	Post Check out the reviewed public Wringer harness	﻿2026-09-19T18:59:10.5795120Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.5797428Z Post job cleanup.
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.6854645Z [command]/usr/bin/git version
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.6929933Z git version 2.55.0
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7012743Z Temporarily overriding HOME='/home/runner/work/_temp/3f31fed6-3d11-442a-901f-68209fde3d92' before making global git config changes
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7014647Z Adding repository directory to the temporary git global config as a safe directory
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7016248Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ZenJev/ZenJev/wringer
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7082547Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7172702Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7564813Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Post Check out the reviewed public Wringer harness	2026-09-19T18:59:10.7669198Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Post Check out the exact application revision	﻿2026-09-19T18:59:10.8418615Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.8421066Z Post job cleanup.
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9467943Z [command]/usr/bin/git version
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9566079Z git version 2.55.0
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9668758Z Temporarily overriding HOME='/home/runner/work/_temp/3854e880-1378-426a-bb15-7df3053e2d6c' before making global git config changes
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9688395Z Adding repository directory to the temporary git global config as a safe directory
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9714540Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ZenJev/ZenJev/ZenJev
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9764407Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify	Post Check out the exact application revision	2026-09-19T18:59:10.9768149Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify	Post Check out the exact application revision	2026-09-19T18:59:11.0367355Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify	Post Check out the exact application revision	2026-09-19T18:59:11.0430652Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify	Stop containers	﻿2026-09-19T18:59:11.0971187Z Print service container logs: a3f4e7f81f814bfea45698816553affd_postgres17_139cee
+verify	Stop containers	2026-09-19T18:59:11.0979018Z ##[command]/usr/bin/docker logs --details b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Stop containers	2026-09-19T18:59:11.1260065Z  The files belonging to this database system will be owned by user "postgres".
+verify	Stop containers	2026-09-19T18:59:11.1270460Z  initdb: warning: enabling "trust" authentication for local connections
+verify	Stop containers	2026-09-19T18:59:11.1271212Z  This user must also own the server process.
+verify	Stop containers	2026-09-19T18:59:11.1271774Z  
+verify	Stop containers	2026-09-19T18:59:11.1272279Z  The database cluster will be initialized with locale "en_US.utf8".
+verify	Stop containers	2026-09-19T18:59:11.1273913Z  The default database encoding has accordingly been set to "UTF8".
+verify	Stop containers	2026-09-19T18:59:11.1274651Z  The default text search configuration will be set to "english".
+verify	Stop containers	2026-09-19T18:59:11.1275228Z  
+verify	Stop containers	2026-09-19T18:59:11.1275578Z  Data page checksums are disabled.
+verify	Stop containers	2026-09-19T18:59:11.1275980Z  
+verify	Stop containers	2026-09-19T18:59:11.1276478Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+verify	Stop containers	2026-09-19T18:59:11.1277354Z  creating subdirectories ... ok
+verify	Stop containers	2026-09-19T18:59:11.1277910Z  selecting dynamic shared memory implementation ... posix
+verify	Stop containers	2026-09-19T18:59:11.1278492Z  selecting default "max_connections" ... 100
+verify	Stop containers	2026-09-19T18:59:11.1279039Z  selecting default "shared_buffers" ... 128MB
+verify	Stop containers	2026-09-19T18:59:11.1279579Z  selecting default time zone ... Etc/UTC
+verify	Stop containers	2026-09-19T18:59:11.1280085Z  creating configuration files ... ok
+verify	Stop containers	2026-09-19T18:59:11.1280583Z  running bootstrap script ... ok
+verify	Stop containers	2026-09-19T18:59:11.1281109Z  performing post-bootstrap initialization ... ok
+verify	Stop containers	2026-09-19T18:59:11.1281662Z  syncing data to disk ... ok
+verify	Stop containers	2026-09-19T18:59:11.1282339Z  
+verify	Stop containers	2026-09-19T18:59:11.1282638Z  
+verify	Stop containers	2026-09-19T18:59:11.1283064Z  Success. You can now start the database server using:
+verify	Stop containers	2026-09-19T18:59:11.1283599Z  
+verify	Stop containers	2026-09-19T18:59:11.1285577Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+verify	Stop containers	2026-09-19T18:59:11.1286127Z  
+verify	Stop containers	2026-09-19T18:59:11.1287550Z  waiting for server to start....2026-09-19 18:56:21.161 UTC [46] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+verify	Stop containers	2026-09-19T18:59:11.1288521Z  2026-09-19 18:56:21.162 UTC [46] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+verify	Stop containers	2026-09-19T18:59:11.1289080Z  2026-09-19 18:56:21.165 UTC [49] LOG:  database system was shut down at 2026-09-19 18:56:21 UTC
+verify	Stop containers	2026-09-19T18:59:11.1289600Z  2026-09-19 18:56:21.171 UTC [46] LOG:  database system is ready to accept connections
+verify	Stop containers	2026-09-19T18:59:11.1289989Z   done
+verify	Stop containers	2026-09-19T18:59:11.1290183Z  server started
+verify	Stop containers	2026-09-19T18:59:11.1290400Z  CREATE DATABASE
+verify	Stop containers	2026-09-19T18:59:11.1290621Z  
+verify	Stop containers	2026-09-19T18:59:11.1290801Z  
+verify	Stop containers	2026-09-19T18:59:11.1291115Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+verify	Stop containers	2026-09-19T18:59:11.1291512Z  
+verify	Stop containers	2026-09-19T18:59:11.1291869Z  waiting for server to shut down....2026-09-19 18:56:21.409 UTC [46] LOG:  received fast shutdown request
+verify	Stop containers	2026-09-19T18:59:11.1292375Z  2026-09-19 18:56:21.410 UTC [46] LOG:  aborting any active transactions
+verify	Stop containers	2026-09-19T18:59:11.1293070Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+verify	Stop containers	2026-09-19T18:59:11.1293949Z  2026-09-19 18:56:21.542 UTC [1] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+verify	Stop containers	2026-09-19T18:59:11.1294628Z  2026-09-19 18:56:21.543 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+verify	Stop containers	2026-09-19T18:59:11.1295093Z  2026-09-19 18:56:21.543 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+verify	Stop containers	2026-09-19T18:59:11.1295598Z  2026-09-19 18:56:21.546 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+verify	Stop containers	2026-09-19T18:59:11.1296147Z  2026-09-19 18:56:21.552 UTC [62] LOG:  database system was shut down at 2026-09-19 18:56:21 UTC
+verify	Stop containers	2026-09-19T18:59:11.1296859Z  2026-09-19 18:56:21.563 UTC [1] LOG:  database system is ready to accept connections
+verify	Stop containers	2026-09-19T18:59:11.1297743Z  2026-09-19 18:56:21.424 UTC [46] LOG:  background worker "logical replication launcher" (PID 52) exited with exit code 1
+verify	Stop containers	2026-09-19T18:59:11.1298368Z  2026-09-19 18:56:21.424 UTC [47] LOG:  shutting down
+verify	Stop containers	2026-09-19T18:59:11.1298846Z  2026-09-19 18:56:21.425 UTC [47] LOG:  checkpoint starting: shutdown immediate
+verify	Stop containers	2026-09-19T18:59:11.1299868Z  2026-09-19 18:56:21.456 UTC [47] LOG:  checkpoint complete: wrote 925 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.026 s, sync=0.004 s, total=0.032 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4256 kB, estimate=4256 kB; lsn=0/19179A8, redo lsn=0/19179A8
+verify	Stop containers	2026-09-19T18:59:11.1300885Z  2026-09-19 18:56:21.464 UTC [46] LOG:  database system is shut down
+verify	Stop containers	2026-09-19T18:59:11.1301213Z   done
+verify	Stop containers	2026-09-19T18:59:11.1301404Z  server stopped
+verify	Stop containers	2026-09-19T18:59:11.1301615Z  
+verify	Stop containers	2026-09-19T18:59:11.1301862Z  PostgreSQL init process complete; ready for start up.
+verify	Stop containers	2026-09-19T18:59:11.1302175Z  
+verify	Stop containers	2026-09-19T18:59:11.1308862Z Stop and remove container: a3f4e7f81f814bfea45698816553affd_postgres17_139cee
+verify	Stop containers	2026-09-19T18:59:11.1314199Z ##[command]/usr/bin/docker rm --force b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Stop containers	2026-09-19T18:59:11.2629617Z b2cbeef49df4e1342aab63231e0c7df6cf5b042fbf9107b7e3d0172129e0b73b
+verify	Stop containers	2026-09-19T18:59:11.2660736Z Print service container logs: 59c70f17a310491dae019ff5aeab9768_postgres17_a61993
+verify	Stop containers	2026-09-19T18:59:11.2665929Z ##[command]/usr/bin/docker logs --details b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Stop containers	2026-09-19T18:59:11.2860824Z  The files belonging to this database system will be owned by user "postgres".
+verify	Stop containers	2026-09-19T18:59:11.2862739Z  initdb: warning: enabling "trust" authentication for local connections
+verify	Stop containers	2026-09-19T18:59:11.2863406Z  This user must also own the server process.
+verify	Stop containers	2026-09-19T18:59:11.2864011Z  
+verify	Stop containers	2026-09-19T18:59:11.2864578Z  The database cluster will be initialized with locale "en_US.utf8".
+verify	Stop containers	2026-09-19T18:59:11.2865488Z  The default database encoding has accordingly been set to "UTF8".
+verify	Stop containers	2026-09-19T18:59:11.2866464Z  The default text search configuration will be set to "english".
+verify	Stop containers	2026-09-19T18:59:11.2867449Z  
+verify	Stop containers	2026-09-19T18:59:11.2867883Z  Data page checksums are disabled.
+verify	Stop containers	2026-09-19T18:59:11.2868374Z  
+verify	Stop containers	2026-09-19T18:59:11.2868899Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+verify	Stop containers	2026-09-19T18:59:11.2869710Z  creating subdirectories ... ok
+verify	Stop containers	2026-09-19T18:59:11.2870325Z  selecting dynamic shared memory implementation ... posix
+verify	Stop containers	2026-09-19T18:59:11.2871012Z  selecting default "max_connections" ... 100
+verify	Stop containers	2026-09-19T18:59:11.2871620Z  selecting default "shared_buffers" ... 128MB
+verify	Stop containers	2026-09-19T18:59:11.2872359Z  selecting default time zone ... Etc/UTC
+verify	Stop containers	2026-09-19T18:59:11.2872932Z  creating configuration files ... ok
+verify	Stop containers	2026-09-19T18:59:11.2873562Z  running bootstrap script ... ok
+verify	Stop containers	2026-09-19T18:59:11.2874169Z  performing post-bootstrap initialization ... ok
+verify	Stop containers	2026-09-19T18:59:11.2874765Z  syncing data to disk ... ok
+verify	Stop containers	2026-09-19T18:59:11.2875190Z  
+verify	Stop containers	2026-09-19T18:59:11.2875542Z  
+verify	Stop containers	2026-09-19T18:59:11.2875974Z  Success. You can now start the database server using:
+verify	Stop containers	2026-09-19T18:59:11.2876515Z  
+verify	Stop containers	2026-09-19T18:59:11.2877216Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+verify	Stop containers	2026-09-19T18:59:11.2877790Z  
+verify	Stop containers	2026-09-19T18:59:11.2878852Z  waiting for server to start....2026-09-19 18:56:22.107 UTC [49] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+verify	Stop containers	2026-09-19T18:59:11.2880284Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+verify	Stop containers	2026-09-19T18:59:11.2881386Z  2026-09-19 18:56:22.399 UTC [1] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+verify	Stop containers	2026-09-19T18:59:11.2882249Z  2026-09-19 18:56:22.399 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+verify	Stop containers	2026-09-19T18:59:11.2882913Z  2026-09-19 18:56:22.399 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+verify	Stop containers	2026-09-19T18:59:11.2884264Z  2026-09-19 18:56:22.401 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+verify	Stop containers	2026-09-19T18:59:11.2885251Z  2026-09-19 18:56:22.404 UTC [65] LOG:  database system was shut down at 2026-09-19 18:56:22 UTC
+verify	Stop containers	2026-09-19T18:59:11.2885942Z  2026-09-19 18:56:22.409 UTC [1] LOG:  database system is ready to accept connections
+verify	Stop containers	2026-09-19T18:59:11.2886422Z  2026-09-19 18:58:04.548 UTC [232] WARNING:  there is no transaction in progress
+verify	Stop containers	2026-09-19T18:59:11.2887177Z  2026-09-19 18:58:05.491 UTC [232] WARNING:  there is no transaction in progress
+verify	Stop containers	2026-09-19T18:59:11.2887858Z  2026-09-19 18:58:08.491 UTC [232] WARNING:  there is no transaction in progress
+verify	Stop containers	2026-09-19T18:59:11.2888544Z  2026-09-19 18:58:11.554 UTC [232] WARNING:  there is no transaction in progress
+verify	Stop containers	2026-09-19T18:59:11.2889456Z  2026-09-19 18:56:22.107 UTC [49] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+verify	Stop containers	2026-09-19T18:59:11.2890443Z  2026-09-19 18:56:22.110 UTC [52] LOG:  database system was shut down at 2026-09-19 18:56:21 UTC
+verify	Stop containers	2026-09-19T18:59:11.2891353Z  2026-09-19 18:56:22.113 UTC [49] LOG:  database system is ready to accept connections
+verify	Stop containers	2026-09-19T18:59:11.2892051Z   done
+verify	Stop containers	2026-09-19T18:59:11.2892287Z  server started
+verify	Stop containers	2026-09-19T18:59:11.2892505Z  CREATE DATABASE
+verify	Stop containers	2026-09-19T18:59:11.2892713Z  
+verify	Stop containers	2026-09-19T18:59:11.2892900Z  
+verify	Stop containers	2026-09-19T18:59:11.2893225Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+verify	Stop containers	2026-09-19T18:59:11.2893619Z  
+verify	Stop containers	2026-09-19T18:59:11.2893983Z  waiting for server to shut down....2026-09-19 18:56:22.277 UTC [49] LOG:  received fast shutdown request
+verify	Stop containers	2026-09-19T18:59:11.2894680Z  2026-09-19 18:56:22.277 UTC [49] LOG:  aborting any active transactions
+verify	Stop containers	2026-09-19T18:59:11.2895248Z  2026-09-19 18:56:22.280 UTC [49] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+verify	Stop containers	2026-09-19T18:59:11.2895773Z  2026-09-19 18:56:22.280 UTC [50] LOG:  shutting down
+verify	Stop containers	2026-09-19T18:59:11.2896178Z  2026-09-19 18:56:22.281 UTC [50] LOG:  checkpoint starting: shutdown immediate
+verify	Stop containers	2026-09-19T18:59:11.2897524Z  2026-09-19 18:56:22.293 UTC [50] LOG:  checkpoint complete: wrote 925 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.003 s, total=0.013 s; sync files=301, longest=0.002 s, average=0.001 s; distance=4256 kB, estimate=4256 kB; lsn=0/19179A8, redo lsn=0/19179A8
+verify	Stop containers	2026-09-19T18:59:11.2898535Z  2026-09-19 18:56:22.297 UTC [49] LOG:  database system is shut down
+verify	Stop containers	2026-09-19T18:59:11.2898877Z   done
+verify	Stop containers	2026-09-19T18:59:11.2899083Z  server stopped
+verify	Stop containers	2026-09-19T18:59:11.2899294Z  
+verify	Stop containers	2026-09-19T18:59:11.2899546Z  PostgreSQL init process complete; ready for start up.
+verify	Stop containers	2026-09-19T18:59:11.2899857Z  
+verify	Stop containers	2026-09-19T18:59:11.2900892Z Stop and remove container: 59c70f17a310491dae019ff5aeab9768_postgres17_a61993
+verify	Stop containers	2026-09-19T18:59:11.2901642Z ##[command]/usr/bin/docker rm --force b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Stop containers	2026-09-19T18:59:11.4081081Z b0a963c6b247e3564d34cda10a3fc261d42f0c714c131728b51d49b9c1e96040
+verify	Stop containers	2026-09-19T18:59:11.4110307Z Remove container network: github_network_87b9f798e3e242af9838aa3c482c2750
+verify	Stop containers	2026-09-19T18:59:11.4115507Z ##[command]/usr/bin/docker network rm github_network_87b9f798e3e242af9838aa3c482c2750
+verify	Stop containers	2026-09-19T18:59:11.4870456Z github_network_87b9f798e3e242af9838aa3c482c2750
+verify	Complete job	﻿2026-09-19T18:59:11.4949199Z Cleaning up orphan processes
+verify	Complete job	2026-09-19T18:59:11.5250919Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02, oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

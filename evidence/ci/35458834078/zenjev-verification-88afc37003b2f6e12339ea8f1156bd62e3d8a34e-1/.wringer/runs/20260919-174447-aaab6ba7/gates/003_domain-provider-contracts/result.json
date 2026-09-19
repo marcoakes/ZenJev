@@ -1,0 +1,11 @@
+{
+  "gate_id": "domain-provider-contracts",
+  "command": "node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts",
+  "exit_code": 0,
+  "duration_ms": 1899,
+  "timed_out": false,
+  "stdout_truncated": false,
+  "stderr_truncated": false,
+  "optional": false,
+  "status": "passed"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "zenjev-final-ui-observation.v1",
+  "recordedAt": "2026-09-19T19:03:03.645159+00:00",
+  "reviewer": "Codex delegated agent",
+  "sourceCommit": "8ea4f2730365b180214c221ad5325c97e6e6a7bf",
+  "mechanism": "Codex in-app browser accessibility tree and rendered screenshot via cua_repl",
+  "url": "http://127.0.0.1:3000/tickets",
+  "observations": [
+    "Ticket queue rendered with100synthetic tickets,9engineering signals and0completed actions.",
+    "Header visibly states Synthetic data / Mock decisions / Dry run only.",
+    "Footer visibly states Database connected / Worker healthy.",
+    "Opened ticket-100; conversation, customer comments, separately marked Private internal note and Not evaluated decision state rendered.",
+    "Action preparation remains disabled pending successful evaluation; no mutation performed in this final spot check.",
+    "Pink accents, black typography and cream surfaces visually intact."
+  ],
+  "scope": "Fresh isolated synthetic preview; read-only final spot check supplements recorded automated CI journeys. Original offloaded database records remain preserved and unrecovered.",
+  "ownerPersonalVerdict": null
+}

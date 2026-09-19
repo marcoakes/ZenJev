@@ -1,0 +1,13 @@
+{
+  "schema_version": "wringer.native.snapshot.v1",
+  "root": ".",
+  "head_sha": "88afc37003b2f6e12339ea8f1156bd62e3d8a34e",
+  "branch": "main",
+  "dirty": false,
+  "changed_files": [],
+  "untracked": [],
+  "status": "",
+  "diff": "",
+  "untracked_hashes": {},
+  "fingerprint": "7259b7ccaafdb3061a0620990fbb133727f5c488918b73d6e3db1854ba15e065"
+}

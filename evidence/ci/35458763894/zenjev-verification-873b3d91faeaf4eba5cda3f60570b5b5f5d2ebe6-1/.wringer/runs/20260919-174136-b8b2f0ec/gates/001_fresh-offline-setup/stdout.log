@@ -1,0 +1,32 @@
+{"check":"fresh-portable-setup","phase":"migrate-empty-database"}
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "zenjev_test", schema "public" at "127.0.0.1:55435"
+
+5 migrations found in prisma/migrations
+
+Applying migration `202609190001_initial`
+Applying migration `202609190002_audit_append_only`
+Applying migration `202609190003_backlink_parent`
+Applying migration `202609190004_export_rate`
+Applying migration `202609190005_configurable_policy`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 202609190001_initial/
+    └─ migration.sql
+  └─ 202609190002_audit_append_only/
+    └─ migration.sql
+  └─ 202609190003_backlink_parent/
+    └─ migration.sql
+  └─ 202609190004_export_rate/
+    └─ migration.sql
+  └─ 202609190005_configurable_policy/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+{"check":"fresh-portable-setup","phase":"seed-first-pass"}
+{"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":13}
+{"check":"fresh-portable-setup","phase":"seed-second-pass"}
+{"tickets":100,"issues":20,"organizations":12,"labels":200,"pendingJobs":13}
+{"check":"fresh-portable-setup","status":"passed","startedEmpty":true,"seedPasses":2,"tickets":100,"synthetic_tickets":100,"organizations":12,"comments":300,"issues":20,"labels":200,"snapshots":400,"jobs":13,"actions":0,"migrations":["202609190001_initial","202609190002_audit_append_only","202609190003_backlink_parent","202609190004_export_rate","202609190005_configurable_policy"],"snapshotIntegrity":"400 source snapshots unchanged across both seeds","credentials":"excluded from child processes","runtime":"PGlite PostgreSQL over dedicated loopback TCP","port":55435,"limitation":"Does not verify native PostgreSQL startup, multiprocess concurrency or a fresh dependency installation","ownedTemporaryDatabaseRemoved":true}

@@ -1,0 +1,55 @@
+{
+  "schema": "zenjev-github-smoke.v1",
+  "recordedAt": "2026-09-19T19:11:16.276Z",
+  "finishedAt": "2026-09-19T19:11:17.821Z",
+  "command": "node --import tsx scripts/integration-smoke.ts --provider=github --repository=marcoakes/ZenJev --allow-live-read",
+  "target": "marcoakes/ZenJev",
+  "credential": {
+    "source": "existing gh active-account authentication helper",
+    "host": "github.com",
+    "accountContext": "marcoakes verified by repository publication",
+    "lookup": "gh auth token --hostname github.com",
+    "access": "available",
+    "valueRecorded": false
+  },
+  "priorAttempt": "github-smoke-20260919.json",
+  "limits": {
+    "maxRequests": 1,
+    "automaticRetries": 0,
+    "deadlineMs": 15000,
+    "repositoryMetadataOnly": true,
+    "issuesRead": false,
+    "customerData": false,
+    "externalWrites": false,
+    "modelCalls": 0
+  },
+  "sourceFiles": [
+    {
+      "path": "scripts/integration-smoke.ts",
+      "sha256": "bf8e70d089d541056c3d77bad5607f56c8b44d0414d5682889cf47300cf40955"
+    },
+    {
+      "path": "scripts/environment.mjs",
+      "sha256": "9255984b714b58299cb2d038350d22c593bf6c65ed16539cc4eec2e45c3e9954"
+    },
+    {
+      "path": "src/providers/github.ts",
+      "sha256": "2058ae20a473832c63c8440db5c380ece29cae52136c8bbc1f267ddb71ca3edd"
+    },
+    {
+      "path": "src/providers/http.ts",
+      "sha256": "2a950c69ebfcac4261883afa0942d0c7b19027ecc9573c1acd04e86da608f403"
+    }
+  ],
+  "exitCode": 0,
+  "result": {
+    "status": "succeeded",
+    "provider": "github",
+    "readOnly": true,
+    "recordsRead": 1,
+    "httpRequests": 1,
+    "modelCalls": 0,
+    "mutations": 0,
+    "repositoryPrivate": true
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "zenjev.portable-recovery-diagnostic.v1",
+  "checkedAt": "2026-09-19T18:31:22.004233+00:00",
+  "status": "waiting_for_filesystem_hydration",
+  "inMemoryProbe": {
+    "status": "passed",
+    "runtime": "PGlite 0.5.8 / PostgreSQL 18.3",
+    "operations": [
+      "create",
+      "SELECT version()",
+      "close"
+    ]
+  },
+  "originalDirectories": [
+    {
+      "directory": ".local/portable-zenjev_demo",
+      "files": 1083,
+      "logicalBytes": 43524169,
+      "datalessFiles": 846,
+      "fileFlagCounts": {
+        "0x8040": 236,
+        "0x40": 1,
+        "0x40008060": 846
+      }
+    },
+    {
+      "directory": ".local/portable-zenjev_test",
+      "files": 1083,
+      "logicalBytes": 44097629,
+      "datalessFiles": 1083,
+      "fileFlagCounts": {
+        "0x40008060": 1083
+      }
+    }
+  ],
+  "copyAttempts": [
+    {
+      "path": "work/portable-recovery-f1esg50n/demo-copy",
+      "method": "Python shutil fast-copy",
+      "outcome": "interrupted owned process after kernel fcopyfile stalled"
+    },
+    {
+      "path": "work/portable-buffered-5wyl2mrz/demo-copy",
+      "method": "8-way buffered SHA-256-checked copies",
+      "outcome": "120s timeout,79/1083files completed,0hash errors"
+    },
+    {
+      "path": "work/portable-clone-geuxg5e4/demo-copy",
+      "method": "cp -cR",
+      "outcome": "30s timeout"
+    },
+    {
+      "path": "/private/tmp/zenjev-recovery-hfqzw69k/demo-copy",
+      "method": "cp -cR",
+      "outcome": "60s timeout"
+    },
+    {
+      "path": "/private/tmp/zenjev-clonefile-dx8w0afk/demo-copy",
+      "method": "direct clonefile(2)",
+      "outcome": "30s SIGALRM deadline exit142"
+    }
+  ],
+  "blockedCommand": {
+    "command": "brctl help",
+    "result": "Trying to invoke brctl from a sandboxed process"
+  },
+  "findings": [
+    "Existing database files carry the macOS dataless placeholder flag and many nonempty files have zero allocated blocks.",
+    "All copied files whose reads completed matched their copied SHA-256; no logical corruption has been established.",
+    "The generic WASM startup abort cannot be diagnosed safely until a complete existing-data copy or hydrated original is available."
+  ],
+  "preservation": [
+    "No diagnostic PGlite instance opened either original data directory.",
+    "Original database records were not reset, deleted or replaced.",
+    "Partial scratch copies remain incomplete and were not used as recovered databases.",
+    "No unrelated processes were stopped."
+  ],
+  "nextStep": "Hydrate the original ZenJev project/database folders using an authorized supported file-provider action (e.g. Finder Download Now/Keep Downloaded), verify dataless count is zero, then obtain a complete safe copy and inspect PostgreSQL startup/record counts.",
+  "reference": "https://support.apple.com/en-my/guide/mac-help/mchl1a02d711/mac"
+}

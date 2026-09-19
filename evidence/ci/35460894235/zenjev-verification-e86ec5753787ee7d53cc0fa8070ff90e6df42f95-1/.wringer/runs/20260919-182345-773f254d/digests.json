@@ -1,0 +1,24 @@
+{
+  "schema_version": "wringer.digests.v1",
+  "algorithm": "sha256",
+  "files": {
+    ".wringer.yaml": "83f1763b4e72a086805998f4e0806806f5c82025bf9a252487ba33c26f34b3c6",
+    "checks.json": "40586fb6ad7eab39460ac0e68438c340ecd1b228fc04e2a2f24d9e5e1a7e8ae4",
+    "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence.jsonl": "1b10072b757fb2c970c496c9b9e75b0830b11d61dd88dfa3e1d7719fa3a6e9dd",
+    "execution.json": "a55603065336be6571a72ed9a9eaeeed767979d68b5f2e930f633fb6bb9c2d20",
+    "gates/010_browser-auth/artifacts.json": "06ef2112b95b2c93f4034bc9c020ccaa807e9e8c607b46b6e36230ef551f6bd7",
+    "gates/010_browser-auth/artifacts/browser-results.json": "79c73cb35b34b82889fe33f11a81b191698a49dd69e0030d7067551328216115",
+    "gates/010_browser-auth/artifacts/playwright/.last-run.json": "b01a833ff42aac223403bd02c8cc26179107dca3d786025f13daac0e0060bf12",
+    "gates/010_browser-auth/artifacts/playwright/auth-A-11-real-reviewer-lo-37b02-nd-logout-on-synthetic-data-chromium/error-context.md": "7eb67213d494b9801f9c6734b5173fda8be4257aa0778ad34908d4470146e36f",
+    "gates/010_browser-auth/result.json": "c3fa0e30df3dc3002941bb40caf4a476b66fdc10580da08f525c4cc1650ffb50",
+    "gates/010_browser-auth/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gates/010_browser-auth/stdout.log": "4b7695400ff2d11ad07b8862781bb4bfe745095786d45f42283d29ab2b180d62",
+    "manifest.json": "c893e18bfe28b8bc2214207eddedc691428067b24bba9be8933564a0c78a54eb",
+    "snapshot.json": "420db668590c774785475bcbc624dc1e94d9399d22676166444768e142508277",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.md": "39197105791b44c9617ce9f13269241f334c6fb55be0633ed3ca5c4ac893190b",
+    "untracked.json": "122e9a353ad1734d4c4cc961738ddb2b2d7ed41d5df845b2fe62dc96b1af5584",
+    "wringer.spec.yaml": "0e1702ee0ddf67cf12f163772ee4a3504bd894ae396e1a70fc86aa0751126074"
+  }
+}

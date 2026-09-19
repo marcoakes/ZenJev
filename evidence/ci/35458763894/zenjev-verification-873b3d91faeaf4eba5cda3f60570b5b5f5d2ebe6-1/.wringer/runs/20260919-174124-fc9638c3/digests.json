@@ -1,0 +1,20 @@
+{
+  "schema_version": "wringer.digests.v1",
+  "algorithm": "sha256",
+  "files": {
+    ".wringer.yaml": "16140f205760aeb280b22c5d75595fca03526352e7e9d505b29b9b184069b3c5",
+    "checks.json": "5629e05d6a61e1b330debe75bd65e96ea6c95a3b6c487c26af6db00c4629df10",
+    "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence.jsonl": "fe09eb81369bb4a92eb0ad6cecf3510c624f2df2c1c2d7e9ed20f673a034ea6f",
+    "execution.json": "c8ed87722e3e85b607889bc6a0471f505a892f550f25622e3374d8843bdd4dd7",
+    "gates/009_native-concurrency/result.json": "d900d18b7a956d3cee298454f4e0236863792cbf38a26f0447d755864faf1ddb",
+    "gates/009_native-concurrency/stderr.log": "1104531706b572398565e1a160b3219d9fefa8c2b8ee722c56d44cd569b5e864",
+    "gates/009_native-concurrency/stdout.log": "1ed53341032e40535aaad1c4b6b4f0d6bb283ff4d47148d7059a16bdfc4a45b4",
+    "manifest.json": "aa8e580ea618fc67ce6161d8ac3099a454182e9894e57f7aafe883f7238c6921",
+    "snapshot.json": "1872611d09df94996972602bcc44b4b364b2ec79badbd0789201147a0e2187a6",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.md": "b81fc2372e460bdd0774881bc51d8589c2cd400f37db4fca509563d71ca82c38",
+    "untracked.json": "122e9a353ad1734d4c4cc961738ddb2b2d7ed41d5df845b2fe62dc96b1af5584",
+    "wringer.spec.yaml": "0e1702ee0ddf67cf12f163772ee4a3504bd894ae396e1a70fc86aa0751126074"
+  }
+}

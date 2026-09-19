@@ -1,0 +1,38 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/browser/auth.spec.ts:121:1 › A-11: real reviewer login enforces session cookies, CSRF, admin boundary and logout on synthetic data (15.9s)
+  -  2 [chromium] › tests/browser/auth.spec.ts:159:1 › A-11: real viewer login can read synthetic tickets but cannot mutate or configure
+
+
+  1) [chromium] › tests/browser/auth.spec.ts:121:1 › A-11: real reviewer login enforces session cookies, CSRF, admin boundary and logout on synthetic data 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:3001/tickets"
+    Received: "http://127.0.0.1:3001/login"
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 15000ms
+        34 × locator resolved to <html lang="en">…</html>
+           - unexpected value "http://127.0.0.1:3001/login"
+
+
+      55 |   }
+      56 |   expect(login.status(), failureReason).toBe(200);
+    > 57 |   await expect(page).toHaveURL('http://127.0.0.1:3001/tickets');
+         |                      ^
+      58 |   await expect(page.locator('tbody tr')).toHaveCount(15);
+      59 |   const current = await browserRequest(page, '/api/auth/me');
+      60 |   expect(current.status).toBe(200);
+        at signIn (/home/runner/work/ZenJev/ZenJev/ZenJev/tests/browser/auth.spec.ts:57:22)
+        at /home/runner/work/ZenJev/ZenJev/ZenJev/tests/browser/auth.spec.ts:123:17
+
+    Error Context: ../../../../../../tmp/wringer-native-artifacts-z26ZwZ/playwright/auth-A-11-real-reviewer-lo-37b02-nd-logout-on-synthetic-data-chromium/error-context.md
+
+    Error Context: ../../../../../../tmp/wringer-native-artifacts-z26ZwZ/playwright/auth-A-11-real-reviewer-lo-37b02-nd-logout-on-synthetic-data-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/browser/auth.spec.ts:121:1 › A-11: real reviewer login enforces session cookies, CSRF, admin boundary and logout on synthetic data 
+  1 did not run

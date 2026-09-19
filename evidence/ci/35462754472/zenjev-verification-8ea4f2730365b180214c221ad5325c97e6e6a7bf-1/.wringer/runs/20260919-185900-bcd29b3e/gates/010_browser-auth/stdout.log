@@ -1,0 +1,7 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/browser/auth.spec.ts:126:1 › A-11: real reviewer login enforces session cookies, CSRF, admin boundary and logout on synthetic data (3.0s)
+  ✓  2 [chromium] › tests/browser/auth.spec.ts:164:1 › A-11: real viewer login can read synthetic tickets but cannot mutate or configure (1.6s)
+
+  2 passed (5.9s)
