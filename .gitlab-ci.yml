@@ -1,0 +1,105 @@
+# GitLab CI equivalent of .github/workflows/verify.yml.
+#
+# It preserves that workflow's behaviour deliberately: the same pinned Wringer revision, the same
+# clean-checkout assertion, native PostgreSQL 17 services rather than a portable substitute, the
+# same build ordering, the same worker/application readiness, the same browser checks and the same
+# owned-process cleanup. All orchestration stays in scripts/ci-verify.mjs so both pipelines run the
+# identical verification rather than two drifting copies.
+#
+# Credentials: this job declares no CI/CD variable and reads none. Ordinary merge-request
+# verification runs entirely on synthetic data with a mock decision provider. If live Jev, Zendesk
+# or GitLab credentials are ever added to this project, define them as **protected and masked**
+# variables so unprotected branches and forks can never receive them, and give live checks their
+# own manually triggered job rather than attaching them here.
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+stages:
+  - verify
+
+verify:
+  stage: verify
+  # Node 24 is pinned by image tag; Playwright installs its own pinned Chromium and system
+  # dependencies, exactly as the GitHub workflow does. The Playwright image is not used because
+  # it currently ships a different Node major version.
+  image: node:24-bookworm
+  timeout: 30 minutes
+  interruptible: true
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: "0"
+    WRINGER_SHA: 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+    WRINGER_REPOSITORY_URL: https://github.com/marcoakes/wringer.git
+    BUN_VERSION: 1.4.2
+    # Reached by service alias, not by a mapped host port.
+    ZENJEV_CI_DEMO_DATABASE_URL: postgresql://demo:demo@demo-postgres:5432/zenjev_demo?connection_limit=4
+    ZENJEV_CI_TEST_DATABASE_URL: postgresql://demo:demo@test-postgres:5432/zenjev_test?connection_limit=4
+    npm_config_cache: "$CI_PROJECT_DIR/.npm"
+    NEXT_TELEMETRY_DISABLED: "1"
+  services:
+    - name: postgres:17
+      alias: demo-postgres
+      variables:
+        POSTGRES_USER: demo
+        POSTGRES_PASSWORD: demo
+        POSTGRES_DB: zenjev_demo
+    - name: postgres:17
+      alias: test-postgres
+      variables:
+        POSTGRES_USER: demo
+        POSTGRES_PASSWORD: demo
+        POSTGRES_DB: zenjev_test
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  before_script:
+    - set -euo pipefail
+    - test "$(git rev-parse HEAD)" = "$CI_COMMIT_SHA"
+    - mkdir -p work/ci
+    # Install the pinned Bun from its published release and verify it against that release's
+    # published checksums. Never pipe a remote installer into a shell.
+    - |
+      curl -fsSL -o /tmp/bun.zip "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip"
+      curl -fsSL -o /tmp/bun-sums.txt "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/SHASUMS256.txt"
+      (cd /tmp && grep ' bun-linux-x64\.zip$' bun-sums.txt | sed 's#bun-linux-x64\.zip#/tmp/bun.zip#' | sha256sum -c -)
+      apt-get update && apt-get install -y --no-install-recommends unzip
+      unzip -q -o /tmp/bun.zip -d /tmp/bun
+      install -m 0755 /tmp/bun/bun-linux-x64/bun /usr/local/bin/bun
+      bun --version | tee work/ci/bun-version.log
+    # Check out the reviewed public Wringer harness outside the project directory, so the
+    # application checkout that ci-verify.mjs inspects stays clean.
+    - |
+      git clone --quiet --no-checkout "$WRINGER_REPOSITORY_URL" /tmp/wringer
+      git -C /tmp/wringer checkout --quiet "$WRINGER_SHA"
+      test "$(git -C /tmp/wringer rev-parse HEAD)" = "$WRINGER_SHA"
+  script:
+    - env -i PATH="$PATH" HOME="$HOME" npm_config_cache="$npm_config_cache" npm ci --ignore-scripts --no-audit --no-fund 2>&1 | tee work/ci/npm-ci.log
+    - node scripts/setup.mjs 2>&1 | tee work/ci/setup.log
+    - env -i PATH="$PATH" HOME="$HOME" node node_modules/@playwright/test/cli.js install --with-deps chromium 2>&1 | tee work/ci/browser-install.log
+    - |
+      cd /tmp/wringer
+      env -i PATH="$PATH" HOME="$HOME" bun install --frozen-lockfile --ignore-scripts 2>&1 | tee "$CI_PROJECT_DIR/work/ci/wringer-install.log"
+      env -i PATH="$PATH" HOME="$HOME" bun run build 2>&1 | tee "$CI_PROJECT_DIR/work/ci/wringer-build.log"
+      cd "$CI_PROJECT_DIR"
+    # Every required gate affects the job status: ci-verify.mjs exits nonzero on any gate failure
+    # and never reruns a failed check.
+    - WRINGER_BINARY=/tmp/wringer/dist/wring WRINGER_REPOSITORY=/tmp/wringer node scripts/ci-verify.mjs
+  artifacts:
+    name: "zenjev-verification-$CI_COMMIT_SHORT_SHA-$CI_JOB_ID"
+    # Failed results, logs, traces and screenshots are preserved, not discarded.
+    when: always
+    expire_in: 14 days
+    access: developer
+    paths:
+      - work/ci/
+      - .wringer/runs/
+      - test-results/
+      - playwright-report/

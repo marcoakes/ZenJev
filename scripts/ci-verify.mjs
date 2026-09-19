@@ -15,11 +15,17 @@ const git = (...args) => execFileSync('git', args, { encoding: 'utf8', env: clea
 if (git('-C', harnessRepo, 'rev-parse', 'HEAD') !== expectedHarness) throw new Error('Unexpected Wringer source revision');
 const source = git('rev-parse', 'HEAD');
 if (git('status', '--porcelain')) throw new Error('CI verification requires a clean source checkout');
-const demoDatabase = 'postgresql://demo:demo@127.0.0.1:55432/zenjev_demo?connection_limit=4';
-const testDatabase = 'postgresql://demo:demo@127.0.0.1:55433/zenjev_test?connection_limit=4';
-const env = demoEnvironment({ DATABASE_URL: demoDatabase, ZENJEV_TEST_DATABASE_URL: testDatabase, APP_BIND_HOST: '127.0.0.1', NODE_ENV: 'production' });
+// Databases and ports are overridable so this script runs unchanged on a runner whose PostgreSQL
+// services are reached by hostname, and beside an unrelated local instance on the default ports.
+const demoDatabase = process.env.ZENJEV_CI_DEMO_DATABASE_URL || 'postgresql://demo:demo@127.0.0.1:55432/zenjev_demo?connection_limit=4';
+const testDatabase = process.env.ZENJEV_CI_TEST_DATABASE_URL || 'postgresql://demo:demo@127.0.0.1:55433/zenjev_test?connection_limit=4';
+const appPort = Number(process.env.ZENJEV_CI_APP_PORT || 3000);
+const authPort = Number(process.env.ZENJEV_CI_AUTH_PORT || 3001);
+if (!Number.isInteger(appPort) || !Number.isInteger(authPort) || appPort === authPort) throw new Error('CI application ports must be two distinct integers');
+const env = demoEnvironment({ DATABASE_URL: demoDatabase, ZENJEV_TEST_DATABASE_URL: testDatabase, APP_BIND_HOST: '127.0.0.1', APP_BASE_URL: `http://127.0.0.1:${appPort}`, ZENJEV_AUTH_BASE_URL: `http://127.0.0.1:${authPort}`, ZENJEV_BROWSER_DATABASE_URL: demoDatabase, NODE_ENV: 'production' });
 const owned = new Set();
-const report = { schemaVersion: 'zenjev.ci-verification.v1', sourceCommit: source, harnessCommit: expectedHarness, startedAt: new Date().toISOString(), runtime: process.version, platform: process.platform, dataMode: 'synthetic', provider: 'mock', commands: [], databases: [], bundles: [], status: 'running', limitations: ['Synthetic fixture tests do not validate production credentials or live provider writes.', 'Human usability approval is not manufactured by CI.'] };
+const ci = process.env.GITLAB_CI === 'true' ? 'gitlab' : process.env.GITHUB_ACTIONS === 'true' ? 'github' : 'local';
+const report = { schemaVersion: 'zenjev.ci-verification.v1', sourceCommit: source, harnessCommit: expectedHarness, startedAt: new Date().toISOString(), runtime: process.version, platform: process.platform, ci, ports: { application: appPort, authenticated: authPort }, dataMode: 'synthetic', provider: 'mock', commands: [], databases: [], bundles: [], status: 'running', limitations: ['Synthetic fixture tests do not validate production credentials or live provider writes.', 'Human usability approval is not manufactured by CI.'] };
 
 function start(label, binary, args, childEnv = env) {
   const log = createWriteStream(join(output, `${label}.log`), { flags: 'w' });
@@ -90,11 +96,11 @@ try {
   try { await verify('wringer-native', ['native-concurrency']); }
   catch (error) { failures.push(error.message); console.error(error.message); }
   const worker = start('worker', process.execPath, ['--import', 'tsx', 'src/worker/index.ts']);
-  const app = start('production-app', process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', '3000']);
+  const app = start('production-app', process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(appPort)]);
   // Conservatively require real sessions while still binding this synthetic fixture server to loopback.
-  const authApp = start('authenticated-app', process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', '3001'], { ...env, APP_BASE_URL: 'http://127.0.0.1:3001', APP_BIND_HOST: '0.0.0.0' });
-  await readiness('http://127.0.0.1:3000/api/health', [worker, app]);
-  await readiness('http://127.0.0.1:3001/api/settings', [authApp], true);
+  const authApp = start('authenticated-app', process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(authPort)], { ...env, APP_BASE_URL: `http://127.0.0.1:${authPort}`, APP_BIND_HOST: '0.0.0.0' });
+  await readiness(`http://127.0.0.1:${appPort}/api/health`, [worker, app]);
+  await readiness(`http://127.0.0.1:${authPort}/api/settings`, [authApp], true);
   try { await verify('wringer-workflows', ['fresh-offline-setup', 'branding', 'domain-provider-contracts', 'persistence-workflow', 'browser']); }
   catch (error) { failures.push(error.message); console.error(error.message); }
   try { await verify('wringer-auth', ['browser-auth']); }

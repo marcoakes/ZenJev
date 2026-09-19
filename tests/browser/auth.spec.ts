@@ -5,10 +5,14 @@ import { hashPassword } from '../../src/server/auth';
 
 // A separate loopback server requires sessions even for synthetic fixtures.
 // No recording may capture the temporary password, cookie, or CSRF token.
-test.use({ baseURL: 'http://127.0.0.1:3001', trace: 'off', video: 'off', screenshot: 'off' });
+// The authenticated fixture server's address is supplied by the runner, not assumed.
+const authBase = process.env.ZENJEV_AUTH_BASE_URL || 'http://127.0.0.1:3001';
+test.use({ baseURL: authBase, trace: 'off', video: 'off', screenshot: 'off' });
 test.describe.configure({ mode: 'serial' });
 
-const db = new PrismaClient({ datasourceUrl: 'postgresql://demo:demo@127.0.0.1:55432/zenjev_demo?connection_limit=1', log: [] });
+// The fixture server's own database, supplied by the runner rather than assumed, so this
+// suite can never create or delete accounts in an unrelated instance on the default port.
+const db = new PrismaClient({ datasourceUrl: process.env.ZENJEV_BROWSER_DATABASE_URL || 'postgresql://demo:demo@127.0.0.1:55432/zenjev_demo?connection_limit=1', log: [] });
 const accounts = (['reviewer', 'viewer'] as const).map(role => ({
   id: randomUUID(), username: `browser-${role}-${randomUUID()}`, role,
   password: randomBytes(32).toString('base64url'),
@@ -32,7 +36,7 @@ async function browserRequest(page: Page, path: string, body?: Record<string, un
 
 async function signIn(page: Page, account: (typeof accounts)[number]) {
   await page.goto('/tickets');
-  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
+  await expect(page).toHaveURL(`${authBase}/login`);
   await expect(page.getByRole('heading', { name: 'Welcome to ZenJev', exact: true })).toBeVisible();
   await page.getByRole('textbox', { name: 'Username', exact: true }).fill(account.username);
   const password = page.getByLabel('Password', { exact: true });
@@ -59,7 +63,7 @@ async function signIn(page: Page, account: (typeof accounts)[number]) {
     try { return await page.evaluate(async () => (await fetch('/api/auth/me', { cache: 'no-store' })).status); }
     catch { return 0; } // A full navigation can replace the document during this status-only probe.
   }, { message: 'The new session authenticates before checking destination navigation' }).toBe(200);
-  await expect(page).toHaveURL('http://127.0.0.1:3001/tickets');
+  await expect(page).toHaveURL(`${authBase}/tickets`);
   await expect(page.locator('tbody tr')).toHaveCount(15);
   const current = await browserRequest(page, '/api/auth/me');
   expect(current.status).toBe(200);
@@ -75,13 +79,13 @@ async function signOut(page: Page, account: (typeof accounts)[number]) {
     page.getByRole('button', { name: 'Sign out', exact: true }).click(),
   ]);
   expect(logout.status()).toBe(200);
-  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
+  await expect(page).toHaveURL(`${authBase}/login`);
   expect((await browserRequest(page, '/api/auth/me')).status).toBe(401);
   expect(await db.session.count({ where: { userId: account.id } })).toBe(0);
   expect((await page.context().cookies()).some(value => value.name === 'zenjev_session')).toBe(false);
   await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toHaveCount(0);
   await page.goto('/tickets');
-  await expect(page).toHaveURL('http://127.0.0.1:3001/login');
+  await expect(page).toHaveURL(`${authBase}/login`);
 }
 
 test.beforeAll(async ({ request }) => {
@@ -115,7 +119,7 @@ test.beforeEach(async ({ page }) => {
   page.on('pageerror', error => observed.errors.push(error.message));
   page.on('request', request => {
     const url = new URL(request.url());
-    if (['http:', 'https:'].includes(url.protocol) && url.origin !== 'http://127.0.0.1:3001') observed.external.push(url.origin);
+    if (['http:', 'https:'].includes(url.protocol) && url.origin !== new URL(authBase).origin) observed.external.push(url.origin);
   });
 });
 test.afterEach(async ({ page }) => {
