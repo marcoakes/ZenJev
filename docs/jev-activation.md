@@ -1,25 +1,28 @@
 # Jev activation
 
-Jev access remains pending. The shipped offline workflow is deterministic mock software, not measured Jev performance. The real adapter is contract-tested against intercepted HTTP and uses the same normalized decisions as the UI and worker. Live provider access has not been verified.
+One live synthetic Jev smoke succeeded on 19 September 2026 using the dedicated macOS Keychain item, service `typesafe-api-key`, account `zenjev`. The [retained result](../evidence/live/jev-smoke-20260919.json) records one request, zero retries, requested and reported model `jev-1.13.0`, 653 ms provider latency, 664 ms total duration, and reported usage of 747 input / 193 output tokens. Keychain access and authentication worked for this request; no key value was recorded.
+
+This verifies the native adapter's first synthetic request, not matching, a broader evaluation, customer-data processing, production accuracy or external writes. The default offline workflow remains deterministic mock software. No Zendesk or application GitHub integration result follows from the Jev smoke.
 
 ## One explicit synthetic request
 
-Keep the key in trusted server/worker runtime configuration, using the approved Keychain/secret route. Do not write it to this repository or the browser. The smoke script reads `TYPESAFE_API_KEY` from its process environment and never prints it. Merely supplying a key does not activate the script.
+The product-specific launcher reads only service `typesafe-api-key`, account `zenjev`. It captures the key inside the trusted process and passes it to the smoke child through `TYPESAFE_API_KEY` in an otherwise clean environment. No credential is written to a file, command argument, terminal or browser. Merely storing a key does not activate a request. The launcher does not update the Keychain item or change its access controls; macOS access prompts belong to the owner.
 
-After access is available, explicitly opt in to this one potentially chargeable synthetic request:
+Explicitly opt in to one potentially chargeable synthetic request:
 
 ```bash
-DATA_MODE=demo JEV_MODE=live ALLOW_LIVE_WRITES=false ALLOW_LIVE_DATA_PROCESSING=false \
-  npm run smoke:jev -- --allow-one-paid-request
+node scripts/keychain-jev.mjs --allow-one-paid-request
 ```
 
-This command assumes `TYPESAFE_API_KEY` was securely supplied to that trusted process beforehand; it deliberately contains no key value. Do not run the normal demo launcher to activate Jev: that launcher creates a credential-free mock runtime.
+The command selects the exact Keychain item internally and pins `jev-1.13.0`. It sets `DATA_MODE=demo`, `JEV_MODE=live`, `ALLOW_LIVE_WRITES=false` and `ALLOW_LIVE_DATA_PROCESSING=false` for the child. No build-provider or other integration credentials are inherited. Lookup failure, cancellation and malformed values fail closed before a provider request. Do not run the normal demo launcher to activate Jev: that launcher creates a credential-free mock runtime.
 
 `scripts/jev-smoke.ts` sends one fixed synthetic invoice question to the native endpoint, with six bounded typed questions, a 15-second deadline and **zero retries**. Its empty candidate set prevents a second match call. The native API does not document an output-token-limit parameter; the script does not invent one. The finite request/deadline is not a guaranteed financial cap.
 
-The script refuses missing opt-in, missing key, real data, live write controls or live-data processing. On success it reports requested and provider-reported model, measured request duration, normalized validated field names and provider-reported input/output usage. Missing model/usage stays unknown. On failure it reports a sanitized error and exits nonzero; no mock fallback occurs.
+The script refuses missing opt-in, missing key, real data, live write controls or live-data processing. On success it reports bounded model identifiers, measured request duration and provider-reported input/output usage. Missing or rejected model/usage metadata stays unknown. Only fixed fields and bounded scalar values reach output; a reflected key, arbitrary response fields, raw errors and subprocess stderr are suppressed. On failure it reports an error category and exits nonzero; no mock fallback occurs. The wrapper also bounds lookup/child lifetime and captured output. Each invocation consumes its one-request allowance even if the outcome fails or times out; do not retry automatically.
 
-The default requested model is `jev-1.13.0`, verified in the [official model reference](https://docs.typesafe.ai/models) on 19 September 2026. `JEV_MODEL` can select a reviewed supported model without changing application business logic. The [native API](https://docs.typesafe.ai/api) uses Choice, Score and Noul fields; pinned-contract failures require an adapter/test review, not a silently changed provider.
+[Keychain smoke tests](../tests/keychain-jev.test.ts) use fake keys and stubbed process lookup, plus intercepted provider HTTP. They verify the exact service/account, no secret in arguments or output, unrelated credential stripping, cancellation/lookup failures, reflected-model redaction, bounded child output/deadlines and one-request/no-retry behavior. These tests never access the real Keychain or a live provider.
+
+The default requested model is `jev-1.13.0`, verified in the [official model reference](https://docs.typesafe.ai/models) on 19 September 2026. The underlying `scripts/jev-smoke.ts` still supports an already securely injected process environment and a bounded `JEV_MODEL` identifier; the Keychain launcher deliberately pins the reviewed first-smoke model. The [native API](https://docs.typesafe.ai/api) uses Choice, Score and Noul fields; pinned-contract failures require an adapter/test review, not a silently changed provider.
 
 ## Enable a synthetic Jev workspace later
 
@@ -33,4 +36,4 @@ A successful synthetic Jev request does not authorise customer-data processing o
 
 External writes remain impossible for synthetic tickets. For real Zendesk tickets, live writes additionally require `ALLOW_LIVE_WRITES=true`, live Jev provenance, an authorised authenticated reviewer, a current exact-payload approval, a fresh ticket snapshot and an allowed private destination. Changing a preview, ticket, decision or mode invalidates approval. Public GitHub writes are prohibited. Issue creation and Zendesk backlinking are separate tracked actions; uncertain outcomes require reconciliation before any retry.
 
-Record the actual first response and usage in the test report after activation. Do not replace the current “live unverified” status with a success based on configuration alone.
+Preserve the first live response metadata and usage as historical evidence. Record any separately authorised later request independently; configuration alone does not extend the scope of verified behavior.

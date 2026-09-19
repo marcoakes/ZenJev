@@ -1,0 +1,104 @@
+name: Verify ZenJev
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - 'evidence/**'
+      - 'README.md'
+      - 'ASTRA_MASTER_BUILD.md'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ZenJev
+        shell: bash
+    services:
+      demo-postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: demo
+          POSTGRES_PASSWORD: demo
+          POSTGRES_DB: zenjev_demo
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U demo -d zenjev_demo"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+      test-postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: demo
+          POSTGRES_PASSWORD: demo
+          POSTGRES_DB: zenjev_test
+        ports:
+          - 55433:5432
+        options: >-
+          --health-cmd "pg_isready -U demo -d zenjev_test"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - name: Check out the exact application revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: ZenJev
+          persist-credentials: false
+      - name: Check out the reviewed public Wringer harness
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: marcoakes/wringer
+          ref: 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+          path: wringer
+          persist-credentials: false
+      - name: Install Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: ZenJev/package-lock.json
+      - name: Install pinned Bun for Wringer
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        with:
+          bun-version: '1.4.2'
+      - name: Install application dependencies without lifecycle scripts
+        run: |
+          mkdir -p work/ci
+          env -i PATH="$PATH" HOME="$HOME" npm ci --ignore-scripts --no-audit --no-fund 2>&1 | tee work/ci/npm-ci.log
+          node scripts/setup.mjs 2>&1 | tee work/ci/setup.log
+      - name: Install the pinned Chromium and system dependencies
+        run: env -i PATH="$PATH" HOME="$HOME" node node_modules/@playwright/test/cli.js install --with-deps chromium 2>&1 | tee work/ci/browser-install.log
+      - name: Build the exact Wringer revision
+        working-directory: wringer
+        run: |
+          test "$(git rev-parse HEAD)" = 7ca2fb58e4270ba70fc6f6fdf4a39e30d70d9cb4
+          env -i PATH="$PATH" HOME="$HOME" bun install --frozen-lockfile --ignore-scripts 2>&1 | tee ../ZenJev/work/ci/wringer-install.log
+          env -i PATH="$PATH" HOME="$HOME" bun run build 2>&1 | tee ../ZenJev/work/ci/wringer-build.log
+      - name: Verify native persistence, recovery and production browser workflows
+        env:
+          WRINGER_BINARY: ${{ github.workspace }}/wringer/dist/wring
+          WRINGER_REPOSITORY: ${{ github.workspace }}/wringer
+        run: node scripts/ci-verify.mjs
+      - name: Preserve actual results, failure logs, browser traces and screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: zenjev-verification-${{ github.sha }}-${{ github.run_attempt }}
+          retention-days: 14
+          include-hidden-files: true
+          if-no-files-found: warn
+          path: |
+            ZenJev/work/ci/**
+            ZenJev/.wringer/runs/**
+            ZenJev/test-results/**
+            ZenJev/playwright-report/**

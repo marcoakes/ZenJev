@@ -32,7 +32,9 @@
     "setup": "node scripts/setup.mjs",
     "db:test:prepare": "node scripts/prepare-tests.mjs",
     "demo:portable:production": "node scripts/demo.mjs --portable --production",
-    "check:fresh-setup": "node scripts/check-fresh-setup.mjs"
+    "check:fresh-setup": "node scripts/check-fresh-setup.mjs",
+    "smoke:jev:keychain": "node scripts/keychain-jev.mjs",
+    "test:native": "node scripts/check-native.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",

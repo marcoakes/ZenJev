@@ -15,7 +15,7 @@ gates:
     timeout: 30
     proves: [ZJ-01, ZJ-02, ZJ-03]
   - id: domain-provider-contracts
-    run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts
+    run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts
     timeout: 120
     proves: [SW-04, SW-07, SW-08, SW-09, SW-10]
   - id: persistence-workflow
@@ -38,3 +38,6 @@ gates:
   - id: production-build
     run: node scripts/check.mjs build
     timeout: 300
+  - id: native-concurrency
+    run: node scripts/check-native.mjs
+    timeout: 180

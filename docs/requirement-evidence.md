@@ -1,5 +1,7 @@
 # ZenJev requirement-to-evidence map
 
+> Historical offline-build baseline. See [live activation and release verification](release-verification.md) for the later Jev and publication phase and superseding verification results.
+
 This maps the implemented application to the requirements in the unchanged [master build specification](../ASTRA_MASTER_BUILD.md). It replaces the earlier bootstrap-only map. The application now contains the six workbench routes, persisted decisions and approvals, a durable worker, synthetic fixtures, native provider adapters, and executable verification suites.
 
 **This document is an assertion map, not a pass certificate.** The [test report](test-report.md) records the actual 81 passing application tests, four passing branding checks, successful production build, fresh portable setup, manual browser observations, and blocked Playwright run. Final source-bound Wringer evidence records seven passed gates and one failed browser gate on `29ca2c671e779fec93a2bee7bd9bca4043b3e3eb`. Do not infer a browser pass from a test title or a Wringer gate's `proves` identifiers. Recheck the report's source identity when code changes.

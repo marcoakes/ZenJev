@@ -1,0 +1,54 @@
+{
+  "schema": "zenjev-live-smoke.v1",
+  "recordedAt": "2026-09-19T17:19:24.500Z",
+  "command": "node scripts/keychain-jev.mjs --allow-one-paid-request",
+  "exitCode": 0,
+  "keychain": {
+    "service": "typesafe-api-key",
+    "account": "zenjev",
+    "access": "allowed",
+    "authentication": "verified",
+    "valueRecorded": false
+  },
+  "limits": {
+    "maxRequests": 1,
+    "automaticRetries": 0,
+    "deadlineMs": 15000,
+    "questions": 6,
+    "candidates": 0,
+    "realCustomerData": false,
+    "externalWrites": false
+  },
+  "sourceFiles": [
+    {
+      "path": "scripts/keychain-jev.mjs",
+      "sha256": "fcc9c6be492537c356eda555cecf813db592ed13620f5d6b3f50c4b37f47c61e"
+    },
+    {
+      "path": "scripts/jev-smoke.ts",
+      "sha256": "be5d513291f81a42e025341b2446ddecd8988be222c3d85f03dad684ac412a51"
+    },
+    {
+      "path": "src/providers/decision.ts",
+      "sha256": "feea5bba5a79d7d4c06f7dba1b6886bd983ba2965f2ec3380daec2a30147a305"
+    },
+    {
+      "path": "src/providers/http.ts",
+      "sha256": "2a950c69ebfcac4261883afa0942d0c7b19027ecc9573c1acd04e86da608f403"
+    }
+  ],
+  "result": {
+    "status": "succeeded",
+    "provider": "jev",
+    "dataSource": "synthetic",
+    "requestedModel": "jev-1.13.0",
+    "reportedModel": "jev-1.13.0",
+    "durationMs": 664,
+    "providerLatencyMs": 653,
+    "inputTokens": 747,
+    "outputTokens": 193,
+    "requestLimit": 1,
+    "automaticRetries": 0,
+    "requestDeadlineMs": 15000
+  }
+}

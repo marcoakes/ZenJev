@@ -1,5 +1,7 @@
 # ZenJev build status — 19 September 2026
 
+> Historical offline-build baseline. See [live activation and release verification](release-verification.md) for the later Jev and publication phase and superseding verification results.
+
 The application is implemented in this separate local repository: all six functional screens, persisted synthetic data, PostgreSQL/Prisma schema, independent durable worker, mock/Jev decisions, guarded GitHub/Zendesk adapters, exact approvals, audit, reconciliation, privacy, evaluation and operational scripts. See [actual test report](test-report.md) for completed checks and remaining verification; implementation alone is not a passing test result.
 
 ## Checked source and outcome

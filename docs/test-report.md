@@ -1,5 +1,7 @@
 # ZenJev verification report — 19 September 2026
 
+> Historical offline-build baseline. See [live activation and release verification](release-verification.md) for the later Jev and publication phase and superseding verification results.
+
 **Observed result:** 81 application tests and four branding checks pass; the production build succeeds; an empty portable database accepts all five migrations and two identical seed passes. The production application and independent worker run locally. Headless Playwright is blocked by the host before page creation: one launch failure, six cases not run. Automated accessibility checks have therefore **not passed**. The separate manual browser review is delegated agent review.
 
 ## Candidate and environment
