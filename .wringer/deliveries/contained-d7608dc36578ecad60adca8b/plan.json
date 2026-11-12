@@ -1,0 +1,155 @@
+{
+  "schema_version": "wringer.execution-plan.v5",
+  "name": "Report the held-out split apart from development in the evaluation lab",
+  "intent": "In the evaluation lab, report the development and held-out splits apart, so a support lead tuning the routing threshold sees how routing does on tickets it was not tuned against. A ticket's split is its label's split, else the saved prediction's split, else the split of its related incident (the label's incident first), else it is unassigned. Put the function in src/domain/splits.ts as evaluateBySplit(predictions, labels, threshold), returning the lab's own evaluateSaved result for each split and the IDs of unassigned tickets; export it from src/domain; and show each split's routing precision, coverage and ticket count beside the overall numbers in the evaluation lab. tests/evaluation-splits.test.ts says exactly what it must return.",
+  "intent_sha256": "0d55300d8fc9348d54760d86999870dd956c10d12c18a5f65a20da7174d61c36",
+  "repository": {
+    "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+    "commit": "ee8459f6940e89f27323892dbe07c2630215a898"
+  },
+  "runtime": {
+    "kind": "trusted-local",
+    "network": {
+      "policy": "unenforced"
+    },
+    "env": []
+  },
+  "agents": {
+    "worker": {
+      "protocol": "acp",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentclientprotocol/claude-agent-acp@0.101.1"
+      ],
+      "env": []
+    },
+    "judge": {
+      "protocol": "acp",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentclientprotocol/codex-acp@2.6.0"
+      ],
+      "env": []
+    }
+  },
+  "environment": {
+    "context": [
+      "README.md",
+      "package.json"
+    ],
+    "tools": [
+      {
+        "name": "bun",
+        "version": "1.4.2",
+        "probe": [
+          "bun",
+          "--version"
+        ]
+      },
+      {
+        "name": "node",
+        "version": "24.19.0",
+        "probe": [
+          "node",
+          "-p",
+          "process.versions.node"
+        ]
+      },
+      {
+        "name": "npm",
+        "version": "11.17.0",
+        "probe": [
+          "npm",
+          "--version"
+        ]
+      }
+    ],
+    "setup": [
+      {
+        "id": "dependencies",
+        "argv": [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": ".",
+        "timeout_seconds": 900
+      }
+    ],
+    "baseline": [],
+    "writable_directories": [
+      "node_modules"
+    ]
+  },
+  "scope": {
+    "writable": [
+      "src"
+    ]
+  },
+  "acceptance": {
+    "criteria": [
+      {
+        "id": "evaluation-splits",
+        "title": "Development and held-out splits evaluated apart, as tests/evaluation-splits.test.ts specifies",
+        "quote": "report the development and held-out splits apart",
+        "kind": "check",
+        "required": true
+      }
+    ],
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "argv": [
+          "/bin/sh",
+          "-c",
+          "node scripts/check.mjs test tests/evaluation-splits.test.ts"
+        ],
+        "cwd": ".",
+        "timeout_seconds": 120,
+        "criteria": [
+          "evaluation-splits"
+        ],
+        "files": [
+          "scripts/check.mjs",
+          "tests/evaluation-splits.test.ts"
+        ]
+      }
+    ],
+    "protected_paths": [
+      ".wringer.yaml",
+      "checks/branding.test.mjs",
+      "scripts/check-fresh-setup.mjs",
+      "scripts/check-native.mjs",
+      "scripts/check.mjs",
+      "tests/backend.test.ts",
+      "tests/browser/auth.spec.ts",
+      "tests/browser/workbench.spec.ts",
+      "tests/domain.test.ts",
+      "tests/evaluation-splits.test.ts",
+      "tests/gitlab.test.ts",
+      "tests/integration-smoke.test.ts",
+      "tests/issue-provider-persistence.test.ts",
+      "tests/keychain-jev.test.ts",
+      "tests/provider-integration-orchestration.test.ts",
+      "tests/providers.test.ts"
+    ]
+  },
+  "acceptance_sha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+  "budget": {
+    "max_sessions": 8,
+    "max_worker_turns": 4,
+    "max_judge_turns": 4,
+    "max_planner_turns": 0,
+    "wall_clock_seconds": 3600,
+    "session_timeout_seconds": 900
+  },
+  "loop": {
+    "repeatCandidate": "stop",
+    "repeatedOutcomeWarning": 2
+  },
+  "plan_sha256": "ee8ee66248313621f9c42bfdbade4ed21a6d367418d0202182fc8b8cac31ad7d"
+}

@@ -1,0 +1,119 @@
+{
+  "schema_version": "wringer.contained-delivery-view.v2",
+  "engineering": {
+    "receipt": "engineering.json",
+    "sha256": "47e03d0b11eb55e15ee9fcbf8bb319bc671bcd60b6564d31dd1334a0301cb020",
+    "playbook": null,
+    "adoption": null,
+    "checks": [
+      {
+        "id": "evaluation-splits",
+        "level": "command"
+      }
+    ],
+    "decisions": [
+      {
+        "sequence": 1,
+        "phase": "checks",
+        "action": "continue",
+        "reason": "This observation does not require a repair; readiness still depends on all remaining checks and human decisions.",
+        "sha256": "8760fc7d2322bdae832c8e02adc1e25f5c2eb16f76a9a52ec29bda52c4c7fffa"
+      }
+    ]
+  },
+  "journeyId": "3a3bde3d-926b-4f69-b38b-0787a220154d",
+  "deliveryId": "contained-d7608dc36578ecad60adca8b",
+  "name": "Report the held-out split apart from development in the evaluation lab",
+  "status": "review-ready",
+  "source": {
+    "url": "local://a482a6ecca2b07b84bd08561a561f5800ea66bed",
+    "baseCommit": "ee8459f6940e89f27323892dbe07c2630215a898",
+    "codeCommit": "bbac04a5c7f6e0e418f8446a5e9f4e75801aa2ce",
+    "tree": "95667f1e7973bc6436e040849baa7655d3f0dc39"
+  },
+  "planSha256": "ee8ee66248313621f9c42bfdbade4ed21a6d367418d0202182fc8b8cac31ad7d",
+  "acceptanceSha256": "8e8b2a31b964067b42eed7dcd30556a862871c9853549c0cacf66bea46db73bc",
+  "journalHeadSha256": "dd2598e4344a31077b73b33a7ed12d665e81f8dc0937a6e6d8bc4318e8cb9cd3",
+  "counts": {
+    "checks": 1,
+    "proved": 1,
+    "human": 0
+  },
+  "checks": [
+    {
+      "id": "evaluation-splits",
+      "before": {
+        "status": "failed",
+        "exitCode": 1,
+        "receipt": "receipts/wringer-verifier-0271956f-b8f5-486a-a41c-7e694572216c/observations.json"
+      },
+      "after": {
+        "status": "passed",
+        "exitCode": 0,
+        "receipt": "receipts/wringer-verifier-d4e81e56-4627-4547-9adb-9834e983df51/observations.json"
+      },
+      "inputsSha256": "67e31f6b232463a904da736af33f3c8ad0873678e51be2f6a06673ba53eafae9"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "evaluation-splits",
+      "title": "Development and held-out splits evaluated apart, as tests/evaluation-splits.test.ts specifies",
+      "kind": "check",
+      "required": true,
+      "state": "met",
+      "checkIds": [
+        "evaluation-splits"
+      ],
+      "note": "The supplied deterministic check passed all five acceptance tests. Independent source inspection confirms split precedence, separate evaluateSaved results, unassigned ticket IDs, threshold validation, domain export, and development/held-out precision, coverage, and ticket counts alongside overall metrics.",
+      "by": null
+    }
+  ],
+  "usage": {
+    "sessions": 2,
+    "reportedSessions": 0,
+    "inputTokens": null,
+    "outputTokens": null,
+    "costUsd": null
+  },
+  "agents": [
+    {
+      "effectId": "62114beb-affc-42d7-9561-daa1753a3d66",
+      "role": "worker",
+      "command": "npx",
+      "protocolVersion": 1,
+      "image": "trusted-local",
+      "agentInfo": null,
+      "model": null
+    },
+    {
+      "effectId": "b7fc3cb8-f47a-4e87-9053-466afc5ed367",
+      "role": "judge",
+      "command": "npx",
+      "protocolVersion": 1,
+      "image": "trusted-local",
+      "agentInfo": null,
+      "model": null
+    }
+  ],
+  "auditCommand": "wringer-drive audit --bundle .wringer/deliveries/contained-d7608dc36578ecad60adca8b",
+  "falsifyCommand": "wringer-drive falsify --bundle .wringer/deliveries/contained-d7608dc36578ecad60adca8b",
+  "limits": [
+    "Ran on this computer under the operator's account; nothing was contained.",
+    "This is a tamper-evident record of controller observations, not a fresh execution of acceptance checks or proof against a malicious controller.",
+    "ACP prompts, worker narrative, thought streams and private provider traces are omitted. The source journal was validated before a separately hashed portable semantic projection was made; source digest commitments are provenance, not a claim that omitted bytes can be replayed here.",
+    "No isolation was established: roles and checks ran as ordinary processes under the operator's account, so no platform isolation gate applies to this delivery.",
+    "The candidate bundle carries exact committed Git history. An evidence commit contains this bundle; its own hash is returned by publication, not self-embedded in its contents.",
+    "Falsification is not available for this delivery: it needs an isolated verifier, and nothing was contained.",
+    "Source credential-shape exceptions: 2 exact reviewed matches; source-inspection.json SHA256 e3e981c9bcc0c639271304734100f204b66bde406d5d28a3a8fcd563e8b26e9a. This is not a secret-free claim. Actor identity is asserted, not authenticated.",
+    "Exact credential-shaped matches were accepted as non-secret examples by the named operator or delegated agent. This is an exception record, NOT a secret-free certificate.",
+    "Configured controller secret values and their fragments were non-overridable at delivery. Offline audit has no access to those private values and cannot repeat that check or prove that an unknown credential is harmless.",
+    "Review identity and reasons are operator assertions in cooperative-local state, not authenticated human judgements. A same-account process can exercise that operator authority; no MCP approval tool is provided.",
+    "Playbook use is a controller-recorded request, not proof of model understanding or measured improvement. Guidance is not injected into judge instructions, but tracked repository bytes remain readable.",
+    "Repair excerpts are reconstructed from carried redacted outputs. The original observation digest is an opaque controller commitment: host-specific runtime provenance is projected for portability, not reconstructed byte for byte.",
+    "Any carried adoption receipt records a future-selection decision and evidence revision, not a rerun of its private comparative trials or proof of live benefit.",
+    "Command-red means the command failed before implementation. Assertion-red additionally binds executed protected-runner assertions; neither proves requirement completeness.",
+    "Loop decisions are deterministic observations under one approved policy. Repeated outcomes are not a quality score.",
+    "Usage is reported by agent adapters. Missing token counts and unmeasured monetary cost remain unknown; this is not a billing statement."
+  ]
+}

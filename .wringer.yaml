@@ -14,6 +14,9 @@ gates:
     run: node --test checks/branding.test.mjs
     timeout: 30
     proves: [ZJ-01, ZJ-02, ZJ-03]
+  - id: evaluation-splits
+    run: node scripts/check.mjs test tests/evaluation-splits.test.ts
+    timeout: 120
   - id: domain-provider-contracts
     run: node scripts/check.mjs test tests/domain.test.ts tests/providers.test.ts tests/gitlab.test.ts tests/integration-smoke.test.ts tests/keychain-jev.test.ts
     timeout: 120
